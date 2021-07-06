@@ -17,7 +17,7 @@
 | stu_class    | INTEGER     | 学生所在班级 | 是       | 表class的外键               |
 | stu_gender   | INTEGER     | 学生性别     | 是       | {0: 'male', 1: 'female'}    |
 
-
+------
 
 ## teacher
 
@@ -31,7 +31,7 @@
 | tch_realname | VARCHAR(20) | 教师姓名 | 是       |                             |
 | tch_gender   | INTEGER     | 教师性别 | 是       | {0: 'male', 1: 'female'}    |
 
-
+------
 
 ## class
 
@@ -43,7 +43,7 @@
 | class_name | VARCHAR(20) | 班级名称     | 是       | 唯一                        |
 | tch_id     | VARCHAR(10) | 班级所属教师 | 是       | 表teacher的外键             |
 
-
+------
 
 ## question
 
@@ -61,7 +61,7 @@
 | qu_opright | VARCHAR(255) | 正确选项/正确答案     | 否       | 单选: 字符，多选/填空: 字符串，判断: 字符(T/F)，其余为空     |
 | qu_score   | INTEGER      | 试题分值              | 是       |                                                              |
 
-
+------
 
 ## exampaper
 
@@ -73,7 +73,7 @@
 | ep_title | VARCHAR(255) | 试卷名称 | 是       |                             |
 | ep_score | INTEGER      | 试卷总分 | 否       |                             |
 
-
+------
 
 ## exam
 
@@ -87,7 +87,7 @@
 | exam_begintime | TIMESTAMP(14) | 考试开始时间 | 是       |                             |
 | exam_endtime   | TIMESTAMP(14) | 考试结束时间 | 是       |                             |
 
-
+------
 
 ## ep_qu
 
@@ -99,7 +99,7 @@
 | qu_id | VARCHAR(10) | 试题编号 | 是       | 主键，表question的外键  |
 |       |             |          |          |                         |
 
-
+------
 
 ## subjectivity
 
@@ -117,7 +117,7 @@
 | qu_ans       | VARCHAR(256) | 主观题回答             | 否       |                         |
 | ~~qu_score~~ | ~~INTEGER~~  | ~~教师评分~~           | ~~是~~   | ~~<= 对应试题分值~~     |
 
-
+------
 
 ## exam_record
 
