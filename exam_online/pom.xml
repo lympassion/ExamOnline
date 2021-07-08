@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+<<<<<<< Updated upstream
         <module>SpringMVC-01</module>
     </modules>
 
@@ -18,6 +19,11 @@
             UTF-8
         </project.build.sourceEncoding>
     </properties>
+=======
+        <module>SpringMVC</module>
+        <module>Compare_SpringMVC</module>
+    </modules>
+>>>>>>> Stashed changes
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
