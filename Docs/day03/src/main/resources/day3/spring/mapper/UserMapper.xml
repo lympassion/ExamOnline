@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="day3.spring.mapper.UserMapper">
+
+    <select id="selectStudent" resultType="day3.spring.domain.User">
+        SELECT S_id as id ,S_name as name ,S_password as password FROM  student WHERE S_id =#{id}
+    </select>
+
+    <select id="selectTeacher" resultType="day3.spring.domain.User">
+        SELECT T_id as id ,T_name as name ,T_password as password FROM  teacher WHERE T_id =#{id}
+    </select>
+
+    <select id="selectAdmin" resultType="day3.spring.domain.User">
+        SELECT A_id as id ,A_name as name ,A_password as password FROM  Admin WHERE A_id =#{id}
+    </select>
+</mapper>
+
+
