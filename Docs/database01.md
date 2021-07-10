@@ -99,6 +99,7 @@ SAQ:short answer question  简答题
 | 字段        | 类型    | 位数 | 说明         | 备注               |
 | ----------- | ------- | ---- | ------------ | ------------------ |
 | Exam_id     | varchar | 20   | 考试编号     | 主键               |
+| Exam_name   | varchar | 50   | 考试名称     |                    |
 | Paper_type  | varchar | 2    | 试卷类型     | AB卷               |
 | Source_id   | varchar | 10   | 课程信息     | 考试科目等信息     |
 | Paper_id    | varchar | 10   | 试卷编号     |                    |
