@@ -1,6 +1,6 @@
 package com.loti.dao.pojo.Entity;
 
-import java.util.Map;
+import com.loti.dao.pojo.Entity.User.Student;
 
 public class ExamRecord {
     private String id;

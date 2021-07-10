@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>我的考试 - Exam Online</title>
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../static/css/login.register.css">
+    <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/login.register.css">
 </head>
 
 <body>
@@ -20,10 +20,10 @@
         </br></br>
         <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">学生注册</a>
+              <a class="nav-link active" id="stu-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">学生注册</a>
             </li>
             <li class="nav-item" role="presentation">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#teacher" role="tab" aria-controls="teacher" aria-selected="false">教师注册</a>
+              <a class="nav-link" id="tch-tab" data-toggle="tab" href="#teacher" role="tab" aria-controls="teacher" aria-selected="false">教师注册</a>
             </li>
           </ul>
             <br>
@@ -33,61 +33,61 @@
                     <div class="card-body">
                         <form class="needs-validation" novalidate>
                             <div class="input-group mb-2">
-                                <label for="inputUsername" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <label for="stu-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
-                                    <input name="username" type="text" class="form-control" aria-label="Username" pattern="\S{0,20}" required>
+                                    <input id="stu-username" name="stu-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
 
                             <div class="input-group mb-2">
-                                <label for="inputPassward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <label for="stu-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="inputPassward" name="password" type="password" class="form-control" aria-label="Password" required>
+                                    <input id="stu-passward" name="stu-password" type="password" class="form-control" aria-label="密码" required>
                                     <div class="invalid-feedback">请输入密码</div>
                                   </div>
                             </div>
 
                             <div class='input-group mb-2'>
-                                <label for="password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
+                                <label for="stu-password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="password-confirm" name="password-confirm" type="password" class="form-control" aria-label="Password Confirm" required>
+                                    <input id="stu-password-confirm" name="stu-password-confirm" type="password" class="form-control" aria-label="确认密码" required>
                                     <div class="invalid-feedback">两次输入密码不一致</div>
                                   </div>
                             </div>
 
                             <div class='input-group mb-2'>
-                                <label for="inputRealname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <label for="stu-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
                                 <div class="col-sm-9">
-                                    <input id="inputRealname" name="realname" type="text" class="form-control" aria-label="Realname" pattern="\S{0,20}" required>
+                                    <input id="stu-realname" name="stu-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入您的真实姓名</div>
                                   </div>
                             </div>
 
                             <div class='input-group mb-2'>
-                                <label for="inputClass" class="col-sm-3 col-form-label"></span>班级</span></label>
+                                <label for="stu-class" class="col-sm-3 col-form-label"></span>班级</span></label>
                                 <div class="col-sm-9">
-                                    <input id="inputClass" name="stu-class" type="text" class="form-control" aria-label="Stu Class" pattern="\S{0,20}" required>
+                                    <input id="stu-class" name="stu-class" type="text" class="form-control" aria-label="班级" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入您所在的班级</div>
                                   </div>
                             </div>
         
                             <div class="input-group mb-2">
-                                <label for="inputPassward" class="col-sm-3 col-form-label"></span>性别</span></label>
-                                <div class="col-sm-9 atu">
+                                <label for="stu-gender-radio-group" class="col-sm-3 col-form-label"></span>性别</span></label>
+                                <div class="col-sm-9 atu" id="stu-gender-radio-group">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1">男</label>
-                                      </div>
-                                      <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline2">女</label>
-                                      </div>
-                                  </div>
+                                        <input type="radio" id="stu-gender-radio-male" name="stu-gender-radio" class="custom-control-input" value="male">
+                                        <label class="custom-control-label" for="stu-gender-radio-male">男</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="stu-gender-radio-female" name="stu-gender-radio" class="custom-control-input" value="female">
+                                        <label class="custom-control-label" for="stu-gender-radio-female">女</label>
+                                    </div>
+                                </div>
                                 
                             </div>
                         </form>    
-                        <button type="button" class="btn btn-primary btn-lg mb-2" id="register">注册</button>
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="stu-register">注册</button>
                         <p>已有帐号？<a href="login.html">立即登录</a></p>
                     </div>
                     
@@ -98,109 +98,147 @@
                     <div class="card-body">
                         <form class="needs-validation" novalidate>
                             <div class="input-group mb-2">
-                                <label for="inputUsername" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <label for="tch-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
-                                    <input name="username" type="text" class="form-control" aria-label="Username" pattern="\S{0,20}" required>
+                                    <input id="tch-username" name="tch-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
 
                             <div class="input-group mb-2">
-                                <label for="inputPassward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <label for="tch-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="inputPassward" name="password" type="password" class="form-control" aria-label="Password" required>
+                                    <input id="tch-passward" name="tch-password" type="password" class="form-control" aria-label="密码" required>
                                     <div class="invalid-feedback">请输入密码</div>
                                   </div>
                             </div>
 
                             <div class='input-group mb-2'>
-                                <label for="password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
+                                <label for="tch-password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="password-confirm" name="password-confirm" type="password" class="form-control" aria-label="Password Confirm" required>
+                                    <input id="tch-password-confirm" name="tch-password-confirm" type="password" class="form-control" aria-label="确认密码" required>
                                     <div class="invalid-feedback">两次输入密码不一致</div>
                                   </div>
                             </div>
 
                             <div class='input-group mb-2'>
-                                <label for="inputRealname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <label for="tch-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
                                 <div class="col-sm-9">
-                                    <input id="inputRealname" name="realname" type="text" class="form-control" aria-label="Realname" pattern="\S{0,20}" required>
+                                    <input id="tch-realname" name="tch-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入您的真实姓名</div>
                                   </div>
                             </div>
         
                             <div class="input-group mb-2">
-                                <label for="inputPassward" class="col-sm-3 col-form-label"></span>性别</span></label>
-                                <div class="col-sm-9 m-auto">
+                                <label for="tch-gender-radio-group" class="col-sm-3 col-form-label"></span>性别</span></label>
+                                <div class="col-sm-9 m-auto" id="tch-gender-radio-group">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline1" name="customRadioInline" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline1">男</label>
+                                        <input type="radio" id="tch-gender-radio-male" name="tch-gender-radio" class="custom-control-input" value="male">
+                                        <label class="custom-control-label" for="tch-gender-radio-male">男</label>
                                       </div>
                                       <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="customRadioInline2" name="customRadioInline" class="custom-control-input">
-                                        <label class="custom-control-label" for="customRadioInline2">女</label>
+                                        <input type="radio" id="tch-gender-radio-female" name="tch-gender-radio" class="custom-control-input" value="female">
+                                        <label class="custom-control-label" for="tch-gender-radio-female">女</label>
                                       </div>
                                   </div>
                                 
                             </div>
                         </form>    
-                        <button type="button" class="btn btn-primary btn-lg mb-2" id="register">注册</button>
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="tch-register">注册</button>
                         <p>已有帐号？<a href="login.html">立即登录</a></p>
                     </div>
                     
                 </div>
             </div>
-            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="needs-validation" novalidate>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><span>用户名</span></div>
-                                </div>
-                                <input name="username" type="text" class="form-control" aria-label="Username" pattern="\S{0,20}" required>
-                                <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><span>密码</span></div>
-                                </div>
-                                <input name="password" type="password" class="form-control" aria-label="Password" required>
-                                <div class="invalid-feedback">请输入密码</div>
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><span>确认密码</span></div>
-                                </div>
-                                <input id="password-confirm" type="password" class="form-control" aria-label="Password Confirm" required>
-                                <div class="invalid-feedback">两次输入密码不一致</div>
-                            </div>
-                            <div class="alert alert-primary mb-2" role="alert" id="locator-addr" hidden>
-                            </div>
-                            <div class="input-group mb-2">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><span>电话号码</span></div>
-                                </div>
-                                <input name="phone" type="text" class="form-control" aria-label="phone" pattern="\d{11}" required>
-                                <div class="invalid-feedback">请输入11位电话号码</div>
-                            </div>
-                        </form>    
-                        <button type="button" class="btn btn-primary btn-lg mb-2" id="register">注册</button>
-                        <p>已有帐号？<a href="login.html">立即登录</a></p>
-                    </div>
-                    
-                </div> 
-            </div>
           </div>
-          
-          
-
-    
-        
     </div>
 
-    <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+            $('#stu-register').click(function(){
+                /*
+                var usertype = $('#myTab li:first-child a').hasClass('active') ? "student" : "teacher";
+                if(usertype=='student') {
+                    var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                    var sendData={
+                        "usertype":$('#usertype').val(),
+                        "username":$('#username').val(),
+                        "password":$('#password').val(),
+                        "realname":$('#realname').val(),
+                        "stuclass":$('#stuclass').val()
+                    };
+                }
+                */
+                var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                var sendData={
+                    "usertype": "student",
+                    "username": $('#stu-username').val(),
+                    "password": $('#stu-password').val(),
+                    "realname": $('#stu-realname').val(),
+                    "class": $('#stu-class').val(),
+                    "gender": usergender,
+                };
+                $.ajax({
+                    type: "post",
+                    url: "student/register",
+                    data: sendData,
+                    datatype: "json",
+                    success: function(message){
+                        if(msg.code == 0){
+                            //注册成功
+                            console.log(message.data.username);
+                            SetCookie("userid", message.data.userid);
+                            window.location.href = "index.html";
+                            //alert("欢迎:"+msg.data.username);
+                        }else{
+                            //注册失败
+                            alert(message.msg);
+                        }
+                        
+                    },
+                    error: function(message){
+                        alert("通信失败");
+                    }
+                    
+                });
+            })
+
+            $('#tch-register').click(function(){
+                var usergender = document.getElementsByName('radio-teacher')[0].checked ? "male" : "female";
+                var sendData={
+                    "usertype": "teacher",
+                    "username": $('#tch-username').val(),
+                    "password": $('#tch-password').val(),
+                    "realname": $('#tch-realname').val(),
+                    "gender": usergender,
+                };
+                $.ajax({
+                    type: "post",
+                    url: "teacher/register",
+                    data: sendData,
+                    datatype: "json",
+                    success: function(message){
+                        if(msg.code == 0){
+                            //注册成功
+                            console.log(message.data.username);
+                            SetCookie("userid", message.data.userid);
+                            window.location.href = "index.html";
+                            //alert("欢迎:"+msg.data.username);
+                        }else{
+                            //注册失败
+                            alert(message.msg);
+                        }
+                    },
+                    error: function(message){
+                        alert("通信失败");
+                    }
+                });
+            })
+        })
+    </script>
 
 </body>
 

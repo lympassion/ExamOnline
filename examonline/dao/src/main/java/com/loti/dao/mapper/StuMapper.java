@@ -1,6 +1,6 @@
 package com.loti.dao.mapper;
 
-import com.loti.dao.pojo.Entity.Student;
+import com.loti.dao.pojo.Entity.User.Student;
 
 import java.util.List;
 

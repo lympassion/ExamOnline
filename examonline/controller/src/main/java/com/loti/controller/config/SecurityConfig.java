@@ -17,6 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/s_/**").hasRole("student")
                 .antMatchers("t_/**").hasRole("teacher");
 
+        http.headers().frameOptions().disable();
         http.formLogin().loginPage("/tologin");
 
     }

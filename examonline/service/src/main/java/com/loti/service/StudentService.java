@@ -1,7 +1,7 @@
 package com.loti.service;
 
 import com.loti.dao.pojo.Entity.Exam;
-import com.loti.dao.pojo.Entity.Student;
+import com.loti.dao.pojo.Entity.User.Student;
 
 import java.util.List;
 import java.util.Map;

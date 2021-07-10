@@ -1,9 +1,7 @@
 package com.loti.service;
 
 import com.loti.dao.pojo.Entity.Paper;
-import com.loti.dao.pojo.Entity.Student;
-
-import java.util.List;
+import com.loti.dao.pojo.Entity.User.Student;
 
 public interface TeacherService {
     //新增学生信息
