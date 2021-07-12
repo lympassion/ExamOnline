@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>注册 - Exam Online</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../static/css/login.register.css">
+</head>
+
+<body class="register-body">
+    <div class="container">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+            <div class="sidebar-brand-text mx-3"><span>Exam Online</span></div>
+        </a>
+        </br></br>
+        <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="stu-tab" data-toggle="tab" href="#student" role="tab" aria-controls="student" aria-selected="true">学生注册</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="tch-tab" data-toggle="tab" href="#teacher" role="tab" aria-controls="teacher" aria-selected="false">教师注册</a>
+            </li>
+          </ul>
+            <br>
+          <div class="tab-content">
+            <div class="tab-pane active" id="student" role="tabpanel" aria-labelledby="student-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="needs-validation" novalidate>
+                            <div class='input-group mb-2'>
+                                <label for="stu-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-realname" name="stu-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入您的真实姓名</div>
+                                  </div>
+                            </div>
+                            <!--
+                            <div class="input-group mb-2">
+                                <label for="stu-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-username" name="stu-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
+                                  </div>
+                            </div>
+                            -->
+                            <div class="input-group mb-2">
+                                <label for="stu-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-passward" name="stu-password" type="password" class="form-control" aria-label="密码" required>
+                                    <div class="invalid-feedback">请输入密码</div>
+                                  </div>
+                            </div>
+
+                            <div class='input-group mb-2'>
+                                <label for="stu-password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-password-confirm" name="stu-password-confirm" type="password" class="form-control" aria-label="确认密码" required>
+                                    <div class="invalid-feedback">两次输入密码不一致</div>
+                                  </div>
+                            </div>
+
+                            
+
+                            <div class='input-group mb-2'>
+                                <label for="stu-class" class="col-sm-3 col-form-label"></span>班级</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-class" name="stu-class" type="text" class="form-control" aria-label="班级" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入您所在的班级</div>
+                                  </div>
+                            </div>
+        
+                            <div class="input-group mb-2">
+                                <label for="stu-gender-radio-group" class="col-sm-3 col-form-label"></span>性别</span></label>
+                                <div class="col-sm-9 atu" id="stu-gender-radio-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="stu-gender-radio-male" name="stu-gender-radio" class="custom-control-input" value="male">
+                                        <label class="custom-control-label" for="stu-gender-radio-male">男</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="stu-gender-radio-female" name="stu-gender-radio" class="custom-control-input" value="female">
+                                        <label class="custom-control-label" for="stu-gender-radio-female">女</label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </form>    
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="stu-register">注册</button>
+                        <p>已有帐号？<a href="login.html">立即登录</a></p>
+                    </div>
+                    
+                </div>  
+            </div>
+            <div class="tab-pane" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="needs-validation" novalidate>
+                            <div class='input-group mb-2'>
+                                <label for="tch-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="tch-realname" name="tch-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入您的真实姓名</div>
+                                  </div>
+                            </div>
+                            <!--
+                            <div class="input-group mb-2">
+                                <label for="tch-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="tch-username" name="tch-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
+                                  </div>
+                            </div>
+                            -->
+                            <div class="input-group mb-2">
+                                <label for="tch-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <div class="col-sm-9">
+                                    <input id="tch-passward" name="tch-password" type="password" class="form-control" aria-label="密码" required>
+                                    <div class="invalid-feedback">请输入密码</div>
+                                  </div>
+                            </div>
+
+                            <div class='input-group mb-2'>
+                                <label for="tch-password-confirm" class="col-sm-3 col-form-label"></span>确认密码</span></label>
+                                <div class="col-sm-9">
+                                    <input id="tch-password-confirm" name="tch-password-confirm" type="password" class="form-control" aria-label="确认密码" required>
+                                    <div class="invalid-feedback">两次输入密码不一致</div>
+                                  </div>
+                            </div>
+
+                            <div class="input-group mb-2">
+                                <label for="tch-gender-radio-group" class="col-sm-3 col-form-label"></span>性别</span></label>
+                                <div class="col-sm-9 m-auto" id="tch-gender-radio-group">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tch-gender-radio-male" name="tch-gender-radio" class="custom-control-input" value="male">
+                                        <label class="custom-control-label" for="tch-gender-radio-male">男</label>
+                                      </div>
+                                      <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="tch-gender-radio-female" name="tch-gender-radio" class="custom-control-input" value="female">
+                                        <label class="custom-control-label" for="tch-gender-radio-female">女</label>
+                                      </div>
+                                  </div>
+                                
+                            </div>
+                        </form>    
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="tch-register">注册</button>
+                        <p>已有帐号？<a href="login.html">立即登录</a></p>
+                    </div>
+                    
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+            $('#stu-register').click(function(){
+                /*
+                var usertype = $('#myTab li:first-child a').hasClass('active') ? "student" : "teacher";
+                if(usertype=='student') {
+                    var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                    var sendData={
+                        "usertype":$('#usertype').val(),
+                        "username":$('#username').val(),
+                        "password":$('#password').val(),
+                        "realname":$('#realname').val(),
+                        "stuclass":$('#stuclass').val()
+                    };
+                }
+                */
+                var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                var sendData={
+                    "usertype": "student",
+                    "realname": $('#stu-realname').val(),
+                    "password": $('#stu-password').val(),
+                    "class": $('#stu-class').val(),
+                    "gender": usergender,
+                };
+                $.ajax({
+                    type: "post",
+                    url: "/student/register",
+                    data: sendData,
+                    datatype: "json",
+                    success: function(resultMsg){
+                        if(resultMsg.code == 0){
+                            //注册成功
+                            console.log(resultMsg);
+                            setCookie("token", resultMsg.token);
+                            window.location.href = "main.html";
+                            //alert("欢迎:"+msg.data.username);
+                        }else{
+                            //注册失败
+                            alert(resultMsg.msg);
+                        }
+                        
+                    },
+                    error: function(resultMsg){
+                        alert("通信失败");
+                    }
+                    
+                });
+            })
+
+            $('#tch-register').click(function(){
+                var usergender = document.getElementsByName('radio-teacher')[0].checked ? "male" : "female";
+                var sendData={
+                    "usertype": "teacher",
+                    "realname": $('#tch-realname').val(),
+                    "password": $('#tch-password').val(),
+                    "gender": usergender,
+                };
+                $.ajax({
+                    type: "post",
+                    url: "/teacher/register",
+                    data: sendData,
+                    datatype: "json",
+                    success: function(resultMsg){
+                        if(msg.code == 0){
+                            //注册成功
+                            console.log(resultMsg);
+                            setCookie("token", resultMsg.token);
+                            window.location.href = "main.html";
+                            //alert("欢迎:"+msg.data.username);
+                        }else{
+                            //注册失败
+                            alert(resultMsg.msg);
+                        }
+                    },
+                    error: function(resultMsg){
+                        alert("通信失败");
+                    }
+                });
+            })
+
+            function setCookie(name,value){
+                var Days = 30;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days*24*60*60*30);
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	        }
+
+            function getCookie(name){
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+                else
+                return null;
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

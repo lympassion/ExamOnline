@@ -25,7 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aec5574c-035f-416e-bac5-fa4c8b8fd19c" name="默认的" comment="update.gitignore" />
+    <list default="true" id="aec5574c-035f-416e-bac5-fa4c8b8fd19c" name="默认的" comment="update.gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,19 +76,6 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../quiz" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -100,7 +89,8 @@
       <workItem from="1625703078623" duration="1597000" />
       <workItem from="1625713393906" duration="6952000" />
       <workItem from="1625789358914" duration="6452000" />
-      <workItem from="1625880756698" duration="2162000" />
+      <workItem from="1625880756698" duration="3531000" />
+      <workItem from="1625921012914" duration="643000" />
     </task>
     <task id="LOCAL-00001" summary="update .gitignore">
       <created>1625628957096</created>
