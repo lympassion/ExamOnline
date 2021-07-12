@@ -2,7 +2,9 @@ package com.loti.service;
 
 import com.loti.dao.pojo.Entity.Paper;
 import com.loti.dao.pojo.Entity.User.Student;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface TeacherService {
     //新增学生信息
     void AddStudent(Student student);

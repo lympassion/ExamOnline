@@ -1,34 +1,61 @@
 package com.loti.dao.pojo.Entity.User;
 
+import org.springframework.stereotype.Component;
 
-import com.loti.dao.pojo.Entity.Class;
+@Component
+public class Student{
+    private int studentId;
+    private String studentName;
+    private String studentClass;
+    private String studentEmail;
+    private String studentPassword;
+    private int studentGender;
 
-public class Student extends User{
-    private String username;
-    private boolean gender;
-    private Class s_class;
-
-    public String getUsername() {
-        return username;
+    public int getStudentId() {
+        return studentId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
-    public boolean isGender() {
-        return gender;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public Class getS_class() {
-        return s_class;
+    public String getStudentClass() {
+        return studentClass;
     }
 
-    public void setS_class(Class s_class) {
-        this.s_class = s_class;
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
+
+    public String getStudentPassword() {
+        return studentPassword;
+    }
+
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
+    }
+
+    public int getStudentGender() {
+        return studentGender;
+    }
+
+    public void setStudentGender(int studentGender) {
+        this.studentGender = studentGender;
     }
 }

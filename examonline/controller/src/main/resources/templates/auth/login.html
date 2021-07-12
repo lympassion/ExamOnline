@@ -4,16 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>我的考试 - Exam Online</title>
+    <title>登录 - Exam Online</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="/css/login.register.css">
 </head>
 
-<body>
+<body class="login-body">
     <div class="container">
-        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
             <div class="sidebar-brand-text mx-3"><span>Exam Online</span></div>
         </a>
@@ -32,7 +32,7 @@
                     <div class="input-group mb-2">
                         <label for="passward" class="col-sm-3 col-form-label"></span>密码</span></label>
                         <div class="col-sm-9">
-                            <input id="passward" name="password" type="password" class="form-control" aria-label="password" required>
+                            <input id="password" name="password" type="password" class="form-control" aria-label="password" required>
                             <div class="invalid-feedback">请输入密码</div>
                           </div>
                     </div>
@@ -54,68 +54,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
 
-    <script type="text/javascript">
+    <script>
         $(function(){
             $('#login').click(function(){
+                var validArr = [1, 2, 3]    // 合法的id起始符
+                var usertype = null, url = null;
+
                 if($('#username').val() == '')
                 {
-                    alert('请输入用户名');
+                    alert('请输入ID');
                     $('#username').focus();
                     return;
+                }  else if ($('#username').val().length != 8 || validArr.indexOf(parseInt($('#username').val()[0])) == -1) {
+                    alert('ID不合法');
+                    $('#username').focus();
+                    return;
+                } else {
+                    // ID合法，判断用户类型
+                    if ($('#username').val()[0] == '1') {
+                        url = "/student/login";
+                    } else if ($('#username').val()[0] == '2') {
+                        url = "/teacher/login";
+                    } else {
+                        url = "/admin/login";
+                    }
                 }
+
                 if($('#password').val() == '')
                 {
-                    alert('请输入登录密码');
+                    alert('请输入密码');
                     $('#password').focus();
                     return ;
                 }
-
-                // 判断用户类型
-                var usertype = null, url = null;
-                if ($('#username').val()[0] == 'S') {
-                    usertype = "student";
-                    url = "student/login";
-                } else if ($('#username').val()[0] == 'T') {
-                    usertype = "teacher";
-                    url = "teacher/login";
-                } else if ($('#username').val()[0] == 'A') {
-                    usertype = "admin";
-                    url = "admin/login";
-                } else {
-                    alert('用户名错误！');
-                    $('#username').focus();
-                    return ;
-                }
-
+                
                 var sendData={
-                    "usertype": usertype,
-                    "username": $('#username').val(),
+                    "userId": parseInt($('#username').val()),
                     "password": $('#password').val()
                 };
 
                 $.ajax({
                     type: "post",
-                    url: "student/login",
+                    url: "/student/login",
                     data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
-                        if(msg.code == 0){
+                        if(resultMsg.code == 0){
                             //登录成功
-                            console.log(resultMsg.data.username);
-                            SetCookie("userid", resultMsg.data.userid);
-                            window.location.href="index.html";
+                            console.log(resultMsg);
+                            setCookie("token", resultMsg.token);
+                            window.location.href="main.html";
                             //alert("欢迎:"+msg.data.username);
                         }else{
                             //登录失败
-                            alert(resultMsg.msg);
                         }
-                    },
-                    error: function(resultMsg){
-                        alert("通信失败");
                     }
                 });
             })
         });
+
+        function setCookie(name,value){
+                var Days = 30;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days*24*60*60*30);
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	        }
+
+            function getCookie(name){
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+                else
+                return null;
+            }
 
     </script>
 

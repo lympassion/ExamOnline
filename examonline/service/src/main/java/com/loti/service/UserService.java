@@ -1,10 +1,11 @@
 package com.loti.service;
 
-import com.loti.dao.pojo.Entity.User.User;
+import com.loti.dao.pojo.Entity.User.MyUser;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
-    //根据用户id获取用户
-    User getUserById(String id);
-    //判断用户是否合法（）
-    User getUserByUsrAndPass(String id,String pwd);
+    //查找数据库是否有user
+    MyUser checkUser(MyUser user);
+    MyUser checkUserById(int id);
 }

@@ -1,16 +1,13 @@
 package com.loti.controller.Router;
 
 
-import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
-import com.loti.dao.pojo.Entity.User.Student;
-import com.loti.dao.pojo.Entity.User.Teacher;
-import com.loti.dao.pojo.Entity.User.User;
+import com.loti.dao.pojo.Entity.User.MyUser;
 import com.loti.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,34 +15,47 @@ import java.util.Map;
 @Controller
 public class RouterController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
     public String index(){
-        return "index";
+        return "auth/login";
     }
 
-//    @RequestMapping(value = "/login",method = RequestMethod.GET)
-//    public String login(){
-//        return "auth/login";
-//    }
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "auth/login";
+    }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Map<String,Object> loginControl(@RequestBody User user){
-        int error_code = 101;
-        String error_type = "";
-        String role ="";//temp
-        String userid = "";//temp
-        User usr = new User(); //UserService TODO
+    @RequestMapping(value = "/student/login",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> loginControl(MyUser user){
+        int error_code = 102;
+        String error_type = "user no exist";
+
+        MyUser usr = userService.checkUser(user);
+
+        System.out.println(usr);
+        String role = usr.getRole();
+
+        if(role ==null){
+            error_code = 105;
+            error_type = "username invalid";
+        }
         if(usr!=null){
-            String jwt = JwtUtil.generateToken(role,userid);//TODO
+            String jwt = JwtUtil.generateToken(role,String.valueOf(user.userId));//TODO
             return new HashMap<String, Object>(){{
                 put("code", 0);
                 put("msg","ok");
                 put("token",jwt);
             }};
         }else {
+            String finalError_type = error_type;
+            int finalError_code = error_code;
             return new HashMap<String, Object>(){{
-                put("code",error_code);
-                put("msg",error_type);
+                put("code", finalError_code);
+                put("msg", finalError_type);
                 put("token",null);
             }};
         }
@@ -57,17 +67,18 @@ public class RouterController {
 //        return  "auth/register";
 //    }
 
-    @RequestMapping()
-    public Map<String,Object> register(@RequestBody Map<String,String> UserMap){
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> register( Map<String,String> UserMap){
         switch (UserMap.get("usertype")){
             case "student":
-                Student student = FormatUtil.MapToStudent(UserMap);
                 //studentService
                 break;
             case  "teacher":
-                Teacher teacher = FormatUtil.MapToTeacher(UserMap);
                 //teacherService
                 break;
+            default:
+                return null;
         }
         return null;//TODO
     }

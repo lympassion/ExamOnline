@@ -2,10 +2,12 @@ package com.loti.service;
 
 import com.loti.dao.pojo.Entity.Exam;
 import com.loti.dao.pojo.Entity.User.Student;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@Service
 public interface StudentService {
     //通过id查看学生信息
     Student getInfoById(String id);

@@ -1,22 +1,49 @@
 package com.loti.dao.pojo.Entity.User;
 
-public class Teacher extends User{
-    private String username;
-    private boolean gender;
+public class Teacher {
+    private int teacherId;
+    private String teacherName;
+    private int teacherGender;
+    private String teacherEmail;
+    private String teacherPassword;
 
-    public String getUsername() {
-        return username;
+    public int getTeacherId() {
+        return teacherId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
     }
 
-    public boolean isGender() {
-        return gender;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public int getTeacherGender() {
+        return teacherGender;
+    }
+
+    public void setTeacherGender(int teacherGender) {
+        this.teacherGender = teacherGender;
+    }
+
+    public String getTeacherEmail() {
+        return teacherEmail;
+    }
+
+    public void setTeacherEmail(String teacherEmail) {
+        this.teacherEmail = teacherEmail;
+    }
+
+    public String getTeacherPassword() {
+        return teacherPassword;
+    }
+
+    public void setTeacherPassword(String teacherPassword) {
+        this.teacherPassword = teacherPassword;
     }
 }

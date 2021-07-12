@@ -4,16 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>我的考试 - Exam Online</title>
+    <title>注册 - Exam Online</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="/css/login.register.css">
 </head>
 
-<body>
+<body class="register-body">
     <div class="container">
-        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
             <div class="sidebar-brand-text mx-3"><span>Exam Online</span></div>
         </a>
@@ -32,6 +32,14 @@
                 <div class="card">
                     <div class="card-body">
                         <form class="needs-validation" novalidate>
+                            <div class='input-group mb-2'>
+                                <label for="stu-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="stu-realname" name="stu-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入您的真实姓名</div>
+                                  </div>
+                            </div>
+                            <!--
                             <div class="input-group mb-2">
                                 <label for="stu-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
@@ -39,7 +47,7 @@
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
-
+                            -->
                             <div class="input-group mb-2">
                                 <label for="stu-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
@@ -56,13 +64,7 @@
                                   </div>
                             </div>
 
-                            <div class='input-group mb-2'>
-                                <label for="stu-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
-                                <div class="col-sm-9">
-                                    <input id="stu-realname" name="stu-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
-                                    <div class="invalid-feedback">请输入您的真实姓名</div>
-                                  </div>
-                            </div>
+                            
 
                             <div class='input-group mb-2'>
                                 <label for="stu-class" class="col-sm-3 col-form-label"></span>班级</span></label>
@@ -97,6 +99,14 @@
                 <div class="card">
                     <div class="card-body">
                         <form class="needs-validation" novalidate>
+                            <div class='input-group mb-2'>
+                                <label for="tch-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
+                                <div class="col-sm-9">
+                                    <input id="tch-realname" name="tch-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
+                                    <div class="invalid-feedback">请输入您的真实姓名</div>
+                                  </div>
+                            </div>
+                            <!--
                             <div class="input-group mb-2">
                                 <label for="tch-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
@@ -104,7 +114,7 @@
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
-
+                            -->
                             <div class="input-group mb-2">
                                 <label for="tch-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
@@ -121,14 +131,6 @@
                                   </div>
                             </div>
 
-                            <div class='input-group mb-2'>
-                                <label for="tch-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
-                                <div class="col-sm-9">
-                                    <input id="tch-realname" name="tch-realname" type="text" class="form-control" aria-label="真实姓名" pattern="\S{0,20}" required>
-                                    <div class="invalid-feedback">请输入您的真实姓名</div>
-                                  </div>
-                            </div>
-        
                             <div class="input-group mb-2">
                                 <label for="tch-gender-radio-group" class="col-sm-3 col-form-label"></span>性别</span></label>
                                 <div class="col-sm-9 m-auto" id="tch-gender-radio-group">
@@ -175,31 +177,30 @@
                 var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
                 var sendData={
                     "usertype": "student",
-                    "username": $('#stu-username').val(),
-                    "password": $('#stu-password').val(),
                     "realname": $('#stu-realname').val(),
+                    "password": $('#stu-password').val(),
                     "class": $('#stu-class').val(),
                     "gender": usergender,
                 };
                 $.ajax({
                     type: "post",
-                    url: "student/register",
+                    url: "/student/register",
                     data: sendData,
                     datatype: "json",
-                    success: function(message){
-                        if(msg.code == 0){
+                    success: function(resultMsg){
+                        if(resultMsg.code == 0){
                             //注册成功
-                            console.log(message.data.username);
-                            SetCookie("userid", message.data.userid);
-                            window.location.href = "index.html";
+                            console.log(resultMsg);
+                            setCookie("token", resultMsg.token);
+                            window.location.href = "main.html";
                             //alert("欢迎:"+msg.data.username);
                         }else{
                             //注册失败
-                            alert(message.msg);
+                            alert(resultMsg.msg);
                         }
                         
                     },
-                    error: function(message){
+                    error: function(resultMsg){
                         alert("通信失败");
                     }
                     
@@ -210,33 +211,48 @@
                 var usergender = document.getElementsByName('radio-teacher')[0].checked ? "male" : "female";
                 var sendData={
                     "usertype": "teacher",
-                    "username": $('#tch-username').val(),
-                    "password": $('#tch-password').val(),
                     "realname": $('#tch-realname').val(),
+                    "password": $('#tch-password').val(),
                     "gender": usergender,
                 };
                 $.ajax({
                     type: "post",
-                    url: "teacher/register",
+                    url: "/teacher/register",
                     data: sendData,
                     datatype: "json",
-                    success: function(message){
+                    success: function(resultMsg){
                         if(msg.code == 0){
                             //注册成功
-                            console.log(message.data.username);
-                            SetCookie("userid", message.data.userid);
-                            window.location.href = "index.html";
+                            console.log(resultMsg);
+                            setCookie("token", resultMsg.token);
+                            window.location.href = "main.html";
                             //alert("欢迎:"+msg.data.username);
                         }else{
                             //注册失败
-                            alert(message.msg);
+                            alert(resultMsg.msg);
                         }
                     },
-                    error: function(message){
+                    error: function(resultMsg){
                         alert("通信失败");
                     }
                 });
             })
+
+            function setCookie(name,value){
+                var Days = 30;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days*24*60*60*30);
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	        }
+
+            function getCookie(name){
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+                else
+                return null;
+            }
+
         })
     </script>
 
