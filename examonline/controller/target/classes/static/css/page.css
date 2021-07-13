@@ -5,7 +5,7 @@
 
 .page .nav-left {
 	position: absolute;
-	margin-top: 57px;
+	margin-top: 0px;
 	height: 690px;
 	width: 240px;
 	background-color: #FFFFFF;
@@ -123,4 +123,36 @@
 	width:1px;
 	height:500px;
 	position: absolute;
+}
+
+.index-page {
+	height: 100%;
+	width: 100%;
+	background: url('../img/background/background_2.svg') no-repeat;
+	background-size: cover;
+	position: absolute;
+	overflow: hidden;
+  }
+  
+
+.page-animation {
+	animation: fadeInAnimation ease 4s;
+	
+	animation-iteration-count: 1; /*设置动画播放次数*/
+	
+	animation-fill-mode: forwards; /*设置样式以在动画不播放时应用元素。forward是设置动画结束后，使用元素的结束属性值*/
+	
+	}
+	
+	@keyframes fadeInAnimation {
+	0% {
+	opacity: 0; /*设置不透明度*/
+	
+	}
+	
+	100% {
+	opacity: 1;
+	
+	}
+	
 }

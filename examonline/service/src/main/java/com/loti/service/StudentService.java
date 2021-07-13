@@ -12,7 +12,7 @@ public interface StudentService {
     //通过id查看学生信息
     Student getInfoById(String id);
     //修改学生信息，并存入
-    void AlterInfo(Student student);
+    void InsertStu(Student student);
     //查看可参加考试 by ?
     List<Exam> getExamIn();//TODO
     //查看详细答题记录

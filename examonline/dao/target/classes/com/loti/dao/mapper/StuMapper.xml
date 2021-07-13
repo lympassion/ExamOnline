@@ -3,16 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.loti.dao.mapper.StuMapper">
-
     <select id="getAllstudent" resultType="com.loti.dao.pojo.Entity.User.Student">
         select * from student
     </select>
-
     <select id="selectById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Student">
         select * from student where (student_id) = #{id}
     </select>
     <select id="selectByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Student" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
         select * from student WHERE student_id = #{userId} AND student_password = #{password}
     </select>
-
+    <insert id="InsertStudent"  parameterType="com.loti.dao.pojo.Entity.User.Student" keyProperty="student_id" keyColumn="studentId">
+        insert into student (student_id, student_name, student_class, student_email, student_password, student_gender)
+            VALUES(#{studentId},#{studentName},#{studentClass},#{studentEmail},#{studentPassword},#{studentGender})
+    </insert>
 </mapper>

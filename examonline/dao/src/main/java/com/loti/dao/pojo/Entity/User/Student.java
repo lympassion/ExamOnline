@@ -11,6 +11,17 @@ public class Student{
     private String studentPassword;
     private int studentGender;
 
+    Student(){}
+
+    public Student(int studentId, String studentName, String studentClass, String studentEmail, String studentPassword, int studentGender) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.studentClass = studentClass;
+        this.studentEmail = studentEmail;
+        this.studentPassword = studentPassword;
+        this.studentGender = studentGender;
+    }
+
     public int getStudentId() {
         return studentId;
     }

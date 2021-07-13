@@ -174,7 +174,7 @@
                     };
                 }
                 */
-                var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                var usergender = document.getElementsByName('stu-gender-radio')[0].checked ? "male" : "female";
                 var sendData={
                     "usertype": "student",
                     "realname": $('#stu-realname').val(),
@@ -208,7 +208,7 @@
             })
 
             $('#tch-register').click(function(){
-                var usergender = document.getElementsByName('radio-teacher')[0].checked ? "male" : "female";
+                var usergender = document.getElementsByName('tch-gender-radio')[0].checked ? "male" : "female";
                 var sendData={
                     "usertype": "teacher",
                     "realname": $('#tch-realname').val(),

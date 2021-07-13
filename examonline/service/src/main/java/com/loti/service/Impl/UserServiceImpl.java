@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
             Teacher teacher = teacherMapper.SelectTeacherByIdAndPass(user);
             if(teacher == null)
                 return null;
-            return new MyUser(teacher.getTeacher_id(),teacher.getTeacher_password());
+            return new MyUser(teacher.getTeacherId(),teacher.getTeacherPassword());
         }
         return null;
     }
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         }
         if(String.valueOf(id).substring(0,1).equals(MyUser.ROLE_TEACHER)){
             Teacher teacher = teacherMapper.SelectTeacherById(id);
-            return new MyUser(teacher.getTeacher_id(),teacher.getTeacher_password());
+            return new MyUser(teacher.getTeacherId(),teacher.getTeacherPassword());
         }
         return null;
     }

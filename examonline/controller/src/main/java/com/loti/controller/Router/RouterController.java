@@ -1,13 +1,17 @@
 package com.loti.controller.Router;
 
-
+import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
 import com.loti.dao.pojo.Entity.User.MyUser;
+import com.loti.dao.pojo.Entity.User.Student;
+import com.loti.service.StudentService;
 import com.loti.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +21,12 @@ public class RouterController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private StudentService studentService;
 
     @RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
     public String index(){
-        return "auth/login";
+        return "index";
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
@@ -35,8 +41,6 @@ public class RouterController {
         String error_type = "user no exist";
 
         MyUser usr = userService.checkUser(user);
-
-        System.out.println(usr);
         String role = usr.getRole();
 
         if(role ==null){
@@ -67,18 +71,32 @@ public class RouterController {
 //        return  "auth/register";
 //    }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/student/register",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> register( Map<String,String> UserMap){
+    public Map<String,Object> register(@RequestBody Map<String,String> UserMap){
+        if(UserMap == null){
+            return new HashMap<String, Object>(){{
+                put("code",101);put("msg","参数未获取");put("token",null);
+            }};
+        }
         switch (UserMap.get("usertype")){
             case "student":
-                //studentService
-                break;
+                Student student = new Student(
+                        0, UserMap.get("realname"), UserMap.get("class"),
+                        "123@qq.com", UserMap.get("password"),
+                        FormatUtil.GenderFormat(UserMap.get("gender")));
+                studentService.InsertStu(student);//TODO
+                String jwt = JwtUtil.generateToken("student",String.valueOf(student.getStudentId()));
+                return new HashMap<String, Object>(){{
+                    put("code",0);put("msg","ok");put("token",student.getStudentId());
+                }};
             case  "teacher":
                 //teacherService
                 break;
             default:
-                return null;
+                return new HashMap<String, Object>(){{
+                put("code",105);put("msg","参数不合法");put("token",null);
+            }};
         }
         return null;//TODO
     }

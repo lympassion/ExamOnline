@@ -2,6 +2,24 @@ html, body {
     height: 100%;
 }
 
+.register-body {
+	height: 100%;
+	width: 100%;
+	background: url('../img/background/background_4.svg') no-repeat;
+	background-size: cover;
+	position: absolute;
+	overflow: hidden;
+  }
+
+.login-body {
+    height: 100%;
+    width: 100%;
+    background: url('../img/background/background_3.svg') no-repeat;
+    background-size: cover;
+    position: absolute;
+    overflow: hidden;
+}
+
 .container {
     width: 30%;
     position: absolute;
