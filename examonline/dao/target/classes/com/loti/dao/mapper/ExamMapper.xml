@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.ExamMapper">
+    <select id="SelectExamByCourseId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam where course_id = #{id}
+    </select>
+    <insert id="InsertExam"  parameterType="com.loti.dao.pojo.Entity.Exam">
+        insert into exam (exam_id, exam_name, course_id, paper_id, total_score, start_time, end_time, exam_time) VALUES
+            (#{examId},#{examName},#{courseId},#{paperId},#{totalScore},#{startTime},#{endTime},#{examTime})
+    </insert>
+    <select id="SelectExamByExamId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam where exam_id = #{id}
+    </select>
+    <select id="SelectExamByStuId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam where exam_id in (
+            select exam_id from student_paper_record where student_id = #{id}
+            )
+    </select>
+    <select id="SelectExamByStuIdTested" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam e
+        left join student_paper_record s on e.exam_id=s.exam_id
+        where s.student_id = #{id} and s.student_mark != -1
+    </select>
+    <select id="SelectExamByStuIdNotTest" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam e
+        left join student_paper_record s on e.exam_id=s.exam_id
+        where s.student_id = #{id} and s.student_mark = -1
+    </select>
+</mapper>

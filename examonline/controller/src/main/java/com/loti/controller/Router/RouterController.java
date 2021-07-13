@@ -88,7 +88,7 @@ public class RouterController {
                 studentService.InsertStu(student);//TODO
                 String jwt = JwtUtil.generateToken("student",String.valueOf(student.getStudentId()));
                 return new HashMap<String, Object>(){{
-                    put("code",0);put("msg","ok");put("token",student.getStudentId());
+                    put("code",0);put("msg","ok");put("token",jwt);
                 }};
             case  "teacher":
                 //teacherService

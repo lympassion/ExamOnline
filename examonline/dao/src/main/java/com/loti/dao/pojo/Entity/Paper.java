@@ -1,6 +1,6 @@
 package com.loti.dao.pojo.Entity;
 
-public class Paper {
+public class Paper {//TODO
     private String paperId;
     private String paperTitle;
     private int total_score;

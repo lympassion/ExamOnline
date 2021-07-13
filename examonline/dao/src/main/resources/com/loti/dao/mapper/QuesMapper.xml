@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.QuesMapper">
+    <select id="SelectAllQues" resultType="com.loti.dao.pojo.Entity.Question">
+        select * from question
+    </select>
+    <select id="SelectQuesById" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
+        select * from question where (question_id) = #{id}
+    </select>
+    <insert id="InsertQues"  parameterType="com.loti.dao.pojo.Entity.Question">
+        insert into question (question_id, question_type, course_id, question_content, opa, opb, opc, opd, question_answer, question_score) VALUES
+            (#{questionId},#{questionType},#{courseId},#{questionContent},#{opa},#{opb},#{opc},#{opd},
+             #{questionAnswer},#{questionScore})
+    </insert>
+    <select id="SelectQuesByType" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
+        select * from question where question_type = #{type}
+    </select>
+    <select id="SelectQuesByCourse" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
+        select * from question where course_id = #{id}
+    </select>
+</mapper>

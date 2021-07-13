@@ -57,6 +57,8 @@
     <script src="../static/js/timeFormat.js"></script>
 
     <script>
+
+        var userId = $.session.get(userId);
         /*
         window.onload = function(){
             $.ajax({
@@ -78,8 +80,8 @@
             $('#examListTable').bootstrapTable('destroy');  
             //初始化表格, 动态从服务器加载数据  
             $("#examListTable").bootstrapTable({  
-                // method: "get", 
-                // url: "/student/getEndedExam?uid={{userid}}",
+                method: "get", 
+                url: "/student/getExamEnd?sid=" + userId,
                 // pagination: true, //启动分页  
                 // pageSize: 1,  //每页显示的记录数  
                 // pageNumber:1, //当前第几页  

@@ -53,6 +53,7 @@
     <script src="/js/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="/js/script.min.js"></script>
+    <script src="/js/jquerysession.js"></script>
 
     <script>
         $(function(){
@@ -86,9 +87,11 @@
                     $('#password').focus();
                     return ;
                 }
+
+                var userId = $('#username').val();
                 
                 var sendData={
-                    "userId": parseInt($('#username').val()),
+                    "userId": parseInt(userId),
                     "password": $('#password').val()
                 };
 
@@ -102,6 +105,7 @@
                             //登录成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
+                            $.session.set('userId', userId);
                             window.location.href="main.html";
                             //alert("欢迎:"+msg.data.username);
                         }else{

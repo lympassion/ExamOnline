@@ -8,7 +8,6 @@ import com.loti.dao.pojo.Entity.User.Teacher;
 import com.loti.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class UserServiceImpl implements UserService {
