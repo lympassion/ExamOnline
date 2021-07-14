@@ -486,31 +486,23 @@
         <script src="../static/js/jquery.countdown.min.js"></script>
 		<script src="../static/js/jquerysession.js"></script>
         
-        <!-- <script>
-            $('.switch-question>a').click(function () {
-                var target = $(this).attr('href');
-                $('html, body').animate({scrollTop: $(target).offset().top - 40}, 500);
-                return true;
-            });
-        </script> -->
-        
         <script>
             window.onload = function() {
                 
                 var userId = $.session.get('userId');
                 
                 document.getElementById('userIdArea').innerHTML = userId;
-                // $('#open-page-modal').modal('show');
-                // $('#open-modal-confirm').click(function() {
-                //     openWebCam();
-                // })
+                $('#open-page-modal').modal('show');
+                $('#open-modal-confirm').click(function() {
+                    openWebCam();
+                })
                 $('#btn-exam-submit').click(function() {
                     window.close();
                 })
             }
     
             function timeCountdown () {
-                $('#clock-countdown').countdown('2021/07/13 22:55:00').on('update.countdown', function(event) {
+                $('#clock-countdown').countdown('2021/07/15 13:55:00').on('update.countdown', function(event) {
                     var format = '%H:%M:%S';
                     if(event.offset.totalDays > 0) {
                         format = '%-d day%!d ' + format;
