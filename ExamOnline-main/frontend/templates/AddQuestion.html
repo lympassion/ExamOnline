@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+    <style>
+        .center {
+            margin-left: -180px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">我的试题</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">新增试题</li>
+                </ol>
+            </nav>
+
+            <!--试题表单-->
+            <div class="form-content shadow p-3 mb-5 bg-white rounded">
+                <form id="form-notice-add" class="form-horizontal pl-lg-5">
+                    <div class="center">
+                        <h3 class="form-header h3">试 题 信 息</h3>
+                    </div>
+                    <br>
+
+                    <div class="form-group ml-3">
+                        <label class="col-xs-3 control-label font-weight-bold"><span style="color: red; ">* </span>类 型：</label>
+                        <br>
+                        <div class="col-xs- font-weight-bold">
+                            <label class="radio-box pr-5">
+                                <input name="type" type="radio" value="1"> 单选
+                            </label>
+                            <label class="radio-box pr-5">
+                                <input name="type" type="radio" value="2"> 多选
+                            </label>
+                            <label class="radio-box pr-5">
+                                <input name="type" type="radio" value="3"> 填空
+                            </label>
+                            <label class="radio-box pr-5">
+                                <input name="type" type="radio" value="4"> 判断
+                            </label>
+                            <label class="radio-box pr-5">
+                                <input name="type" type="radio" value="5"> 问答
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group col-sm-8">
+                            <label class="control-label"><span style="color: red; ">*</span> 试题：</label>
+                            <textarea class="form-control" autocomplete="off" placeholder="请输入试题"
+                                      id="exampleFormControlTextarea1" rows="5" maxlength="1000" required style="width: 40rem;"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">*</span> 分值：</label>
+                            <div class="col-sm-8">
+                                <input name="score" autocomplete="off" placeholder="请输入分值" class="form-control" type="number"
+                                       maxlength="3" required style="width: 40rem;">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="width: 40rem;">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">*</span> 选项A：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" name="optionA" id="optionA" required style="width: 40rem;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">*</span> 选项B：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" name="optionB" id="optionB" required style="width: 40rem;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">*</span> 选项C：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" name="optionC" id="optionC" required style="width: 40rem;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">*</span> 选项D：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" name="optionD" id="optionD" required style="width: 40rem;">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label font-weight-bold"><span style="color: red; ">* </span>单选题答案 ：</label>
+                            <div class="col-sm-8" id="radioAnswer">
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" name="radioAnswer" value="A">A
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" name="radioAnswer" value="B">B
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" name="radioAnswer" value="C">C
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" name="radioAnswer" value="D">D
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label font-weight-bold"><span style="color: red; ">* </span>多选题答案 ：</label>
+                            <div class="col-sm-8" id="checkboxAnswer">
+                                <label class="check-box" style="width: 15px">
+                                    <input class="form-control" type="checkbox" name="checkboxAnswerA" value="A">A
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="checkbox" name="checkboxAnswerB" value="B">B
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="checkbox" name="checkboxAnswerC" value="C">C
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="checkbox" name="checkboxAnswerD" value="D">D
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label font-weight-bold"><span style="color: red; ">* </span>判断题答案 ：</label>
+                            <div class="col-sm-8" id="judgeAnswer">
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" value="1" name="judgeAnswer">正确
+                                </label>
+                                <label class="radio-box" style="width: 15px">
+                                    <input class="form-control" type="radio" value="0" name="judgeAnswer">错误
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label font-weight-bold"><span style="color: red; ">* </span>填空答案 ：</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" name="blackAnswer" id="blackAnswer" required style="width: 40rem;">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 45rem;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color: red; ">* </span>问答答案 ：</label>
+                            <div class="col-sm-8">
+                <textarea name="shortAnswer" autocomplete="off" maxlength="500" id="shortAnswer" class="form-control"
+                          rows="3" style="width: 40rem;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="form-header h6 font-weight-bold p-3">试题分析备注 : </h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="col-xs-8">
+                        <textarea name="analyse" autocomplete="off" placeholder="请输入. . ." maxlength="1000" class="form-control" id="analyse"
+                                  rows="5" style="width: 45rem;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/js/timeFormat.js"></script>
+
+    <script>
+        var prefix = "../../ExamOnline/Docs/question";
+        $('input').on('ifChecked', function (event) {
+            var type = $(event.target).val();
+            if (type == "1") {
+                //如果是单选
+                //ABCD 四个选项显示，单选答案框显示
+                $("#optionA").parents(".form-group").show();
+                $("#optionB").parents(".form-group").show();
+                $("#optionC").parents(".form-group").show();
+                $("#optionD").parents(".form-group").show();
+                $("#radioAnswer").parents(".form-group").show();
+                $("#checkboxAnswer").parents(".form-group").hide();
+                $("#judgeAnswer").parents(".form-group").hide();
+                $("#blackAnswer").parents(".form-group").hide();
+                $("#shortAnswer").parents(".form-group").hide();
+            } else if (type == "2") {
+                //如果是多选
+                //ABCD 四个选项显示，多选答案框显示
+                $("#optionA").parents(".form-group").show();
+                $("#optionB").parents(".form-group").show();
+                $("#optionC").parents(".form-group").show();
+                $("#optionD").parents(".form-group").show();
+                $("#checkboxAnswer").parents(".form-group").show();
+                $("#radioAnswer").parents(".form-group").hide();
+                $("#judgeAnswer").parents(".form-group").hide();
+                $("#blackAnswer").parents(".form-group").hide();
+                $("#shortAnswer").parents(".form-group").hide();
+            } else if (type == "3") {
+                //填空
+                //ABCD 四个选项隐藏
+                $("#optionA").parents(".form-group").hide();
+                $("#optionB").parents(".form-group").hide();
+                $("#optionC").parents(".form-group").hide();
+                $("#optionD").parents(".form-group").hide();
+                $("#checkboxAnswer").parents(".form-group").hide();
+                $("#radioAnswer").parents(".form-group").hide();
+                $("#judgeAnswer").parents(".form-group").hide();
+                $("#blackAnswer").parents(".form-group").show();
+                $("#shortAnswer").parents(".form-group").hide();
+            } else if (type == "4") {
+                //判断
+                $("#optionA").parents(".form-group").hide();
+                $("#optionB").parents(".form-group").hide();
+                $("#optionC").parents(".form-group").hide();
+                $("#optionD").parents(".form-group").hide();
+                $("#checkboxAnswer").parents(".form-group").hide();
+                $("#radioAnswer").parents(".form-group").hide();
+                $("#judgeAnswer").parents(".form-group").show();
+                $("#blackAnswer").parents(".form-group").hide();
+                $("#shortAnswer").parents(".form-group").hide();
+            } else if (type == "5") {
+                //简单
+                $("#optionA").parents(".form-group").hide();
+                $("#optionB").parents(".form-group").hide();
+                $("#optionC").parents(".form-group").hide();
+                $("#optionD").parents(".form-group").hide();
+                $("#checkboxAnswer").parents(".form-group").hide();
+                $("#radioAnswer").parents(".form-group").hide();
+                $("#judgeAnswer").parents(".form-group").hide();
+                $("#blackAnswer").parents(".form-group").hide();
+                $("#shortAnswer").parents(".form-group").show();
+            }
+        });
+        /**
+         * 获取页面数据
+         */
+        function getData() {
+            var type = $("input[name='type']:checked").val();
+            var title = $("input[name='title']").val();
+            var score = $("input[name='score']").val();
+            var analyse = $("#analyse").val();
+            //获取ABCD选项
+            var optionA = $("input[name='optionA']").val();
+            var optionB = $("input[name='optionB']").val();
+            var optionC = $("input[name='optionC']").val();
+            var optionD = $("input[name='optionD']").val();
+            var data = {"type": type, "title": title, "score": score, "analyse": analyse}
+
+            //单选
+            if (type == 1) {
+                var radioAnswer = $("input[name='radioAnswer']:checked").val();
+                data.answer = radioAnswer;
+                data.optionA = optionA;
+                data.optionB = optionB;
+                data.optionC = optionC;
+                data.optionD = optionD;
+            } else if (type == 2) {
+                //多选
+                var checkboxAnswer = $("input[name='checkboxAnswer']:checked").val();
+                var s = "";
+                $.each($('input:checkbox:checked'), function () {
+                    s += $(this).val() + ',';   //如果选中，将value添加到变量s中
+                });
+                data.answer = s;
+                data.optionA = optionA;
+                data.optionB = optionB;
+                data.optionC = optionC;
+                data.optionD = optionD;
+            } else if (type == 3) {
+                //填空
+                var blackAnswer = $("input[name='blackAnswer']").val();
+                data.answer = blackAnswer;
+            } else if (type == 4) {
+                var judgeAnswer = $("input[name='judgeAnswer']:checked").val();
+                data.answer = judgeAnswer;
+                //判断
+            } else if (type == 5) {
+                //简答
+                var shortAnswer = $("#shortAnswer").val();
+                data.answer = shortAnswer;
+            }
+            return data;
+        }
+        function submitHandler() {
+            $.operate.save(prefix + "/add", getData());
+        }
+    </script>
+
+<style>
+  #examListTable {border: none;}
+</style>
+
+</body>
+</html>
