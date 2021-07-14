@@ -193,8 +193,8 @@
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId),
-                            window.location.href = "main.html";
+                            $.session.set('userId', resultMsg.userId),
+                            window.location.href = "studentMain.html";
                             //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败
@@ -226,8 +226,8 @@
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId),
-                            window.location.href = "main.html";
+                            $.session.set('userId', resultMsg.userId),
+                            window.location.href = "teacherMain.html";
                             //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败

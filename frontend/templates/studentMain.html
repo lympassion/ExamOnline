@@ -89,10 +89,10 @@
 			<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">注销确认</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+					<h5 class="modal-title" id="exampleModalLabel">注销确认</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
 				确定要注销吗？
@@ -153,9 +153,14 @@
 				})
 
 				$('#btn-confirm-logout').click(function() {
-					
+					$.session.remove(userId);
 					window.location.href='index.html';
 				})
+
+				// 关闭main页面也要删除Id记录
+				window.onunload = function() {
+					$.session.remove(userId);
+				}
             })
 		</script>
 	</body>
