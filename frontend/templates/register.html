@@ -41,17 +41,17 @@
                             </div>
                             <!--
                             <div class="input-group mb-2">
-                                <label for="stu-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <label for="stu-userId" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
-                                    <input id="stu-username" name="stu-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
+                                    <input id="stu-userId" name="stu-userId" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
                             -->
                             <div class="input-group mb-2">
-                                <label for="stu-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <label for="stu-password" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="stu-passward" name="stu-password" type="password" class="form-control" aria-label="密码" required>
+                                    <input id="stu-password" name="stu-password" type="password" class="form-control" aria-label="密码" required>
                                     <div class="invalid-feedback">请输入密码</div>
                                   </div>
                             </div>
@@ -108,17 +108,17 @@
                             </div>
                             <!--
                             <div class="input-group mb-2">
-                                <label for="tch-username" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                                <label for="tch-userId" class="col-sm-3 col-form-label"></span>用户名</span></label>
                                 <div class="col-sm-9">
-                                    <input id="tch-username" name="tch-username" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
+                                    <input id="tch-userId" name="tch-userId" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
                                     <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
                                   </div>
                             </div>
                             -->
                             <div class="input-group mb-2">
-                                <label for="tch-passward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                                <label for="tch-password" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
-                                    <input id="tch-passward" name="tch-password" type="password" class="form-control" aria-label="密码" required>
+                                    <input id="tch-password" name="tch-password" type="password" class="form-control" aria-label="密码" required>
                                     <div class="invalid-feedback">请输入密码</div>
                                   </div>
                             </div>
@@ -157,6 +157,7 @@
 
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquerysession.js"></script>
 
     <script>
         $(function(){
@@ -167,14 +168,14 @@
                     var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
                     var sendData={
                         "usertype":$('#usertype').val(),
-                        "username":$('#username').val(),
+                        "userId":$('#userId').val(),
                         "password":$('#password').val(),
                         "realname":$('#realname').val(),
                         "stuclass":$('#stuclass').val()
                     };
                 }
                 */
-                var usergender = document.getElementsByName('radio-student')[0].checked ? "male" : "female";
+                var usergender = document.getElementsByName('stu-gender-radio')[0].checked ? "male" : "female";
                 var sendData={
                     "usertype": "student",
                     "realname": $('#stu-realname').val(),
@@ -192,13 +193,13 @@
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
+                            $.session.set('userId', userId),
                             window.location.href = "main.html";
-                            //alert("欢迎:"+msg.data.username);
+                            //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败
                             alert(resultMsg.msg);
                         }
-                        
                     },
                     error: function(resultMsg){
                         alert("通信失败");
@@ -225,8 +226,9 @@
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
+                            $.session.set('userId', userId),
                             window.location.href = "main.html";
-                            //alert("欢迎:"+msg.data.username);
+                            //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败
                             alert(resultMsg.msg);

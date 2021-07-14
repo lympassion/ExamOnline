@@ -24,9 +24,10 @@
 						</a>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="text-center">
-                            <img src="../static/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
+                            <img id="userImgArea" src="../static/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
                         </div>
-                        <div class="sidebar-brand-text mx-3"><span>Misty Mountain</span></div>
+                        <div id="userIdArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
+                        <!-- <div class="sidebar-brand-text mx-3"><span>Misty Mountain</span></div> -->
                     </a>
                 </div>
 			</div>
@@ -108,8 +109,13 @@
 		<script src="../static/js/jquery.min.js"></script>
 		<script src="../static/js/bootstrap.min.js"></script>
 		<script src="../static/js/jquery.easing.min.js"></script>
+		<script src="../static/js/jquerysession.js"></script>
 		<script>
 			$(function() {
+				var userId = $.session.get('userId');
+
+				document.getElementById('userIdArea').innerHTML = userId;
+				
 				let navflag = false;
 				$('.nav-tab').click(function() {
 					$(this).siblings().each(function() {
