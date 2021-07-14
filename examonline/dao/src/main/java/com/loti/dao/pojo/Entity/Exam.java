@@ -4,15 +4,19 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Component
 public class Exam {
     private int examId;
     private String examName;
-    private int courseId;
+    private String courseName;
     private int paperId;
     private int totalScore;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Timestamp startTime;
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Timestamp endTime;
     private int examTime;//format :second
 
@@ -32,12 +36,12 @@ public class Exam {
         this.examName = examName;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public int getPaperId() {

@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.loti.dao.mapper.ExamMapper">
-    <select id="SelectExamByCourseId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
-        select * from exam where course_id = #{id}
+    <select id="SelectExamByCourseId" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam where course_name = #{course_name}
     </select>
     <insert id="InsertExam"  parameterType="com.loti.dao.pojo.Entity.Exam">
-        insert into exam (exam_id, exam_name, course_id, paper_id, total_score, start_time, end_time, exam_time) VALUES
-            (#{examId},#{examName},#{courseId},#{paperId},#{totalScore},#{startTime},#{endTime},#{examTime})
+        insert into exam (exam_id, exam_name, course_name, paper_id, total_score, start_time, end_time, exam_time) VALUES
+            (#{examId},#{examName},#{courseName},#{paperId},#{totalScore},#{startTime},#{endTime},#{examTime})
     </insert>
     <select id="SelectExamByExamId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
         select * from exam where exam_id = #{id}

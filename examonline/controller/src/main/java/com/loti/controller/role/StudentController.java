@@ -18,9 +18,9 @@ public class StudentController {
     @Autowired
     private ExamService examService;
 
-    @RequestMapping(value = "/getAllExam/{sid}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllExam",method = RequestMethod.GET)
     @ResponseBody
-    public List<Exam> getExamInfo(@PathVariable("sid") int studentId){
+    public List<Exam> getExamInfo(@RequestParam("sid") int studentId){
         if(studentId==0)
             return null;
         return examService.getStudentExam(studentId);

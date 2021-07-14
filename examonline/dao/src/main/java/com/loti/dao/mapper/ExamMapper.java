@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface ExamMapper {
-    Exam SelectExamByCourseId(int id);
+    Exam SelectExamByCourseId(String course_name);
     Exam SelectExamByExamId(int id);
     //插入exam表
     void InsertExam(Exam exam);

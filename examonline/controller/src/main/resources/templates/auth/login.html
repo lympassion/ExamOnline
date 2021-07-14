@@ -22,9 +22,9 @@
             <div class="card-body">
                 <form class="needs-validation" novalidate>
                     <div class="input-group mb-2">
-                        <label for="username" class="col-sm-3 col-form-label"></span>用户名</span></label>
+                        <label for="userId" class="col-sm-3 col-form-label"></span>用户名</span></label>
                         <div class="col-sm-9">
-                            <input id="username" name="username" type="text" class="form-control" aria-label="username" required>
+                            <input id="userId" name="userId" type="text" class="form-control" aria-label="userId" required>
                             <div class="invalid-feedback">请输入用户名</div>
                           </div>
                     </div>
@@ -61,20 +61,20 @@
                 var validArr = [1, 2, 3]    // 合法的id起始符
                 var usertype = null, url = null;
 
-                if($('#username').val() == '')
+                if($('#userId').val() == '')
                 {
                     alert('请输入ID');
-                    $('#username').focus();
+                    $('#userId').focus();
                     return;
-                }  else if ($('#username').val().length != 8 || validArr.indexOf(parseInt($('#username').val()[0])) == -1) {
+                }  else if ($('#userId').val().length != 8 || validArr.indexOf(parseInt($('#userId').val()[0])) == -1) {
                     alert('ID不合法');
-                    $('#username').focus();
+                    $('#userId').focus();
                     return;
                 } else {
                     // ID合法，判断用户类型
-                    if ($('#username').val()[0] == '1') {
+                    if ($('#userId').val()[0] == '1') {
                         url = "/student/login";
-                    } else if ($('#username').val()[0] == '2') {
+                    } else if ($('#userId').val()[0] == '2') {
                         url = "/teacher/login";
                     } else {
                         url = "/admin/login";
@@ -87,17 +87,17 @@
                     $('#password').focus();
                     return ;
                 }
-
-                var userId = $('#username').val();
                 
+                var userId = $('#userId').val();
+
                 var sendData={
-                    "userId": parseInt(userId),
+                    "userId": userId,
                     "password": $('#password').val()
                 };
 
                 $.ajax({
                     type: "post",
-                    url: "/student/login",
+                    url: "/user/login",
                     data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
@@ -105,12 +105,16 @@
                             //登录成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId);
+                            $.session.set('userId', userId),
                             window.location.href="main.html";
-                            //alert("欢迎:"+msg.data.username);
+                            //alert("欢迎:"+msg.data.userId);
                         }else{
                             //登录失败
+                            alert(resultMsg.msg);
                         }
+                    },
+                    error: function(resultMsg){
+                        alert("通信失败");
                     }
                 });
             })
@@ -120,7 +124,7 @@
                 var Days = 30;
                 var exp = new Date();
                 exp.setTime(exp.getTime() + Days*24*60*60*30);
-                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toUTCString();
 	        }
 
             function getCookie(name){

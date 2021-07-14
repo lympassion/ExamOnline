@@ -8,10 +8,7 @@ import com.loti.service.StudentService;
 import com.loti.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +31,7 @@ public class RouterController {
         return "auth/login";
     }
 
-    @RequestMapping(value = "/student/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> loginControl(MyUser user){
         int error_code = 102;
@@ -73,7 +70,8 @@ public class RouterController {
 
     @RequestMapping(value = "/student/register",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> register(@RequestBody Map<String,String> UserMap){
+    public Map<String,Object> register(@RequestParam Map<String,String> UserMap){
+        System.out.println(UserMap.toString());
         if(UserMap == null){
             return new HashMap<String, Object>(){{
                 put("code",101);put("msg","参数未获取");put("token",null);
