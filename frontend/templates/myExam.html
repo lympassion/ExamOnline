@@ -118,7 +118,7 @@
                             sortable: true,
                             formatter: function(value, row, index) {
                                 var val = value / 1000;
-                                return formatTimeFromTimestamp(value)
+                                return formatTimeFromTimestamp(val)
                             }
                         }, {
                             field: 'examTime',
@@ -147,7 +147,7 @@
                 onLoadSuccess: function () {
                 },
                 onLoadError: function () {
-                    showTips("数据加载失败！");
+                    // showTips("数据加载失败！");
                 }
 
             });  
@@ -159,8 +159,8 @@
         }
 
         function addStatusText(value, row, index) {
-            var startTime = row.startTime;
-            var endTime = row.endTime;
+            var startTime = row.startTime / 1000;
+            var endTime = row.endTime / 1000;
             var timeNow = Math.round(new Date() / 1000);
             // 如果时间已过则显示已结束，还没开始 或 时间允许但还没参加 则显示待参加
             if(timeNow > endTime) {
