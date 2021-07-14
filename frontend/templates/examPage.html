@@ -521,7 +521,7 @@
 
                 $.ajax({
                     type: "get",
-                    url: "/student/getExamPaper?eid=" + examId + "&pid=" + paperId,
+                    url: "/student/getExamPaper?eid=" + examId + "&pid=" + paperId + "&sid=" + userId,
                     datatype: "json",
                     success: parsePaperData(paperData)
                 })
@@ -542,12 +542,12 @@
                         datatype: "json",
                         success: function(resultMsg){
                             if(resultMsg.code == 0){
-                                //提交成功
+                                // 提交成功
                                 alert('提交成功！');
                                 window.close();
-                            }else{
-                                //登录失败
-                                alert(resultMsg.msg);
+                            } else {
+                                // 提交失败
+                                alert(resultMsg.code + resultMsg.msg);
                             }
                         },
                         error: function(resultMsg){
