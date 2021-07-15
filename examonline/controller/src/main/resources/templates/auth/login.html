@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="input-group mb-2">
-                        <label for="passward" class="col-sm-3 col-form-label"></span>密码</span></label>
+                        <label for="password" class="col-sm-3 col-form-label"></span>密码</span></label>
                         <div class="col-sm-9">
                             <input id="password" name="password" type="password" class="form-control" aria-label="password" required>
                             <div class="invalid-feedback">请输入密码</div>
@@ -57,6 +57,7 @@
 
     <script>
         $(function(){
+            
             $('#login').click(function(){
                 var validArr = [1, 2, 3]    // 合法的id起始符
                 var usertype = null, url = null;

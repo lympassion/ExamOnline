@@ -18,4 +18,6 @@ public interface ExamMapper {
     List<Exam> SelectExamByStuIdTested(int id);
     //根据学生id查询未参加考试的exam表
     List<Exam> SelectExamByStuIdNotTest(int id);
+    //根据考试id查询考试时间
+    int SelectExamTimeByExamId(int id);
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.StuExamMapper">
+    <select id="SelectStuExamById" resultType="com.loti.dao.pojo.Entity.StudentExam">
+        select * from student_exam
+        where exam_id = #{examId} and student_id = #{stuId} and question_id = #{quesId}
+    </select>
+    <insert id="InsertStuExam"  parameterType="com.loti.dao.pojo.Entity.StudentExam" >
+        insert into student_exam (exam_id, student_id, student_answer, student_score, question_id) VALUES
+        (#{examId},#{studentId},#{studentAnswer},#{studentScore},#{questionId})
+    </insert>
+</mapper>

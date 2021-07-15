@@ -15,8 +15,9 @@ type：
 @Component
 public class Question {
     int questionId;
+    // type: 单选：0 多选：1 判断：2 填空：3 主观题：4
     int questionType;
-    int courseId;
+    String courseName;
     String questionContent;
     String opa;
     String opb;
@@ -24,6 +25,17 @@ public class Question {
     String opd;
     String questionAnswer;
     int questionScore;
+
+    //just for trans
+    int questionOrder = 0;
+
+    public int getQuestionOrder() {
+        return questionOrder;
+    }
+
+    public void setQuestionOrder(int questionOrder) {
+        this.questionOrder = questionOrder;
+    }
 
     public int getQuestionId() {
         return questionId;
@@ -41,12 +53,12 @@ public class Question {
         this.questionType = questionType;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getQuestionContent() {

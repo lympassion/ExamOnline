@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.StuPaperMapper">
+    <select id="SelectMarkByExamAndStudent" resultType="int">
+        select student_mark from student_paper_record
+        where student_id = #{stuId} and exam_id = #{examId}
+    </select>
+    <select id="SelectStuPaperByRecId" parameterType="int" resultType="com.loti.dao.pojo.Entity.StudentPaper">
+        select * from student_paper_record where (student_id) = #{id}
+    </select>
+    <update id="updateStudentTestInfoById" >
+        update student_paper_record
+        set student_mark = 0 where student_id = #{stuId} and exam_id = #{examId}
+    </update>
+    <insert id="InsertStuPaper"  parameterType="com.loti.dao.pojo.Entity.StudentPaper" >
+        insert into student_paper_record (record_id, exam_id, student_id) VALUES
+        (#{recordId},#{examId},#{studentId})
+    </insert>
+</mapper>

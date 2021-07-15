@@ -14,9 +14,9 @@
         select * from exam where exam_id = #{id}
     </select>
     <select id="SelectExamByStuId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
-        select * from exam where exam_id in (
-            select exam_id from student_paper_record where student_id = #{id}
-            )
+        select * from exam e
+        left join student_paper_record spr on e.exam_id = spr.exam_id
+        where spr.student_id = #{id}
     </select>
     <select id="SelectExamByStuIdTested" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
         select * from exam e
@@ -27,5 +27,9 @@
         select * from exam e
         left join student_paper_record s on e.exam_id=s.exam_id
         where s.student_id = #{id} and s.student_mark = -1
+    </select>
+    <select id="SelectExamTimeByExamId" parameterType="int" resultType="int">
+        select exam_time from exam
+        where exam_id = #{id}
     </select>
 </mapper>

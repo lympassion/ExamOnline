@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,16 +20,35 @@
                     <li class="breadcrumb-item active" aria-current="page">基本信息</li>
                 </ol>
             </nav>
-
-        
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="text-center m-5">
+                        <img src="/img/avatars/avatar6.jpg" class="rounded-circle" height="200" width="200">
+                    </div>
+                    <div class="custom-file">
+                        <input onchange="showFilename(this.files[0])" type="file" class="custom-file-input" id="customFile">
+                        <label id="new-avatar-label" class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            
+               
             
                 
         </div>
-
-        
-
     </div>
     
     <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+        })
+
+        function showFilename(file) {
+            $("#new-avatar-label").html(file.name);
+        }   
+    </script>
+
 </body>
 </html>

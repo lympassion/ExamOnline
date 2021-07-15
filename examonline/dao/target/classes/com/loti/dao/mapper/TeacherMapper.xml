@@ -12,7 +12,7 @@
     <select id="selectTeacherByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Teacher" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
         select * from teacher WHERE teacher_id = #{userId} AND teacher_password = #{password}
     </select>
-    <insert id="InsertTeacher"  parameterType="com.loti.dao.pojo.Entity.User.Teacher" >
+    <insert id="InsertTeacher"  parameterType="com.loti.dao.pojo.Entity.User.Teacher" useGeneratedKeys="true" keyProperty="teacherId">
         insert into teacher (teacher_id, teacher_name,teacher_gender,teacher_email, teacher_password)
             VALUES(#{teacherId},#{teacherName},#{teacherGender},#{teacherEmail},#{teacherPassword})
     </insert>

@@ -7,6 +7,16 @@ public class Teacher {
     private String teacherEmail;
     private String teacherPassword;
 
+    Teacher(){}
+
+    public Teacher(int teacherId, String teacherName, int teacherGender, String teacherEmail, String teacherPassword) {
+        this.teacherId = teacherId;
+        this.teacherName = teacherName;
+        this.teacherGender = teacherGender;
+        this.teacherEmail = teacherEmail;
+        this.teacherPassword = teacherPassword;
+    }
+
     public int getTeacherId() {
         return teacherId;
     }

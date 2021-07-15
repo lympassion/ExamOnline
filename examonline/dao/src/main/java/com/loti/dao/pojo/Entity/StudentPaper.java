@@ -4,7 +4,6 @@ public class StudentPaper {
     int recordId;
     int examId;
     int studentId;
-    String studentAnswer;
     int studentMark;
 
     public int getRecordId() {
@@ -29,14 +28,6 @@ public class StudentPaper {
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
-    }
-
-    public String getStudentAnswer() {
-        return studentAnswer;
-    }
-
-    public void setStudentAnswer(String studentAnswer) {
-        this.studentAnswer = studentAnswer;
     }
 
     public int getStudentMark() {

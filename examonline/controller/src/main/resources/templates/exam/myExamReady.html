@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" type="text/css" href="\css\page.css" />
-        <link rel="stylesheet" href="//css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
         <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+
+        <style>
+            #examListTable {border: none;}
+          </style>
 </head>
 <body>
     <div class="page">
@@ -21,31 +25,6 @@
                 </ol>
               </nav>
               <table class="table table-borderless" id="examListTable">
-                <!--
-                <thead>
-                  <tr>
-                    <th data-field="examName">考试名称</th>
-                    <th data-field="examCourseName">学科</th>
-                    <th data-field="examStartTime">开始时间</th>
-                    <th data-field="examOperator">操作</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Java能力测试</td>
-                    <td>Java</td>
-                    <td>2021-07-10 20:00:00</td>
-                    <td>
-                        <a href="#" class="text-decoration-none">查看详情</a>
-                    </td>
-                  </tr>
-                  
-                  
-                </tbody>
-              </table>
-              -->
   
         </div>
 
@@ -55,8 +34,12 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
 
     <script>
+
+        var userId = $.session.get('userId');
+
         /*
         window.onload = function(){
             $.ajax({
@@ -98,47 +81,80 @@
                 search: true,  //是否启用查询
                 showRefresh: true,  //显示刷新按钮  
                 columns: [{
-                      field: 'examName',
-                      title: '考试名称'
-                  }, {
-                      field: 'examCourseName',
-                      title: '学科'
-                  }, {
-                      field: 'examStartTime',
-                      title: '开始时间',
-                      formatter: function(value, row, index) {
-                          return formatTimeFromTimestamp(value)
-                      }
-                  }, {
-                      field: 'examEndTime',
-                      title: '停止进入时间',
-                      formatter: function(value, row, index) {
-                          return formatTimeFromTimestamp(value)
-                      }
-                  }, {
-                      field: 'examOperator',
-                      title: '操作',
-                      formatter: addButton,
-                      events: operateEvents
-                  }],
-                  data:[
-                      {"examName":"测试1","examCourseName":"java","examStartTime":1626057000,"examEndTime":1626229800},
-                      {"examName":"测试2","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试3","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试4","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试5","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试6","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试7","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
-                      {"examName":"测试8","examCourseName":"java","examStartTime":1626093132,"examEndTime":1626229800},
-                      {"examName":"测试9","examCourseName":"java","examStartTime":1626093132,"examEndTime":1626229800}
-                  ]
-   
+                            field: 'examName',
+                            title: '考试名称'
+                        }, {
+                            field: 'examId',
+                            title: '考试编号',
+                            visible: false
+                            // sortable: true
+                        }, {
+                            field: 'courseName',
+                            title: '学科',
+                            sortable: true
+                        }, {
+                            field: 'paperId',
+                            title: '试卷编号',
+                            visible: false
+                            // sortable: true
+                        }, {
+                            field: 'totalScore',
+                            title: '试卷总分',
+                            visible: false
+                        }, {
+                            field: 'startTime',
+                            title: '开始时间',
+                            sortable: true,
+                            formatter: function(value, row, index) {
+                                var val = value / 1000;
+                                return formatTimeFromTimestamp(val)
+                            }
+                        }, {
+                            field: 'endTime',
+                            title: '停止进入时间',
+                            formatter: function(value, row, index) {
+                                var val = value / 1000;
+                                return formatTimeFromTimestamp(val)
+                            }
+                        }, {
+                            field: 'examTime',
+                            title: '考试时长',
+                            formatter: function(value, row, index) {
+                                return timeSecToMin(value)
+                            }
+                        }, {
+                            field: 'examOperator',
+                            title: '操作',
+                            formatter: addButton,
+                            events: operateEvents
+                        }],
+                // data:[
+                //       {"examName":"测试1","examCourseName":"java","examStartTime":1626057000,"examEndTime":1626229800,"examTime":"120分钟"},
+                //       {"examName":"测试2","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800,"examTime":"120分钟"},
+                //       {"examName":"测试3","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800,"examTime":"120分钟"},
+                //       {"examName":"测试4","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"},
+                //       {"examName":"测试5","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"},
+                //       {"examName":"测试6","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"},
+                //       {"examName":"测试7","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"},
+                //       {"examName":"测试8","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"},
+                //       {"examName":"测试9","examCourseName":"java","examStartTime":1626359540,"examEndTime":1626532340,"examTime":"120分钟"}
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
             });  
         }
 
+        function timeSecToMin(timeSec) {
+            var timeMin = timeSec / 60 + "分钟";
+            return timeMin;
+        }
+
         function addButton(value, row, index) {
-            var startTime = row.examStartTime;
-            var endTime = row.examEndTime;
+            var startTime = row.startTime / 1000;
+            var endTime = row.endTime / 1000;
             var timeNow = Math.round(new Date() / 1000);
             // 如果时间范围合法，则添加进入考试按钮；如果时间未到则显示‘尚未开始’
             if(timeNow >= startTime && timeNow < endTime) {
@@ -147,7 +163,7 @@
                 ].join('');
             } else if (timeNow < startTime) {
               return [
-                  '<p>尚未开始</p>'
+                  '<button type="button" class="btn btn-secondary btn-sm" style="margin-right:15px;" disabled>暂未开放</button>'
               ].join('');
             }
         }
@@ -155,7 +171,8 @@
         window.operateEvents = {
             'click .RoleOfA': function (e, value, row, index) {
                 var val = row.examName;
-                alert(val + '：考试页面还没写……');            
+                var examURL = "examPage.html?eid=" + row.examId + "&pid=" + row.paperId;
+                window.open(examURL);   
             }
         }; 
     
@@ -163,12 +180,7 @@
             //调用函数，初始化表格  
             initTable();    
         }); 
-
     </script>
-
-<style>
-  #examListTable {border: none;}
-</style>
 
 </body>
 </html>

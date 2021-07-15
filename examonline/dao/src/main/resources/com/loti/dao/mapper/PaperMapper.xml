@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.PaperMapper">
+    <select id="SelectQuesByPaperId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
+        select q.*,p.question_order
+        from question q
+                 right join paper p on q.question_id = p.question_id
+        where p.paper_id = #{id}
+        order by q.question_type
+    </select>
+    <insert id="InserPaper"  parameterType="com.loti.dao.pojo.Entity.Paper">
+        insert into paper (id, paper_id, course_name, question_type, question_id, question_order, paper_name) VALUES
+            (#{id},#{paperId},#{courseName},#{questionType},#{questionId},#{questionOrder},#{paperName})
+    </insert>
+</mapper>

@@ -1,14 +1,14 @@
 package com.loti.controller.Router;
 
-import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
 import com.loti.dao.pojo.Entity.User.MyUser;
-import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.service.StudentService;
 import com.loti.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,43 +60,6 @@ public class RouterController {
                 put("token",null);
             }};
         }
-    }
-
-//    @RequestMapping(value = "/register",method = RequestMethod.GET)
-//    public String register(){
-//        //TODO
-//        return  "auth/register";
-//    }
-
-    @RequestMapping(value = "/student/register",method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String,Object> register(@RequestParam Map<String,String> UserMap){
-        System.out.println(UserMap.toString());
-        if(UserMap == null){
-            return new HashMap<String, Object>(){{
-                put("code",101);put("msg","参数未获取");put("token",null);
-            }};
-        }
-        switch (UserMap.get("usertype")){
-            case "student":
-                Student student = new Student(
-                        0, UserMap.get("realname"), UserMap.get("class"),
-                        "123@qq.com", UserMap.get("password"),
-                        FormatUtil.GenderFormat(UserMap.get("gender")));
-                studentService.InsertStu(student);//TODO
-                String jwt = JwtUtil.generateToken("student",String.valueOf(student.getStudentId()));
-                return new HashMap<String, Object>(){{
-                    put("code",0);put("msg","ok");put("token",jwt);
-                }};
-            case  "teacher":
-                //teacherService
-                break;
-            default:
-                return new HashMap<String, Object>(){{
-                put("code",105);put("msg","参数不合法");put("token",null);
-            }};
-        }
-        return null;//TODO
     }
 
 }
