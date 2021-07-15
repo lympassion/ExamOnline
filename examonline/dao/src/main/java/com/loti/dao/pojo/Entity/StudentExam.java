@@ -1,5 +1,8 @@
 package com.loti.dao.pojo.Entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class StudentExam {
     int resultId;
     int examId;

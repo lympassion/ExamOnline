@@ -6,10 +6,10 @@
     <select id="getAllTeacher" resultType="com.loti.dao.pojo.Entity.User.Teacher">
         select * from teacher
     </select>
-    <select id="selectTeacherById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Teacher">
+    <select id="SelectTeacherById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Teacher">
         select * from teacher where (teacher_id) = #{id}
     </select>
-    <select id="selectTeacherByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Teacher" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
+    <select id="SelectTeacherByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Teacher" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
         select * from teacher WHERE teacher_id = #{userId} AND teacher_password = #{password}
     </select>
     <insert id="InsertTeacher"  parameterType="com.loti.dao.pojo.Entity.User.Teacher" useGeneratedKeys="true" keyProperty="teacherId">

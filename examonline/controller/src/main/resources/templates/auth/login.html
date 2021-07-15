@@ -106,8 +106,15 @@
                             //登录成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId),
-                            window.location.href="main.html";
+                            $.session.set('userId', userId);
+                            if(userId[0] == "1") {
+                                window.location.href="studentMain.html";
+                            } else if (userId[0] == "2") {
+                                window.location.href="teacherMain.html";
+                            } else {
+                                window.location.href="adminMain.html";
+                            }
+                            
                             //alert("欢迎:"+msg.data.userId);
                         }else{
                             //登录失败

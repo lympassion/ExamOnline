@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.RPaperMapper">
+    <select id="SelectRPaperByName" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+        where paper_name = #{name}
+    </select>
+    <insert id="InsertRPaper"  parameterType="com.loti.dao.pojo.Entity.RealPaper" useGeneratedKeys="true" keyProperty="paperId">>
+        insert into real_paper (paper_id, paper_name, course_name, paper_score) VALUES
+        (#{paperId},#{paperName},#{courseName},#{paperScore})
+    </insert>
+</mapper>

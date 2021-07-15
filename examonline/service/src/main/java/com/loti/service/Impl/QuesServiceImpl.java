@@ -26,6 +26,11 @@ public class QuesServiceImpl implements QuesService {
     }
 
     @Override
+    public List<Question> GetQuesByTypeName(int type, String course_name) {
+        return quesMapper.SelectQuesByTypeAndName(type,course_name);
+    }
+
+    @Override
     public String GetCourseName() {
         List<String> courseList = quesMapper.SelectCourseName();
         String course = "";

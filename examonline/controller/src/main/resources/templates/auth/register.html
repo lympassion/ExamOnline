@@ -177,6 +177,7 @@
                 */
                 var usergender = document.getElementsByName('stu-gender-radio')[0].checked ? "male" : "female";
                 var sendData={
+                    "usertype": "student",
                     "realname": $('#stu-realname').val(),
                     "password": $('#stu-password').val(),
                     "class": $('#stu-class').val(),
@@ -185,16 +186,15 @@
                 $.ajax({
                     type: "post",
                     url: "/student/register",
-                    contentType: "application/json",
-                    data: JSON.stringify(sendData),
+                    data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
                         if(resultMsg.code == 0){
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId),
-                            window.location.href = "main.html";
+                            $.session.set('userId', resultMsg.userId),
+                            window.location.href = "studentMain.html";
                             //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败
@@ -211,24 +211,23 @@
             $('#tch-register').click(function(){
                 var usergender = document.getElementsByName('radio-teacher')[0].checked ? "male" : "female";
                 var sendData={
+                    "usertype": "teacher",
                     "realname": $('#tch-realname').val(),
                     "password": $('#tch-password').val(),
                     "gender": usergender,
                 };
-                
                 $.ajax({
                     type: "post",
                     url: "/teacher/register",
-                    contentType: "application/json",
-                    data: JSON.stringify(sendData),
+                    data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
                         if(msg.code == 0){
                             //注册成功
                             console.log(resultMsg);
                             setCookie("token", resultMsg.token);
-                            $.session.set('userId', userId),
-                            window.location.href = "main.html";
+                            $.session.set('userId', resultMsg.userId),
+                            window.location.href = "teacherMain.html";
                             //alert("欢迎:"+msg.data.userId);
                         }else{
                             //注册失败

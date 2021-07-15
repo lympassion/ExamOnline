@@ -14,8 +14,8 @@
             (#{questionId},#{questionType},#{courseName},#{questionContent},#{opa},#{opb},#{opc},#{opd},
              #{questionAnswer},#{questionScore})
     </insert>
-    <select id="SelectQuesByType" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
-        select * from question where question_type = #{type}
+    <select id="SelectQuesByTypeAndName" resultType="com.loti.dao.pojo.Entity.Question">
+        select * from question where question_type = #{type} and course_name = #{cname}
     </select>
     <select id="SelectQuesByCourse" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.Question">
         select * from question where course_name = #{course_name}

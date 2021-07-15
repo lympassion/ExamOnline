@@ -10,14 +10,15 @@ public class Paper {
     private int questionType;
     private int questionId;
     private int questionOrder;
-    private String paperName;
 
-    public String getPaperName() {
-        return paperName;
-    }
-
-    public void setPaperName(String paperName) {
-        this.paperName = paperName;
+    Paper(){}
+    public Paper(int id, int paperId, String courseName, int questionType, int questionId, int questionOrder) {
+        this.id = id;
+        this.paperId = paperId;
+        this.courseName = courseName;
+        this.questionType = questionType;
+        this.questionId = questionId;
+        this.questionOrder = questionOrder;
     }
 
     public int getId() {

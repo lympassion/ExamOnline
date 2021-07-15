@@ -551,8 +551,15 @@
                 })
                 
                 $('#btn-exam-submit').click(function() {
+                    submitNow();
 
-                    var ansSubmit = getStuAnswers(num_total, num_q_0, num_q_1, num_q_2, num_q_4);
+                    // window.close();
+                })
+            }
+
+
+            function submitNow() {
+                var ansSubmit = getStuAnswers(num_total, num_q_0, num_q_1, num_q_2, num_q_4);
 
                     $.ajax({
                         type: "post",
@@ -573,9 +580,8 @@
                             // alert("通信失败");
                         }
                     });
-                    // window.close();
-                })
             }
+
 
             // function parseUrl(){
             //     var url=location.href;
@@ -605,6 +611,7 @@
                 .on('finish.countdown', function(event) {
                     $(this).html('时间到!').parent().addClass('disabled');
                     alert("时间到！");
+                    submitNow();
                 });
             }
 
@@ -1125,10 +1132,9 @@
                 // return ansJSON;
                 // console.log(ansData);
                 // console.log(typeof(ansData));
-                var ansDataJSON = ansData;
-                var ansJsonTest = JSON.stringify(ansData)
-                console.log(ansDataJSON);
-                console.log(ansJsonTest);
+                var ansDataJSON = JSON.stringify(ansData);
+                // console.log(ansDataJSON);
+                // console.log(typeof(ansDataJSON));
                 
                 return ansDataJSON;
             }

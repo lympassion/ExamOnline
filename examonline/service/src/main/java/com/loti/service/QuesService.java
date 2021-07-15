@@ -9,5 +9,6 @@ import java.util.List;
 public interface QuesService {
     void InsertQuestion(Question question);
     Question GetQuesByQid(int ques_id);
+    List<Question> GetQuesByTypeName(int type,String course_name);
     String GetCourseName();
 }

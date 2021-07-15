@@ -11,7 +11,7 @@
         order by q.question_type
     </select>
     <insert id="InserPaper"  parameterType="com.loti.dao.pojo.Entity.Paper">
-        insert into paper (id, paper_id, course_name, question_type, question_id, question_order, paper_name) VALUES
-            (#{id},#{paperId},#{courseName},#{questionType},#{questionId},#{questionOrder},#{paperName})
+        insert into paper (id, paper_id, course_name, question_type, question_id, question_order) VALUES
+            (#{id},#{paperId},#{courseName},#{questionType},#{questionId},#{questionOrder})
     </insert>
 </mapper>
