@@ -15,10 +15,8 @@
 
 
         <style>
-            #question_0_listTable {border: none;}
-            #question_1_listTable {border: none;}
-            #question_2_listTable {border: none;}
-            #question_4_listTable {border: none;}
+            #paperListTable {border: none;}
+            #classListTable {border: none;}
         </style>
 </head>
 <body>
@@ -335,7 +333,9 @@
                                 classId += classChosed[i].classId + ",";
                             }
                         }
-                        
+
+                        classId = classId.substring(0, classId.lastIndexOf(","));
+
                         // var newExamSubmit = createSubmit(examName, courseName, startTime, endTime, timeLong, paperId, classId);
                         var newExamSubmitJSON = JSON.stringify(createSubmit(examName, courseName, startTime, endTime, timeLong, paperId, classId));
                         // console.log(paperSubmit);
@@ -466,9 +466,6 @@
         }
     </script>
 
-    <script>
-        
-    </script>
 
 </body>
 </html>
