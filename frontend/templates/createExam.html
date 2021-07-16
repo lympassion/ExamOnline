@@ -153,7 +153,7 @@
             // 获取所有已存在课程的课程名称 
             $.ajax({
                     type: "get",
-                    url: "/teacher/getAllCourseName",
+                    url: "/admin/getAllCourseName",
                     datatype: "json",
                     success: function(resultMsg){
                         addCourseName(resultMsg.data);
@@ -178,7 +178,7 @@
             $("#paperListTable").bootstrapTable({  
                 
                 method: "get", 
-                url: "/teacher/getAllPaper?cname=" + courseName,
+                url: "/admin/getAllPaper?cname=" + courseName,
                 pagination: true, //启动分页  
                 pageSize: 6,  //每页显示的记录数  
                 pageNumber:1, //当前第几页  
@@ -229,7 +229,7 @@
             $("#classListTable").bootstrapTable({  
                 
                 method: "get", 
-                url: "/teacher/getAllClass?cname = " + courseName,
+                url: "/admin/getAllClass?cname = " + courseName,
                 pagination: true, //启动分页  
                 pageSize: 6,  //每页显示的记录数  
                 pageNumber:1, //当前第几页  
@@ -343,7 +343,7 @@
 
                         $.ajax({
                             type: "post",
-                            url: "/teacher/newExamSubmit",
+                            url: "/admin/newExamSubmit",
                             contentType: "application/json",
                             data: newExamSubmitJSON,
                             datatype: "json",
