@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.ClasseMapper">
+    <insert id="InsertClasse"  parameterType="com.loti.dao.pojo.Entity.Classe" useGeneratedKeys="true" keyProperty="classId">
+        insert into class (class_id, course_name, teacher_id) VALUES
+        (#{classId},#{courseName},#{teacherId})
+    </insert>
+    <select id="SelectClassByTeacher" parameterType="int" resultType="com.loti.dao.pojo.Entity.Classe">
+        select * from class where teacher_id = #{id}
+    </select>
+    <update id="updateExamById">
+        update class
+        set exam_id = #{examId} where class_id = #{classId}
+    </update>
+    <select id="SelectClassByCourse" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.Classe">
+        select * from class where course_name = #{courseName}
+    </select>
+</mapper>

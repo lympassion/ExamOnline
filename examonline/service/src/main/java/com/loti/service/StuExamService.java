@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface StuExamService {
     StudentExam getStuExamById(int exam_id,int stu_id,int ques_id);
     void InsertStuExam(StudentExam studentExam);
+    void InsertInitStuExamByClass(int class_id,int exam_id);
 }

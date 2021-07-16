@@ -21,4 +21,9 @@ public class StuExamServiceImpl implements StuExamService {
     public void InsertStuExam(StudentExam studentExam) {
         stuExamMapper.InsertStuExam(studentExam);
     }
+
+    @Override
+    public void InsertInitStuExamByClass(int class_id, int exam_id) {
+        stuExamMapper.InsertInitStuExamByClass(class_id,exam_id);
+    }
 }

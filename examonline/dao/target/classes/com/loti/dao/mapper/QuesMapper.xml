@@ -23,4 +23,7 @@
     <select id="SelectCourseName" resultType="java.lang.String">
         select distinct course_name from question
     </select>
+    <select id="SelectScoreById" parameterType="int" resultType="int">
+        select question_score from question where question_id = #{id}
+    </select>
 </mapper>

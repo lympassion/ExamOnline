@@ -11,4 +11,5 @@ public interface ExamService {
     List<Exam> getStudentTest(int stu_id);
     List<Exam> getStudentExam(int stu_id);
     int getExamTime(int exam_id);
+    void InsertExam(Exam exam);
 }

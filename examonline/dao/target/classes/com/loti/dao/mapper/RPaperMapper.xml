@@ -7,8 +7,21 @@
         select * from real_paper
         where paper_name = #{name}
     </select>
-    <insert id="InsertRPaper"  parameterType="com.loti.dao.pojo.Entity.RealPaper" useGeneratedKeys="true" keyProperty="paperId">>
+    <insert id="InsertRPaper"  parameterType="com.loti.dao.pojo.Entity.RealPaper" useGeneratedKeys="true" keyProperty="paperId">
         insert into real_paper (paper_id, paper_name, course_name, paper_score) VALUES
         (#{paperId},#{paperName},#{courseName},#{paperScore})
     </insert>
+    <select id="getAllRealPaper"   resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+    </select>
+    <update id="updateScoreById">
+        update real_paper
+        set paper_score = #{score} where paper_id = #{paperId}
+    </update>
+    <delete id="RemoveRPaperById" parameterType="int">
+        delete from real_paper where paper_id = #{id}
+    </delete>
+    <select id="getAllRPaperId" resultType="java.lang.Integer">
+        select distinct paper_id from real_paper
+    </select>
 </mapper>

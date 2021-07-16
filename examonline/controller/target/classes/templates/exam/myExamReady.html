@@ -80,6 +80,9 @@
                 // pageList: [5, 10, 15, 20, 25],  //记录数可选列表  
                 search: true,  //是否启用查询
                 showRefresh: true,  //显示刷新按钮  
+                responseHandler:function (res) {
+                    return res.data;
+                },
                 columns: [{
                             field: 'examName',
                             title: '考试名称'

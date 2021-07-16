@@ -39,4 +39,9 @@ public class QuesServiceImpl implements QuesService {
         }
         return course;
     }
+
+    @Override
+    public int getScoreById(int q_id) {
+        return quesMapper.SelectScoreById(q_id);
+    }
 }

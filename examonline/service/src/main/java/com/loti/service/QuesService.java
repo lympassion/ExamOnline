@@ -11,4 +11,5 @@ public interface QuesService {
     Question GetQuesByQid(int ques_id);
     List<Question> GetQuesByTypeName(int type,String course_name);
     String GetCourseName();
+    int getScoreById(int q_id);
 }

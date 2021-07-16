@@ -18,6 +18,18 @@ public class Exam {
     private Timestamp endTime;
     private int examTime;//format :second
 
+    Exam(){}
+    public Exam(int examId, String examName, String courseName, int paperId, int totalScore, Timestamp startTime, Timestamp endTime, int examTime) {
+        this.examId = examId;
+        this.examName = examName;
+        this.courseName = courseName;
+        this.paperId = paperId;
+        this.totalScore = totalScore;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.examTime = examTime;
+    }
+
     public int getExamId() {
         return examId;
     }

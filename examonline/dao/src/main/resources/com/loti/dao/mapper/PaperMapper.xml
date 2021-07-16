@@ -10,8 +10,14 @@
         where p.paper_id = #{id}
         order by q.question_type
     </select>
-    <insert id="InserPaper"  parameterType="com.loti.dao.pojo.Entity.Paper">
+    <insert id="InsertPaper"  parameterType="com.loti.dao.pojo.Entity.Paper">
         insert into paper (id, paper_id, course_name, question_type, question_id, question_order) VALUES
             (#{id},#{paperId},#{courseName},#{questionType},#{questionId},#{questionOrder})
     </insert>
+    <select id="GetAllPaper"  resultType="com.loti.dao.pojo.Entity.Paper">
+        select * from paper
+    </select>
+    <delete id="RemovePaperById" parameterType="int">
+        delete from paper where paper_id = #{id}
+    </delete>
 </mapper>

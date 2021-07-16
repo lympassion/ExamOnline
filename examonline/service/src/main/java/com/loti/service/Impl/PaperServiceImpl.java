@@ -34,5 +34,30 @@ public class PaperServiceImpl implements PaperService {
         rPaperMapper.InsertRPaper(realPaper);
     }
 
+    @Override
+    public List<RealPaper> getAllRealPaper() {
+        return rPaperMapper.getAllRealPaper();
+    }
+
+    @Override
+    public void updateScore(int paper_id, int score) {
+        rPaperMapper.updateScoreById(paper_id,score);
+    }
+
+    @Override
+    public void DeleteRPaperById(int paper_id) {
+        rPaperMapper.RemoveRPaperById(paper_id);
+    }
+
+    @Override
+    public List<Integer> getAllRPaperId() {
+        return rPaperMapper.getAllRPaperId();
+    }
+
+    @Override
+    public int getPaperScoreById(int paper_id) {
+        return rPaperMapper.getScoreById(paper_id);
+    }
+
 
 }

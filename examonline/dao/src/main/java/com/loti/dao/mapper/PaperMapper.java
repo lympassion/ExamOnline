@@ -12,4 +12,6 @@ public interface PaperMapper {
 //    Paper SelectPaperByCourseName(String name);
     List<Question> SelectQuesByPaperId(int id);
     void InsertPaper(Paper paper);
+    List<Paper> getAllPaper();
+    void RemovePaperById(int id);
 }

@@ -35,4 +35,9 @@ public class ExamServiceImpl implements ExamService {
     public int getExamTime(int exam_id) {
         return examMapper.SelectExamTimeByExamId(exam_id);
     }
+
+    @Override
+    public void InsertExam(Exam exam) {
+        examMapper.InsertExam(exam);
+    }
 }

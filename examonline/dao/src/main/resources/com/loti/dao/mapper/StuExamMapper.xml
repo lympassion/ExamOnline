@@ -11,4 +11,9 @@
         insert into student_exam (exam_id, student_id, student_answer, student_score, question_id) VALUES
         (#{examId},#{studentId},#{studentAnswer},#{studentScore},#{questionId})
     </insert>
+    <insert id="InsertInitStuExamByClass">
+        insert into student_paper_record (record_id, exam_id, student_id)
+        select 0,#{examId},student_id from student_class
+        where class_id = #{classId}
+    </insert>
 </mapper>

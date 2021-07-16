@@ -75,6 +75,10 @@
                             title: '学科',
                             sortable: true
                         }, {
+                            field: 'paperScore',
+                            title: '总分',
+                            visible:false
+                        }, {
                             field: 'paperOperator',
                             title: '操作',
                             formatter: addButton,
@@ -101,10 +105,6 @@
         }
 
         function addButton(value, row, index) {
-            var startTime = row.startTime / 1000;
-            var endTime = row.endTime / 1000;
-            var timeNow = Math.round(new Date() / 1000);
-            // 如果时间已过则显示已结束，还没开始 或 时间允许但还没参加 则显示待参加
             return [
                     '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">查看</button>'
                     + "  " + 
@@ -116,15 +116,23 @@
             'click .RoleOfA': function (e, value, row, index) {
                 var val = "row:" + JSON.stringify(row);
                 alert(val);            
-            }
-        };
-        
-        window.operateEvents = {
+            },
             'click .RoleOfB': function (e, value, row, index) {
-                // var val = "row:" + JSON.stringify(row);
-                // alert(val);
-                // var paperId = JSON.stringify(row).paperId;
-                // alert(paperId;
+                var paperId = row["paperId"];
+                // alert(removeData.paperId);
+                
+                // 删除某个试卷
+                $.ajax({
+                        type: "get",
+                        url: "/teacher/removePaper?pid=" + paperId,
+                        datatype: "json",
+                        success: initTable(),
+                        //success: parsePaperData(data),
+                        error: function(data) {
+                            // alert(data);
+                        }
+                    })
+
             }
         };
     

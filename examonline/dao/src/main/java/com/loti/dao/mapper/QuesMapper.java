@@ -15,9 +15,11 @@ public interface QuesMapper {
     // type: 单选：0 多选：1 判断：2 填空：3 主观题：4
     List<Question> SelectQuesByTypeAndName(@Param("type") int type,@Param("cname") String cname);
     //根据课程id获取题目
-    List<Question> SelectQuesByCourse(String course_id);
+    List<Question> SelectQuesByCourse(String course_name);
     //添加课程
     void InsertQues(Question question);
     //获取考题课程列表
     List<String> SelectCourseName();
+
+    int SelectScoreById(int id);
 }

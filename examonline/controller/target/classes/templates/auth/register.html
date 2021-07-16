@@ -186,6 +186,7 @@
                 $.ajax({
                     type: "post",
                     url: "/student/register",
+                    contentType: "application/json",
                     data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
@@ -219,6 +220,7 @@
                 $.ajax({
                     type: "post",
                     url: "/teacher/register",
+                    contentType: "application/json",
                     data: sendData,
                     datatype: "json",
                     success: function(resultMsg){
