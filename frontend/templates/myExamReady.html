@@ -154,7 +154,7 @@
 
         function addButton(value, row, index) {
             var startTime = row.startTime / 1000;
-            var endTime = row.eEndTime / 1000;
+            var endTime = row.endTime / 1000;
             var timeNow = Math.round(new Date() / 1000);
             // 如果时间范围合法，则添加进入考试按钮；如果时间未到则显示‘尚未开始’
             if(timeNow >= startTime && timeNow < endTime) {
