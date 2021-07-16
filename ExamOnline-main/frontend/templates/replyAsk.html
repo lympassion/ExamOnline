@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/css/page.css" />
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/css/login.register.css">
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">学生提问</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">回复提问</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <div class="container-fluid main profile">
+                    <div class="row">
+                        <!--主要内容-->
+                        <div class="card shadow-sm p-3 mb-5 bg-white rounded font-weight-bold" style="width: 60rem;">
+                            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                <!--提问-->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h4 class="question-title">
+                                        <span th:text="${M_title}"></span>
+                                    </h4>
+                                    <span class="text-desc h4">
+                                                学生编号：<span th:text="${S_id}"></span>   |
+                                                发布时间：<span th:text="${#dates.format(M_time,'yyyy-MM-dd HH:mm')}"></span>
+                                    </span>
+                                    <br>
+                                </div>
+                                <!--内容-->
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-3" id="question_view">
+                                    <textarea th:text="${M_content}" name="student_ask" autocomplete="off" maxlength="500" id="shortAnswer"
+                                              class="form-control" rows="3" style="width: 55rem" placeholder=" "></textarea>
+                                </div>
+                            </div>
+                            <!--script获取学生提问内容-->
+                            <br>
+                            <!--回复输入框-->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="apply ml-3 h4">回复:</div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
+                                    <!--用户头像与姓名，是否需要显示？-->
+                                    <!--<div class="media">-->
+                                        <!--<div class="media-left">-->
+                                            <!--<a href="#">-->
+                                            <!--<img class="media-object img-rounded"-->
+                                            <!--src="${session.user != null ? session.user.avatarUrl : '/images/default-avatar.png'}">-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                        <!--<div class="media-body">-->
+                                            <!--<h5 class="media-heading">-->
+                                                <!--<span th:text="${session.user != null ? session.user.name : '匿名用户'}"></span>-->
+                                            <!--</h5>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <!--显示回复的message编号，是否需要？-->
+                                    <input type="text" id="reply_message_id" style="border-color:lightgrey; border-radius: 6px" size="20px" b placeholder="" value="${reply_message_id}">
+                                    <!--回复框-->
+                                    <textarea class="form-control comment mt-3" rows="6" id="reply_content" placeholder="请输入..."></textarea>
+                                </div>
+                            </div>
+                            <br>
+                            <!--确认键-->
+                            <div class="col-sm-3 mx-auto mt-2">
+                                <button id="btn-submit" type="button" class="btn btn-outline-primary" onclick="post()">回复</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript">
+        //通过xxx函数获取学生端提出的问题
+        $(function () {
+            editormd.markdownToHTML("question-view", {});
+        });
+    </script>
+
+
+    <!--<script>-->
+        <!--$(function(){-->
+        <!--})-->
+    <!--</script>-->
+</body>
+</html>
