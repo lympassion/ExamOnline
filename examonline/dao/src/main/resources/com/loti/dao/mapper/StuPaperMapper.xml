@@ -18,4 +18,14 @@
         insert into student_paper_record (record_id, exam_id, student_id) VALUES
         (#{recordId},#{examId},#{studentId})
     </insert>
+    <update id="updateScorePart1">
+        update student_paper_record
+        set score_part1 = #{score}
+        where student_id = #{stuId} and exam_id = #{examId}
+    </update>
+    <update id="updateScorePart2">
+        update student_paper_record
+        set score_part2 = #{score}
+        where student_id = #{stuId} and exam_id = #{examId}
+    </update>
 </mapper>

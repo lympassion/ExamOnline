@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.AdminMapper">
+    <select id="selectByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Admin" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
+        select * from admin WHERE admin_id = #{userId} AND admin_password = #{password}
+    </select>
+    <select id="selectAdminById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Admin">
+        select * from admin where admin_id = #{id}
+    </select>
+</mapper>

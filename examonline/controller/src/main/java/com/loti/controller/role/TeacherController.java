@@ -3,18 +3,19 @@ package com.loti.controller.role;
 import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
 import com.loti.controller.trans.ExamMsg;
+import com.loti.controller.trans.QuesSubInfo;
+import com.loti.controller.trans.paperExamInfo;
 import com.loti.dao.mapper.StuClassMapper;
-import com.loti.dao.pojo.Entity.Exam;
-import com.loti.dao.pojo.Entity.Paper;
-import com.loti.dao.pojo.Entity.Question;
-import com.loti.dao.pojo.Entity.RealPaper;
+import com.loti.dao.pojo.Entity.*;
 import com.loti.dao.pojo.Entity.User.Teacher;
 import com.loti.service.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,8 @@ public class TeacherController {
     private ClassService classService;
     @Autowired
     private StuExamService stuExamService;
+    @Autowired
+    private StuPaperService stuPaperService;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
@@ -149,6 +152,14 @@ public class TeacherController {
         return paperService.getAllRealPaper();
     }
 
+    @RequestMapping(value = "/getAllExam",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Exam> getExamInfo(@RequestParam("tid") int teacherId){
+        if(teacherId == 0)
+            return null;
+        return examService.getExamByTeacherId(teacherId);
+    }
+
     @RequestMapping(value = "/removePaper",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> removePaper(@RequestParam("pid") String paperId){
@@ -164,28 +175,61 @@ public class TeacherController {
         }};
     }
 
-    @RequestMapping(value = "/newExamSubmit",method = RequestMethod.POST)
+    @RequestMapping(value = "/getStuAnswerPart2",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> examSubmit(@RequestBody ExamMsg examMsg){
-        System.out.println(examMsg.toString());
-        int total_score = paperService.getPaperScoreById(examMsg.getPaperId());
-        String[] classList = examMsg.getClassIdList().split(",");
+    public List<QuesSubInfo> getStuAns(@RequestParam("eid") int exam_id,@RequestParam("sid") int stu_id){
+        List<StudentExam> studentExams = stuExamService.getStuExamByExamStu(exam_id,stu_id);
+        List<QuesSubInfo> quesSubInfos = new LinkedList<>();
         try {
-            for(String classe : classList){
-                Exam exam = new Exam(0,examMsg.getExamName(),
-                        examMsg.getCourseName(),examMsg.getPaperId(),total_score,examMsg.getStartTime(),
-                        examMsg.getEndTime(),examMsg.getTimeLong());
-                examService.InsertExam(exam);
-                classService.updateExamById(Integer.parseInt(classe),exam.getExamId());
-                stuExamService.InsertInitStuExamByClass(Integer.parseInt(classe),exam.getExamId());
+            for(StudentExam studentExam:studentExams){
+                int questionId = studentExam.getQuestionId();
+                Question question = quesService.GetQuesByQid(questionId);
+                if(question.getQuestionType()!=4)
+                    continue;
+                int paperId = examService.getPaperId(exam_id);
+                int order = paperService.getOrderByPaperAndQues(questionId,paperId);
+                quesSubInfos.add(new QuesSubInfo(order,questionId,studentExam.getStudentScore()
+                        ,question.getQuestionContent(),studentExam.getStudentAnswer()
+                        ,question.getQuestionScore()));
             }
-            return new HashMap<String, Object>(){{
-               put("code",0);put("msg","ok");
-            }};
-        }catch (NullPointerException e){
-            return new HashMap<String, Object>(){{
-                put("code",101);put("msg","database error");
-            }};//error control
+            return quesSubInfos;
+        }catch (Exception e){
+            //ERROR CONTROL
+            return null;
         }
-    }
+   }
+
+
+
+   //TODO FOR TEST
+   @RequestMapping(value = "/submitExamMark",method = RequestMethod.POST)
+   @ResponseBody
+   public Map<String,Object> submitExam(@RequestBody Map<String,String> submitData){
+        int examId = Integer.parseInt(submitData.get("examId"));
+        int stuId = Integer.parseInt(submitData.get("studentId"));
+        String[] scores = submitData.get("score").split(",");
+        String[] quesIds = submitData.get("questionId").split(",");
+        int score_part2 = 0;
+        try {
+            for(int i=0;i<scores.length;i++){
+                stuExamService.updateScore(examId,stuId,
+                        Integer.parseInt(quesIds[i]),Integer.parseInt(scores[i]));
+                score_part2 += Integer.parseInt(scores[i]);
+            }
+            stuPaperService.updateScorePart2(examId,stuId,score_part2);
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+   }
+
+   @RequestMapping(value = "/getStuScorePart1",method = RequestMethod.GET)
+   @ResponseBody
+   public List<paperExamInfo> getStuScorePart1(@RequestParam("eid") int examId,@RequestParam("tid") int teacherId){
+        return null;
+   }
 }

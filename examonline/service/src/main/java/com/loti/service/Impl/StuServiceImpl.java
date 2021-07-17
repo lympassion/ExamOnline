@@ -17,8 +17,8 @@ public class StuServiceImpl implements StudentService {
     private StuMapper stuMapper;
 
     @Override
-    public Student getInfoById(String id) {
-        return null;
+    public Student getInfoById(int stu_id) {
+        return stuMapper.selectById(stu_id);
     }
 
     @Override
@@ -27,17 +27,12 @@ public class StuServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Exam> getExamIn() {
-        return null;
+    public List<Student> getAllStudent() {
+        return stuMapper.getAllStudent();
     }
 
     @Override
-    public Map<String, String> getRecord(Student student) {
-        return null;
-    }
-
-    @Override
-    public Map<String, String> getWrongAnsRec(Student student) {
-        return null;
+    public List<Student> getStuUniCourse(String course_name) {
+        return stuMapper.selectStuUniCourse(course_name);
     }
 }

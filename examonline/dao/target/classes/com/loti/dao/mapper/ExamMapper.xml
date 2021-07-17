@@ -6,7 +6,7 @@
     <select id="SelectExamByCourseId" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.Exam">
         select * from exam where course_name = #{course_name}
     </select>
-    <insert id="InsertExam"  parameterType="com.loti.dao.pojo.Entity.Exam">
+    <insert id="InsertExam"  parameterType="com.loti.dao.pojo.Entity.Exam" useGeneratedKeys="true" keyProperty="examId">
         insert into exam (exam_id, exam_name, course_name, paper_id, total_score, start_time, end_time, exam_time) VALUES
             (#{examId},#{examName},#{courseName},#{paperId},#{totalScore},#{startTime},#{endTime},#{examTime})
     </insert>
@@ -23,6 +23,14 @@
         left join student_paper_record s on e.exam_id=s.exam_id
         where s.student_id = #{id} and s.student_mark != -1
     </select>
+    <select id="getAllExam" resultType="com.loti.dao.pojo.Entity.Exam">
+        select * from exam
+    </select>
+    <select id="getExamByTeacherId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select e.* from exam e
+        left join class c on e.exam_id = c.exam_id
+        where teacher_id = #{id}
+    </select>
     <select id="SelectExamByStuIdNotTest" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
         select * from exam e
         left join student_paper_record s on e.exam_id=s.exam_id
@@ -31,5 +39,13 @@
     <select id="SelectExamTimeByExamId" parameterType="int" resultType="int">
         select exam_time from exam
         where exam_id = #{id}
+    </select>
+    <select id="SelectPaperId" parameterType="int" resultType="int">
+        select paper_id from exam where exam_id = #{id}
+    </select>
+    <select id="SelectByTeacherId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Exam">
+        select e.* from exam e
+        left join class c on e.exam_id = c.exam_id
+        where c.teacher_id = #{id}
     </select>
 </mapper>

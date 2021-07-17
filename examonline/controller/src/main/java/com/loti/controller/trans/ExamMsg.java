@@ -13,7 +13,7 @@ public class ExamMsg {
     Timestamp endTime;
     int timeLong;
     int paperId;
-    String classIdList;
+    String classId;
 
     public String getExamName() {
         return examName;
@@ -63,11 +63,11 @@ public class ExamMsg {
         this.paperId = paperId;
     }
 
-    public String getClassIdList() {
-        return classIdList;
+    public String getClassId() {
+        return classId;
     }
 
-    public void setClassIdList(String classIdList) {
-        this.classIdList = classIdList;
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 }

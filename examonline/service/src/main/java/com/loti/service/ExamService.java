@@ -12,4 +12,7 @@ public interface ExamService {
     List<Exam> getStudentExam(int stu_id);
     int getExamTime(int exam_id);
     void InsertExam(Exam exam);
+    List<Exam> getAllExam();
+    List<Exam> getExamByTeacherId(int teacher_id);
+    int getPaperId(int exam_id);
 }

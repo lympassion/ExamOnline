@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav class="row" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <div class="col-10">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">人事管理</a></li>
+                        <li class="breadcrumb-item"><a href="classManage.html">班级管理</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">班级列表</li>
+                    </ol>
+                </div>
+                <div class="col-2">
+                    <button id="btn-create-class" type="button" class="btn btn-primary" style="margin-top: 5px; margin-left: 40px;">创建班级</button>
+                </div>
+                
+            </nav>
+            <table class="table table-borderless" id="classListTable" style="text-align: center;">
+                
+            </table>
+        </div>
+        
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        $("#btn-create-class").click(function() {
+            var createClassURL = "createClass.html";
+            window.location.href = createClassURL;
+        })
+
+        function initTable() {  
+            //先销毁表格  
+            $('#classListTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#classListTable").bootstrapTable({  
+                method: "get", 
+                url: "/admin/getAllClass",
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表  
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            field: 'classId',
+                            title: '班级编号',
+                            sortable: true
+                        }, {
+                            field: 'className',
+                            title: '班级名称',
+                            sortable: true
+                        }, {
+                            field: 'courseName',
+                            title: '所属学科',
+                            sortable: true
+                        }, {
+                            field: 'teacherId',
+                            title: '负责教师编号',
+                            visible: false
+                        }, {
+                            field: 'teacherName',
+                            title: '负责教师名称'
+                        }, {
+                            field: 'studentCnt',
+                            title: '学生人数'
+                        }, {
+                            field: 'paperOperator',
+                            title: '操作',
+                            formatter: addButton,
+                            events: operateEvents
+                        }],
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+        function addButton(value, row, index) {
+            return [
+                    '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">查看</button>'
+                ].join('');
+        }
+
+        window.operateEvents = {
+            'click .RoleOfA': function (e, value, row, index) {
+                var val = "row:" + JSON.stringify(row);
+                alert(val);            
+            }
+            // 'click .RoleOfB': function (e, value, row, index) {
+            //     var paperId = row["paperId"];
+            //     // alert(removeData.paperId);
+                
+                // // 删除
+                // $.ajax({
+                //         type: "get",
+                //         url: "/admin/removePaper?pid=" + paperId,
+                //         datatype: "json",
+                //         success: initTable(),
+                //         //success: parsePaperData(data),
+                //         error: function(data) {
+                //             // alert(data);
+                //         }
+                //     })
+
+            // }
+        };
+    
+        $(document).ready(function () {  
+            
+            //调用函数，初始化表格  
+            initTable();    
+        }); 
+
+
+    </script>
+
+<style>
+  #classListTable {border: none;}
+</style>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.loti.dao.mapper.ClasseMapper;
 import com.loti.dao.mapper.StuClassMapper;
 import com.loti.dao.pojo.Entity.Classe;
 import com.loti.dao.pojo.Entity.StudentClass;
+import com.loti.dao.pojo.Entity.Trans.TransClass;
 import com.loti.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,5 +38,20 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public List<Classe> SelectClassByCourse(String course_name) {
         return classeMapper.SelectClassByCourse(course_name);
+    }
+
+    @Override
+    public List<TransClass> getAllClassInfo() {
+        return classeMapper.getAllClassInfo();
+    }
+
+    @Override
+    public List<String> getAllClassName() {
+        return classeMapper.getAllClassName();
+    }
+
+    @Override
+    public List<TransClass> getClassInfoByCourse(String courseName) {
+        return classeMapper.getClassInfoByCourse(courseName);
     }
 }

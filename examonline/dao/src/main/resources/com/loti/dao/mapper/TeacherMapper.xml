@@ -13,7 +13,12 @@
         select * from teacher WHERE teacher_id = #{userId} AND teacher_password = #{password}
     </select>
     <insert id="InsertTeacher"  parameterType="com.loti.dao.pojo.Entity.User.Teacher" useGeneratedKeys="true" keyProperty="teacherId">
-        insert into teacher (teacher_id, teacher_name,teacher_gender,teacher_email, teacher_password)
-            VALUES(#{teacherId},#{teacherName},#{teacherGender},#{teacherEmail},#{teacherPassword})
+        insert into teacher (teacher_id, teacher_name,teacher_gender,teacher_email, teacher_password,teacher_course)
+            VALUES(#{teacherId},#{teacherName},#{teacherGender},#{teacherEmail},#{teacherPassword},#{teacherCourse})
     </insert>
+    <select id="SelectNotClass" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.User.Teacher">
+        SELECT * FROM teacher WHERE teacher_id NOT IN (
+            SELECT teacher_id FROM class
+        ) AND teacher_course = #{courseName}
+    </select>
 </mapper>

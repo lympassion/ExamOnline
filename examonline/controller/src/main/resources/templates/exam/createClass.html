@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/step.style.css">
+
+        <style>
+            #teacherListTable {border: none;}
+            #studentListTable {border: none;}
+        </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">人事管理</a></li>
+                    <li class="breadcrumb-item"><a href="classManage.html">班级管理</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">创建班级</li>
+                </ol>
+            </nav>
+            <div>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary unVisible" id="pre">上一步</button>
+                    </div>
+                    <div class="col-8 form-group  border-bottom-1">
+                        <div class="modal-steps">
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 1: 班级信息</label>
+                            </div>
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 2: 选择教师</label>
+                            </div>
+                        
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 3: 选择学生</label>
+                            </div>
+                            <!-- <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 4: 判断题</label>
+                            </div>
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 5: 简答题</label>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary" id="next">下一步</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="step-main">
+                        <div class="step-slide" id="step-slide-1">
+                            <div class="row m-3">
+                                <div class="col"></div>
+                                <div class="col-sm-5">
+                                    <form class="needs-validation" style="margin-top: 150px;">
+                                        <div class="input-group mb-2">
+                                            <label for="className" class="col-sm-3 col-form-label" style="font-weight:normal;">班级名称：</label>
+                                            <div class="col-sm-9">
+                                                <input id="className" name="className" type="text" placeholder="请输入班级名称" class="form-control" required>
+                                                <div class="invalid-feedback">请输入班级名称</div>
+                                              </div>
+                                        </div>
+                    
+                                        <div class="input-group mb-2">
+                                            <label for="courseNameSelect" class="col-sm-3 col-form-label" style="font-weight:normal;">所属课程：</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="courseNameSelect">
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                        <div class="step-slide" id="step-slide-2">
+                            <table class="table table-borderless" id="teacherListTable">
+                            </table>
+                        </div>
+                        <div class="step-slide" id="step-slide-3">
+                            <table class="table table-borderless" id="studentListTable">
+                            </table>
+                        </div>
+                        <!-- <div class="step-slide" id="step-slide-4">
+                            <table class="table table-borderless" id="question_2_listTable">
+                            </table>
+                        </div>
+                        <div class="step-slide" id="step-slide-5">
+                            <table class="table table-borderless" id="question_4_listTable">
+                            </table>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- <table class="table table-borderless" id="quesListTable">
+                
+            </table> -->
+
+
+
+        </div>
+        
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    <script src="/js/jquery.actual.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        var courseName = "";
+        var classNameExist = [];
+        
+        $(document).ready(function () {  
+            
+            // 获取所有已存在课程的课程名称 
+            $.ajax({
+                    type: "get",
+                    url: "/admin/getAllCourseName",
+                    datatype: "json",
+                    success: function(resultMsg1){
+                        addCourseName(resultMsg1.data);
+                    },
+                    //success: parsePaperData(data),
+                    error: function(resultMsg1) {
+                        // alert(data);
+                    }
+                })
+
+            // 获取所有已存在的班级名称 
+            $.ajax({
+                    type: "get",
+                    url: "/admin/getAllClassName",
+                    datatype: "json",
+                    success: function(resultMsg2){
+                        classNameExist = resultMsg2;
+                    },
+                    //success: parsePaperData(data),
+                    error: function(resultMsg2) {
+                        // alert(data);
+                    }
+                })
+
+        }); 
+
+        function addCourseName(courseNamesString) {
+            var courseNames = courseNamesString.split(',');
+            var course = "";
+            for(var i = 0; i < courseNames.length; i++) {
+                course = "<option>" + courseNames[i] + "</option>";
+                document.querySelector('#courseNameSelect').innerHTML += course;
+            }
+        }
+
+        function initAllTables(courseName) {
+            //调用函数，初始化表格  
+            initTable_teacher(courseName);
+            initTable_student(courseName);
+        }
+
+        function initTable_teacher(courseName) {  
+            //先销毁表格  
+            $('#teacherListTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#teacherListTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/admin/getTeachersNoClass?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: true,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'teacherId',
+                            title: '教师编号',
+                            sortable: true
+                        }, {
+                            field: 'teacherName',
+                            title: '姓名'
+                        }, {
+                            field: 'teacherGender',
+                            title: '性别',
+                            formatter: function(value, row, index) {
+                                var val = (value == 0) ? "male" : "female";
+                                return val
+                            }
+                        }],
+                // onLoadSuccess: function () {
+                // },
+                // onLoadError: function () {
+                //     // showTips("数据加载失败！");
+                // }
+
+            });  
+        }
+
+        function initTable_student(courseName) {  
+            //先销毁表格  
+            $('#studentListTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#studentListTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/admin/getStudentUniCourse?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: false,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'studentId',
+                            title: '学生编号',
+                            sortable: true
+                        }, {
+                            field: 'studentName',
+                            title: '姓名'
+                        }, {
+                            field: 'studentGender',
+                            title: '性别',
+                            formatter: function(value, row, index) {
+                                var val = (value == 0) ? "male" : "female";
+                                return val
+                            }
+                        }],      
+                // onLoadSuccess: function () {
+                // },
+                // onLoadError: function () {
+                //     // showTips("数据加载失败！");
+                // }
+
+            });  
+        }
+
+        $(function(){
+
+            step_();
+        })
+
+        function step_() {
+            let howLong=$(".modal-steps").actual("width")/3;
+            // console.log(howLong)
+            let current=0;
+            $('.step-main').css("height",getMaxHeight());
+            $('.step-slide').eq(current).fadeIn(500)
+            $('.step').eq(current).addClass("current");
+
+            let preventResponse=false;
+            // console.log(current);
+
+            var className = "";
+            courseName = "";
+            var teacherId = 0;
+            var studentId = [];
+
+            // 判断班级名称是否存在
+            var classNameInputText = document.querySelector("#className");
+            classNameInputText.onblur = function() {
+                // if(classNameInputText.value == "123") {
+                if(classNameExist.indexOf(classNameInputText.value) >= 0) {
+                    alert("该班级(名称)已存在！");
+                    $('#className').focus;
+                    return;
+                }
+            }
+
+            $('#next').click(function(){
+                if(current == 0) {
+                    className = document.getElementById('className').value;
+                    courseName = document.getElementById('courseNameSelect').value;
+                    console.log(className);
+
+                    initAllTables(courseName); 
+
+                } else if (current == 1) {
+                    teacherId = $('#teacherListTable').bootstrapTable('getSelections')[0].teacherId;
+
+                } else if (current == 2) {
+                    studentId.length = 0;
+                    var studentIdChosedNow = $('#studentListTable').bootstrapTable('getSelections');
+                    for(var i = 0; i < studentIdChosedNow.length; i++) {
+                        if(studentId.indexOf(studentIdChosedNow[i].studentId) < 0) {
+                            studentId += studentIdChosedNow[i].studentId + ",";
+                        }
+                    }
+                    console.log(studentId);
+
+                    studentId = studentId.substring(0, studentId.lastIndexOf(","));
+                    console.log(studentId);
+                    var classSubmit = createSubmit(teacherId, studentId);
+                    var classJSON = JSON.stringify(classSubmit);
+                    // console.log(paperSubmit);
+                    // console.log(pJSON);
+
+                    $.ajax({
+                        type: "post",
+                        url: "/admin/newClassSubmit",
+                        contentType: "application/json",
+                        data: classJSON,
+                        datatype: "json",
+                        success: function(resultMsg){
+                            if(resultMsg.code == 0){
+                                // 提交成功
+                                alert('提交成功！');
+                                window.location.reload();
+                            } else {
+                                // 提交失败
+                                alert(resultMsg.msg);
+                                window.location.href = "createClass.html";
+                            }
+                        },
+                        error: function(resultMsg){
+                            // alert("通信失败");
+                        }
+                    });
+
+                }
+
+
+                // console.log(paperName);
+                // console.log(courseName);
+                // console.log(questions);
+
+                if(!preventResponse){
+                    if(current!=($('.step-slide').length-1)){
+                
+                        $('.step').eq(current).addClass("completed");
+                    
+                        current++;
+                        
+                        let timeOut=null;
+                        clearTimeout(timeOut);
+                        timeOut=setTimeout(function(){
+                            // console.log(current)
+                            $('.step').eq(current).addClass("current");
+                        },200);
+
+                        // console.log(current);
+                        $('.step-slide').eq(current).stop().fadeIn(500).siblings().fadeOut(500);
+                        if(current==($('.step-slide').length-1)){
+                            $(this).html("完&nbsp;&nbsp;&nbsp;&nbsp;成");
+                            
+                            
+                        }else{
+                            $(this).html("下一步");
+                        }
+                        if(current==0){
+                            $('#pre').addClass('unVisible')
+                        }else{
+                            $('#pre').removeClass('unVisible')
+                        }
+
+                        // if(current==($('.step-slide').length)) {
+                        //     $(this).click(function() {
+                        //         // createSubmit();
+                        //         var m = createSubmit();
+                        //         alert(m);
+                        //     })
+                        // }
+                    }
+                    
+                    // $(".step").eq(0).css("width",current*howLong);
+                    preventResponse=true;
+                    setTimeout(function(){
+                        preventResponse=false;
+                    },500);
+                }
+            })
+
+            function createSubmit(teacherId, studentId) {
+                var paperMsg = {
+                    "className": className,
+                    "courseName": courseName,
+                    "teacherId": teacherId,
+                    "studentId": studentId
+                }
+                return paperMsg;
+            }
+
+            $('#pre').click(function(){
+            if(!preventResponse){
+                if(current!=0){
+                    $('.step').eq(current).removeClass("current");
+                    current--;
+                    let timeOut=null;
+                    clearTimeout(timeOut);
+                    timeOut=setTimeout(function(){
+                        $('.step').eq(current).removeClass("completed");
+                    },200);
+                    $('.step-slide').eq(current).stop().fadeIn(500).siblings().fadeOut(500);
+                    if(current==($('.step-slide').length-1)){
+                        $("#next").html("完成");
+                    }else{
+                        $("#next").html("下一步");
+                    }
+                    if(current==0){
+                        $(this).addClass('unVisible')
+                    }else{
+                        $(this).removeClass('unVisible')
+                    }
+                }
+                
+            
+                preventResponse=true;
+                setTimeout(function(){
+                    preventResponse=false;
+                },500);
+            }
+        })
+        }
+
+        function getMaxHeight(){
+            let MaxHeight=0;
+            $('.step-slide').each(function(){
+                let actualHeight=parseFloat($(this).actual('outerHeight'));
+                if(actualHeight>MaxHeight){
+                    MaxHeight=actualHeight
+                }
+            })
+            // console.log(MaxHeight)
+            return MaxHeight;
+        }
+    </script>
+
+</body>
+</html>

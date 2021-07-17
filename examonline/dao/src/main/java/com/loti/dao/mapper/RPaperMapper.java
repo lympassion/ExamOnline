@@ -15,4 +15,6 @@ public interface RPaperMapper {
     void updateScoreById(@Param("paperId") int paperId,@Param("score") int score);
     void RemoveRPaperById(int id);
     List<Integer> getAllRPaperId();
+    List<Integer> getRPaperIdByCourse(String courseName);
+    String getPaperNameById(int id);
 }

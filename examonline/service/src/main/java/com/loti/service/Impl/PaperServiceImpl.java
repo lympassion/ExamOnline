@@ -59,5 +59,25 @@ public class PaperServiceImpl implements PaperService {
         return rPaperMapper.getScoreById(paper_id);
     }
 
+    @Override
+    public int getTypeCnt(int type, int paper_id) {
+        return paperMapper.getTypeCnt(type,paper_id);
+    }
+
+    @Override
+    public List<Integer> getRPaperIdByCourse(String courseName) {
+        return rPaperMapper.getRPaperIdByCourse(courseName);
+    }
+
+    @Override
+    public String getPaperNameById(int id) {
+        return rPaperMapper.getPaperNameById(id);
+    }
+
+    @Override
+    public int getOrderByPaperAndQues(int ques_id, int paper_id) {
+        return paperMapper.getOrderByPaperAndQues(ques_id,paper_id);
+    }
+
 
 }

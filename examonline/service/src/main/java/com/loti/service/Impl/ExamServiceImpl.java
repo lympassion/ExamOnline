@@ -13,7 +13,6 @@ public class ExamServiceImpl implements ExamService {
     @Autowired(required = false)
     private ExamMapper examMapper;
 
-
     @Override
     public List<Exam> getStudentNotTest(int stu_id) {
         List<Exam> examList = examMapper.SelectExamByStuIdNotTest(stu_id);
@@ -40,4 +39,20 @@ public class ExamServiceImpl implements ExamService {
     public void InsertExam(Exam exam) {
         examMapper.InsertExam(exam);
     }
+
+    @Override
+    public List<Exam> getAllExam() {
+        return examMapper.getAllExam();
+    }
+
+    @Override
+    public List<Exam> getExamByTeacherId(int teacher_id) {
+        return examMapper.getExamByTeacherId(teacher_id);
+    }
+
+    @Override
+    public int getPaperId(int exam_id) {
+        return examMapper.SelectPaperId(exam_id);
+    }
+
 }

@@ -11,4 +11,17 @@
         insert into student_exam (exam_id, student_id, student_answer, student_score, question_id) VALUES
         (#{examId},#{studentId},#{studentAnswer},#{studentScore},#{questionId})
     </insert>
+    <insert id="InsertInitStuExamByClass">
+        insert into student_paper_record (exam_id, student_id)
+        select #{examId},student_id from student_class
+        where class_id = #{classId}
+    </insert>
+    <select id="getStuExamByExamStu" resultType="com.loti.dao.pojo.Entity.StudentExam">
+        select * from student_exam where student_id = #{stuId} and exam_id = #{examId}
+    </select>
+    <update id="updateScore">
+        update student_exam
+        set student_score = #{score}
+        where exam_id = #{examId} and student_id = #{stuId} and question_id = #{quesId}
+    </update>
 </mapper>

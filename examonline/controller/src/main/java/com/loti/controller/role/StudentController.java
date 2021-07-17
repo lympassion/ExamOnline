@@ -2,18 +2,18 @@ package com.loti.controller.role;
 
 import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
+import com.loti.controller.trans.SimpleQues;
 import com.loti.dao.pojo.Entity.Exam;
 import com.loti.dao.pojo.Entity.Question;
 import com.loti.dao.pojo.Entity.StudentExam;
 import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.service.*;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/student")
@@ -28,6 +28,8 @@ public class StudentController {
     private StuPaperService stuPaperService;
     @Autowired
     private StuExamService stuExamService;
+    @Autowired
+    private QuesService quesService;
 
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
@@ -110,26 +112,37 @@ public class StudentController {
 
     @RequestMapping(value = "/examSubmit", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> ExamSubmit(@RequestParam Map<String, Object> sheet){
+    public Map<String,Object> ExamSubmit(@RequestBody Map<String, Object> sheet){
         System.out.println(sheet.toString());
         int userId = Integer.parseInt((String)sheet.get("userId"));
         int examId = Integer.parseInt((String)sheet.get("examId"));
-        int total_num = Integer.parseInt((String) sheet.get("num_total"));
-        if(userId == 0||examId == 0||total_num ==0){
+        int score_1 = 0;
+        if(userId == 0||examId == 0){
             //THROW WRONG CODE
         }
-        for(int i=1;i<=total_num;i++){
-            String ansKey_qid = "answer["+String.valueOf(i)+"][quesId]";
-            String ansKsy_qans = "answer["+String.valueOf(i)+"][quesAnswer]";
-            int ques_id = Integer.parseInt((String) sheet.get(ansKey_qid));
-            String ques_ans = (String) sheet.get(ansKsy_qans);
+        LinkedHashMap<String, LinkedHashMap<String,Object>> answer= (LinkedHashMap<String, LinkedHashMap<String, Object>>) sheet.get("answer");
+
+        for (Map.Entry<String, LinkedHashMap<String,Object>> temp : answer.entrySet()) {
+            int ques_id = (Integer) temp.getValue().get("quesId");
+            Question question = quesService.GetQuesByQid(ques_id);
+            String stu_ans = (String) temp.getValue().get("quesAnswer");
+            String corr_ans = question.getQuestionAnswer();
+            int score = 0;
+            if(question.getQuestionType()!=FormatUtil.SUBJECT){
+                score = FormatUtil.JudgeScore(question.getQuestionType(),stu_ans,corr_ans);
+                score_1 += score;
+            }
+
             StudentExam studentExam = new StudentExam();
             studentExam.setExamId(examId);
             studentExam.setStudentId(userId);
             studentExam.setQuestionId(ques_id);
-            studentExam.setStudentAnswer(ques_ans);
+            studentExam.setStudentAnswer(stu_ans);
+            studentExam.setStudentScore(score);
             stuExamService.InsertStuExam(studentExam);
         }
+
+        stuPaperService.updateScorePart1(examId,userId,score_1);
         return new HashMap<String, Object>(){{
             put("code",0);
             put("msg","ok");

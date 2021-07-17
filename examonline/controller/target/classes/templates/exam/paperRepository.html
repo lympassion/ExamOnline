@@ -26,7 +26,7 @@
                 </div>
                 
             </nav>
-            <table class="table table-borderless" id="examListTable" style="text-align: center;">
+            <table class="table table-borderless" id="paperListTable" style="text-align: center;">
                 
             </table>
         </div>
@@ -50,9 +50,9 @@
 
         function initTable() {  
             //先销毁表格  
-            $('#examListTable').bootstrapTable('destroy');  
+            $('#paperListTable').bootstrapTable('destroy');  
             //初始化表格, 动态从服务器加载数据  
-            $("#examListTable").bootstrapTable({  
+            $("#paperListTable").bootstrapTable({  
                 method: "get", 
                 url: "/teacher/getAllPapers",
                 // pagination: true, //启动分页  
@@ -148,7 +148,7 @@
     </script>
 
 <style>
-  #examListTable {border: none;}
+  #paperListTable {border: none;}
 </style>
 
 </body>

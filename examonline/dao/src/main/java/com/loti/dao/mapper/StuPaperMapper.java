@@ -15,4 +15,6 @@ public interface StuPaperMapper {
     //通过学生id和考试id使得其验证参加考试
     void updateStudentTestInfoById(@Param("examId") int examId, @Param("stuId") int studentId);
     void InsertStuPaper(StudentPaper studentPaper);
+    void updateScorePart1(@Param("examId") int examId, @Param("stuId") int studentId, @Param("score") int scorePart1);
+    void updateScorePart2(@Param("examId") int examId, @Param("stuId") int studentId, @Param("score") int scorePart2);
 }

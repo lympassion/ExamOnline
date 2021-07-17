@@ -1,11 +1,15 @@
 package com.loti.dao.pojo.Entity.User;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Teacher {
     private int teacherId;
     private String teacherName;
     private int teacherGender;
     private String teacherEmail;
     private String teacherPassword;
+    private String teacherCourse;
 
     Teacher(){}
 
@@ -55,5 +59,13 @@ public class Teacher {
 
     public void setTeacherPassword(String teacherPassword) {
         this.teacherPassword = teacherPassword;
+    }
+
+    public String getTeacherCourse() {
+        return teacherCourse;
+    }
+
+    public void setTeacherCourse(String teacherCourse) {
+        this.teacherCourse = teacherCourse;
     }
 }

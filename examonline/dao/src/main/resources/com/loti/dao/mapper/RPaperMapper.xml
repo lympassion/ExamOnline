@@ -27,4 +27,11 @@
     <select id="getAllRPaperId" resultType="java.lang.Integer">
         select distinct paper_id from real_paper
     </select>
+    <select id="getRPaperIdByCourse"  parameterType="java.lang.String" resultType="int">
+        select paper_id from real_paper where course_name = #{courseName}
+    </select>
+    <select id="getPaperNameById" parameterType="int" resultType="java.lang.String">
+        select paper_name from real_paper where paper_id = #{id}
+    </select>
+
 </mapper>

@@ -6,6 +6,8 @@ import com.loti.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TeacherServiceImpl implements TeacherService {
     @Autowired(required = false)
@@ -20,4 +22,15 @@ public class TeacherServiceImpl implements TeacherService {
     public void InsertTeacher(Teacher teacher) {
         teacherMapper.InsertTeacher(teacher);
     }
+
+    @Override
+    public List<Teacher> getAllTeacher() {
+        return teacherMapper.getAllTeacher();
+    }
+
+    @Override
+    public List<Teacher> SelectNotClass(String courseName) {
+        return teacherMapper.SelectNotClass(courseName);
+    }
+
 }

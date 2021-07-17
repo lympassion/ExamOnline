@@ -11,4 +11,6 @@ public interface StuPaperService {
     List<StudentPaper> getStuPaperByStuId(int stu_id);
     void UpdateIfTestInfo(int exam_id,int stu_id);
     void InsertStuPaper(StudentPaper studentPaper);
+    void updateScorePart1(int exam_id,int stu_id,int score_1);
+    void updateScorePart2(int exam_id,int stu_id,int score_2);
 }

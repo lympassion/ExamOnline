@@ -14,4 +14,5 @@ public interface TeacherMapper {
     void InsertTeacher(Teacher teacher);
     Teacher SelectTeacherById(int id);
     Teacher SelectTeacherByIdAndPass(MyUser user);
+    List<Teacher> SelectNotClass(String courseName);
 }

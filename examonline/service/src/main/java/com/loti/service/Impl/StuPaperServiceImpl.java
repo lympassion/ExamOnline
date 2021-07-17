@@ -33,4 +33,14 @@ public class StuPaperServiceImpl implements StuPaperService {
     public void InsertStuPaper(StudentPaper studentPaper) {
         stuPaperMapper.InsertStuPaper(studentPaper);
     }
+
+    @Override
+    public void updateScorePart1(int exam_id, int stu_id, int score_1) {
+        stuPaperMapper.updateScorePart1(exam_id,stu_id,score_1);
+    }
+
+    @Override
+    public void updateScorePart2(int exam_id, int stu_id, int score_2) {
+        stuPaperMapper.updateScorePart2(exam_id,stu_id,score_2);
+    }
 }

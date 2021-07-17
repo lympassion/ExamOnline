@@ -20,4 +20,12 @@
     <delete id="RemovePaperById" parameterType="int">
         delete from paper where paper_id = #{id}
     </delete>
+    <select id="getTypeCnt"  resultType="int">
+        SELECT count(question_type) FROM paper
+        where question_type = #{type} AND paper_id = #{paperId}
+    </select>
+    <select id="getOrderByPaperAndQues" resultType="int">
+        select question_order from paper
+        where paper_id = #{paperId} and question_id = #{quesId}
+    </select>
 </mapper>

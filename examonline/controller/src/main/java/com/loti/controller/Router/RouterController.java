@@ -45,7 +45,7 @@ public class RouterController {
             error_type = "username invalid";
         }
         if(usr!=null){
-            String jwt = JwtUtil.generateToken(role,String.valueOf(user.userId));//TODO
+            String jwt = JwtUtil.generateToken(role,String.valueOf(user.userId));
             return new HashMap<String, Object>(){{
                 put("code", 0);
                 put("msg","ok");

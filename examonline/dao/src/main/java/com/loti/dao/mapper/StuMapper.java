@@ -8,8 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface StuMapper {
-    List<Student> getAllstudent();
+    List<Student> getAllStudent();
     void InsertStudent(Student student);
     Student selectById(int id);
     Student selectByIdAndPass(MyUser user);
+    List<Student> selectStuUniCourse(String courseName);
 }

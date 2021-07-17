@@ -8,6 +8,13 @@ public class StudentClass {
     int studentId;
     int classId;
 
+    StudentClass(){}
+    public StudentClass(int id, int studentId, int classId) {
+        this.id = id;
+        this.studentId = studentId;
+        this.classId = classId;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav class="row" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <div class="col-10">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">考试管理</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">考试安排</li>
+                    </ol>
+                </div>
+                <div class="col-2">
+                    <button id="btn-create-exam" type="button" class="btn btn-primary" style="margin-top: 5px; margin-left: 40px;">创建考试</button>
+                </div>
+                
+            </nav>
+            <table class="table table-borderless" id="examListTable" style="text-align: center;">
+                
+            </table>
+        </div>
+        
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        $("#btn-create-exam").click(function() {
+            var createExamURL = "createExam.html";
+            window.location.href = createExamURL;
+        })
+
+        function initTable() {  
+            //先销毁表格  
+            $('#examListTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#examListTable").bootstrapTable({  
+                method: "get", 
+                url: "/admin/getAllExam",
+                // pagination: true, //启动分页  
+                // pageSize: 10,  //每页显示的记录数  
+                // pageNumber:1, //当前第几页  
+                // pageList: [5, 10, 15, 20, 25],  //记录数可选列表  
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            field: 'examName',
+                            title: '考试名称',
+                            sortable: true
+                        }, {
+                            field: 'examId',
+                            title: '考试编号',
+                            visible: false
+                            // sortable: true
+                        }, {
+                            field: 'courseName',
+                            title: '学科',
+                            sortable: true
+                        }, {
+                            field: 'paperId',
+                            title: '试卷编号',
+                            visible: false
+                            // sortable: true
+                        }, {
+                            field: 'totalScore',
+                            title: '试卷总分',
+                            visible: false
+                        }, {
+                            field: 'startTime',
+                            title: '开始时间',
+                            sortable: true,
+                            formatter: function(value, row, index) {
+                                var val = value / 1000;
+                                return formatTimeFromTimestamp(val)
+                            }
+                        }, {
+                            field: 'endTime',
+                            title: '停止进入时间',
+                            sortable: true,
+                            formatter: function(value, row, index) {
+                                var val = value / 1000;
+                                return formatTimeFromTimestamp(val)
+                            }
+                        }, {
+                            field: 'examTime',
+                            title: '考试时长',
+                            formatter: function(value, row, index) {
+                                return timeSecToMin(value)
+                            }
+                        }, {
+                            field: 'examStatus',
+                            title: '状态',
+                            sortable: true,
+                            formatter: addStatusText,
+                            events: operateEvents
+                        }],
+                // data:[
+                //         {"examName":"测试1","examCourseName":"java","examStartTime":1625875200,"examEndTime":1626048000},
+                //         {"examName":"测试2","examCourseName":"java","examStartTime":1625877000,"examEndTime":1626049800},
+                //         {"examName":"测试3","examCourseName":"java","examStartTime":1626143400,"examEndTime":1626229800},
+                //         {"examName":"测试4","examCourseName":"python","examStartTime":1626143400,"examEndTime":1626229800},
+                //         {"examName":"测试5","examCourseName":"python","examStartTime":1626143400,"examEndTime":1626229800},
+                //         {"examName":"测试6","examCourseName":"python","examStartTime":1626143400,"examEndTime":1626229800},
+                //         {"examName":"测试7","examCourseName":"C++","examStartTime":1626143400,"examEndTime":1626229800},
+                //         {"examName":"测试8","examCourseName":"C++","examStartTime":1626093132,"examEndTime":1626229800},
+                //         {"examName":"测试9","examCourseName":"C++","examStartTime":1626093132,"examEndTime":1626229800}
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+        function timeSecToMin(timeSec) {
+            var timeMin = timeSec / 60 + "分钟";
+            return timeMin;
+        }
+
+        function addStatusText(value, row, index) {
+            var startTime = row.startTime / 1000;
+            var endTime = row.endTime / 1000;
+            var timeNow = Math.round(new Date() / 1000);
+            // 如果时间已过则显示已结束，还没开始 或 时间允许但还没参加 则显示待参加
+            if(timeNow > endTime) {
+                return [
+                    '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">查看考试</button>'
+                ].join('');
+            } else if (timeNow < startTime ) {
+                return [
+                    '<button type="button" class="RoleOfA btn btn-secondary btn-sm" style="margin-right:15px;" disabled>尚未开始</button>'
+                ].join('');
+            } else {
+                return [
+                    '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">马上监考</button>'
+                ].join('');
+            }
+        }
+
+        // function addButton(value, row, index) {
+        //     return [
+        //             '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">查看</button>'
+        //             + "  " + 
+        //             '<button type="button" class="RoleOfB btn btn-default btn-primary btn-sm" style="margin-right:15px;">删除</button>'
+        //         ].join('');
+        // }
+
+        window.operateEvents = {
+            'click .RoleOfA': function (e, value, row, index) {
+                var val = "row:" + JSON.stringify(row);
+                alert(val);            
+            }
+        };
+    
+        $(document).ready(function () {  
+            
+            //调用函数，初始化表格  
+            initTable();    
+        }); 
+
+
+
+
+    </script>
+
+<style>
+  #examListTable {border: none;}
+</style>
+
+</body>
+</html>

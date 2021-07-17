@@ -1,7 +1,9 @@
 package com.loti.service.Impl;
 
+import com.loti.dao.mapper.AdminMapper;
 import com.loti.dao.mapper.StuMapper;
 import com.loti.dao.mapper.TeacherMapper;
+import com.loti.dao.pojo.Entity.User.Admin;
 import com.loti.dao.pojo.Entity.User.MyUser;
 import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.dao.pojo.Entity.User.Teacher;
@@ -15,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private StuMapper stuMapper;
     @Autowired(required = false)
     private TeacherMapper teacherMapper;
+    @Autowired(required = false)
+    private AdminMapper adminMapper;
 
     @Override
     public MyUser checkUser(MyUser user) {
@@ -31,6 +35,12 @@ public class UserServiceImpl implements UserService {
                 return null;
             return new MyUser(teacher.getTeacherId(),teacher.getTeacherPassword());
         }
+        if(user.getRole().equals(MyUser.ROLE_ADMIN)){
+            Admin admin = adminMapper.selectByIdAndPass(user);
+            if(admin == null)
+                return null;
+            return new MyUser(admin.getAdminId(),admin.getAdminPassword());
+        }
         return null;
     }
 
@@ -43,6 +53,9 @@ public class UserServiceImpl implements UserService {
         if(String.valueOf(id).substring(0,1).equals(MyUser.ROLE_TEACHER)){
             Teacher teacher = teacherMapper.SelectTeacherById(id);
             return new MyUser(teacher.getTeacherId(),teacher.getTeacherPassword());
+        }if(String.valueOf(id).substring(0,1).equals(MyUser.ROLE_ADMIN)){
+            Admin admin = adminMapper.selectAdminById(id);
+            return new MyUser(admin.getAdminId(),admin.getAdminPassword());
         }
         return null;
     }

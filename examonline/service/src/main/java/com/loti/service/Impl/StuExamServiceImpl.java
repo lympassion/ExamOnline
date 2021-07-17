@@ -6,6 +6,8 @@ import com.loti.service.StuExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class StuExamServiceImpl implements StuExamService {
 
@@ -25,5 +27,15 @@ public class StuExamServiceImpl implements StuExamService {
     @Override
     public void InsertInitStuExamByClass(int class_id, int exam_id) {
         stuExamMapper.InsertInitStuExamByClass(class_id,exam_id);
+    }
+
+    @Override
+    public List<StudentExam> getStuExamByExamStu(int exam_id, int stu_id) {
+        return stuExamMapper.getStuExamByExamStu(exam_id, stu_id);
+    }
+
+    @Override
+    public void updateScore(int exam_id, int stu_id, int ques_id, int score) {
+        stuExamMapper.updateScore(exam_id,stu_id,ques_id,score);
     }
 }
