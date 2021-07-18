@@ -165,29 +165,12 @@
         //         ].join('');
         // }
 
-        // window.operateEvents = {
-        //     'click .RoleOfA': function (e, value, row, index) {
-        //         var val = "row:" + JSON.stringify(row);
-        //         alert(val);            
-        //     },
-        //     'click .RoleOfB': function (e, value, row, index) {
-        //         var paperId = row["paperId"];
-        //         // alert(removeData.paperId);
-                
-        //         // 删除
-        //         $.ajax({
-        //                 type: "get",
-        //                 url: "/admin/removePaper?pid=" + paperId,
-        //                 datatype: "json",
-        //                 success: initTable(),
-        //                 //success: parsePaperData(data),
-        //                 error: function(data) {
-        //                     // alert(data);
-        //                 }
-        //             })
-
-        //     }
-        // };
+        window.operateEvents = {
+            'click .RoleOfA': function (e, value, row, index) {
+                var val = "row:" + JSON.stringify(row);
+                alert(val);            
+            }
+        };
     
         $(document).ready(function () {  
             
