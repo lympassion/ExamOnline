@@ -70,6 +70,11 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public RealPaper getRealPaperById(int paper_id) {
+        return rPaperMapper.SelectRPaperById(paper_id);
+    }
+
+    @Override
     public String getPaperNameById(int id) {
         return rPaperMapper.getPaperNameById(id);
     }
@@ -79,5 +84,13 @@ public class PaperServiceImpl implements PaperService {
         return paperMapper.getOrderByPaperAndQues(ques_id,paper_id);
     }
 
+    @Override
+    public void updateScorePart1(int paper_id, int score) {
+        rPaperMapper.updateScorePart1(paper_id,score);
+    }
 
+    @Override
+    public void updateScorePart2(int paper_id, int score) {
+        rPaperMapper.updateScorePart2(paper_id,score);
+    }
 }

@@ -8,13 +8,16 @@ import java.util.List;
 
 @Mapper
 public interface RPaperMapper {
-    void InsertRPaper(RealPaper paper);
     RealPaper SelectRPaperByName(String name);
-    List<RealPaper> getAllRealPaper();
+    RealPaper SelectRPaperById(int paperId);
     int getScoreById(int paperId);
-    void updateScoreById(@Param("paperId") int paperId,@Param("score") int score);
-    void RemoveRPaperById(int id);
+    List<RealPaper> getAllRealPaper();
     List<Integer> getAllRPaperId();
     List<Integer> getRPaperIdByCourse(String courseName);
     String getPaperNameById(int id);
+    void InsertRPaper(RealPaper paper);
+    void updateScoreById(@Param("paperId") int paperId,@Param("score") int score);
+    void updateScorePart1(@Param("paperId") int paperId,@Param("score") int score);
+    void updateScorePart2(@Param("paperId") int paperId,@Param("score") int score);
+    void RemoveRPaperById(int id);
 }

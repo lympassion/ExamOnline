@@ -33,5 +33,14 @@
     <select id="getPaperNameById" parameterType="int" resultType="java.lang.String">
         select paper_name from real_paper where paper_id = #{id}
     </select>
-
+    <update id="updateScorePart1">
+        update real_paper
+        set paper_score_part1 = #{score}
+        where paper_id = #{paperId}
+    </update>
+    <update id="updateScorePart2">
+        update real_paper
+        set paper_score_part2 = #{score}
+        where paper_id = #{paperId}
+    </update>
 </mapper>

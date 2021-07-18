@@ -38,4 +38,9 @@ public class StuExamServiceImpl implements StuExamService {
     public void updateScore(int exam_id, int stu_id, int ques_id, int score) {
         stuExamMapper.updateScore(exam_id,stu_id,ques_id,score);
     }
+
+    @Override
+    public int getStuExamTypeCnt(int stu_id, int exam_id, int type) {
+        return stuExamMapper.getStuExamTypeCnt(stu_id,exam_id,type);
+    }
 }

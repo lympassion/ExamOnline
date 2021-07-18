@@ -8,6 +8,8 @@ public class RealPaper {
     String paperName;
     String courseName;
     int paperScore;
+    int paperScorePart1;
+    int paperScorePart2;
 
     public RealPaper(){}
     public RealPaper(int paperId, String paperName, String courseName, int paperScore) {
@@ -47,5 +49,21 @@ public class RealPaper {
 
     public void setPaperScore(int paperScore) {
         this.paperScore = paperScore;
+    }
+
+    public int getPaperScorePart1() {
+        return paperScorePart1;
+    }
+
+    public void setPaperScorePart1(int paperScorePart1) {
+        this.paperScorePart1 = paperScorePart1;
+    }
+
+    public int getPaperScorePart2() {
+        return paperScorePart2;
+    }
+
+    public void setPaperScorePart2(int paperScorePart2) {
+        this.paperScorePart2 = paperScorePart2;
     }
 }

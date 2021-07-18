@@ -12,15 +12,18 @@ import java.util.List;
 @Service
 public interface PaperService {
     List<Question> getQuesByPaperId(int paper_id);
-    void InsertPaper(Paper paper);
-    void InsertRealPaper(RealPaper realPaper);
     List<RealPaper> getAllRealPaper();
-    void updateScore(int paper_id,int score);
-    void DeleteRPaperById(int paper_id);
     List<Integer> getAllRPaperId();
+    List<Integer> getRPaperIdByCourse(String courseName);
+    RealPaper getRealPaperById(int paper_id);
     int getPaperScoreById(int paper_id);
     int getTypeCnt(int type,int paper_id);
-    List<Integer> getRPaperIdByCourse(String courseName);
-    String getPaperNameById(int id);
     int getOrderByPaperAndQues(int ques_id,int paper_id);
+    String getPaperNameById(int id);
+    void InsertPaper(Paper paper);
+    void InsertRealPaper(RealPaper realPaper);
+    void updateScorePart1(int paper_id,int score);
+    void updateScorePart2(int paper_id,int score);
+    void updateScore(int paper_id,int score);
+    void DeleteRPaperById(int paper_id);
 }

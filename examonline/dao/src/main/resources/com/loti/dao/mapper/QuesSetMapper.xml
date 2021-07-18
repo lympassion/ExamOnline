@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.QuesMapper">
+    <select id="selectQuesSetByStu" resultType="com.loti.dao.pojo.Entity.QuesSet">
+        select * from question_set where student_id = #{stuId} order by set_time
+    </select>
+    <insert id="InsertQues"  parameterType="com.loti.dao.pojo.Entity.Question">
+        insert into question_set (question_set_id, student_id, question_id) VALUES
+        (#{quesSetId},#{studentId},#{questionId})
+    </insert>
+    <select id="selectQues" resultType="com.loti.dao.pojo.Entity.QuesSet">
+        select * from question_set
+        where student_id = #{stuId} and question_id = #{quesId}
+    </select>
+</mapper>

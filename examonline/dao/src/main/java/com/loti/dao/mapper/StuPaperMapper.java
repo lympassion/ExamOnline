@@ -10,8 +10,12 @@ import java.util.List;
 public interface StuPaperMapper {
     //通过学生id和考试id判断是否参加考试
     int SelectMarkByExamAndStudent(@Param("examId") int examId, @Param("stuId") int studentId);
+    //获取主观题客观题得分
+    int selectScorePart1(@Param("examId") int examId, @Param("stuId") int studentId);
+    int selectScorePart2(@Param("examId") int examId, @Param("stuId") int studentId);
     //通过学生id查看考试
-    List<StudentPaper> SelectStuPaperByRecId(int id);
+    List<StudentPaper> SelectStuPaperByStuId(int id);
+    List<StudentPaper> SelectStuPaperByExamId(int id);
     //通过学生id和考试id使得其验证参加考试
     void updateStudentTestInfoById(@Param("examId") int examId, @Param("stuId") int studentId);
     void InsertStuPaper(StudentPaper studentPaper);

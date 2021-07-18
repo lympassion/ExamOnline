@@ -26,4 +26,7 @@ public interface ExamMapper {
     int SelectExamTimeByExamId(int id);
     //通过exam id获取试卷id
     int SelectPaperId(int id);
+    //通过examId获取试卷主观题和客观题总分
+    int getTotalScore1(int examId);
+    int getTotalScore2(int examId);
 }

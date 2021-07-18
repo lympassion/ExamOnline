@@ -21,7 +21,22 @@ public class StuPaperServiceImpl implements StuPaperService {
 
     @Override
     public List<StudentPaper> getStuPaperByStuId(int stu_id) {
-        return stuPaperMapper.SelectStuPaperByRecId(stu_id);
+        return stuPaperMapper.SelectStuPaperByStuId(stu_id);
+    }
+
+    @Override
+    public List<StudentPaper> getStuPaperByExamId(int exam_id) {
+        return stuPaperMapper.SelectStuPaperByExamId(exam_id);
+    }
+
+    @Override
+    public int selectScorePart1(int exam_id, int stu_id) {
+        return stuPaperMapper.selectScorePart1(exam_id,stu_id);
+    }
+
+    @Override
+    public int selectScorePart2(int exam_id, int stu_id) {
+        return stuPaperMapper.selectScorePart2(exam_id,stu_id);
     }
 
     @Override

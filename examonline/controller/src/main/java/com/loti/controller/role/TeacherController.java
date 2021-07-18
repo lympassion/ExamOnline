@@ -2,14 +2,11 @@ package com.loti.controller.role;
 
 import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
-import com.loti.controller.trans.ExamMsg;
 import com.loti.controller.trans.QuesSubInfo;
 import com.loti.controller.trans.paperExamInfo;
-import com.loti.dao.mapper.StuClassMapper;
 import com.loti.dao.pojo.Entity.*;
 import com.loti.dao.pojo.Entity.User.Teacher;
 import com.loti.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +28,11 @@ public class TeacherController {
     @Autowired
     private ExamService examService;
     @Autowired
-    private ClassService classService;
-    @Autowired
     private StuExamService stuExamService;
     @Autowired
     private StuPaperService stuPaperService;
+    @Autowired
+    private StudentService studentService;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
@@ -104,7 +101,7 @@ public class TeacherController {
         String[] questions2 = paperInfo.get("questions2").split(",");
         String[] questions4 = paperInfo.get("questions4").split(",");
         int order = 0;
-        int total_score = 0;
+        int total_score = 0,score_part1 = 0,score_part2 = 0;
 
         RealPaper realPaper = new RealPaper(0,paperName,courseName,0);
         paperService.InsertRealPaper(realPaper);
@@ -115,27 +112,37 @@ public class TeacherController {
                 paperService.InsertPaper(new Paper(
                         0,paper_id,courseName,0,Integer.parseInt(s),order++
                 ));
-                total_score += quesService.getScoreById(Integer.parseInt(s));
+                int ques_score0 = quesService.getScoreById(Integer.parseInt(s));
+                total_score += ques_score0;
+                score_part1 += ques_score0;
             }
             for(String s:questions1){
                 paperService.InsertPaper(new Paper(
                         0,paper_id,courseName,1,Integer.parseInt(s),order++
                 ));
-                total_score += quesService.getScoreById(Integer.parseInt(s));
+                int ques_score1 = quesService.getScoreById(Integer.parseInt(s));
+                total_score += ques_score1;
+                score_part1 += ques_score1;
             }
             for(String s:questions2){
                 paperService.InsertPaper(new Paper(
                         0,paper_id,courseName,2,Integer.parseInt(s),order++
                 ));
-                total_score += quesService.getScoreById(Integer.parseInt(s));
+                int ques_score2 = quesService.getScoreById(Integer.parseInt(s));
+                total_score += ques_score2;
+                score_part1 += ques_score2;
             }
             for(String s:questions4){
                 paperService.InsertPaper(new Paper(
                         0,paper_id,courseName,4,Integer.parseInt(s),order++
                 ));
-                total_score += quesService.getScoreById(Integer.parseInt(s));
+                int ques_score4 = quesService.getScoreById(Integer.parseInt(s));
+                total_score += ques_score4;
+                score_part2 += ques_score4;
             }
             paperService.updateScore(paper_id,total_score);
+            paperService.updateScorePart1(paper_id,score_part1);
+            paperService.updateScorePart2(paper_id,score_part2);
             return new HashMap<String, Object>(){{
                put("code",0);put("msg","ok");
             }};
@@ -229,7 +236,22 @@ public class TeacherController {
 
    @RequestMapping(value = "/getStuScorePart1",method = RequestMethod.GET)
    @ResponseBody
-   public List<paperExamInfo> getStuScorePart1(@RequestParam("eid") int examId,@RequestParam("tid") int teacherId){
-        return null;
+   public List<paperExamInfo> getStuScorePart1(@RequestParam("eid") int examId){
+        List<paperExamInfo> paperExamInfos = new LinkedList<>();
+        List<StudentPaper> studentPapers = stuPaperService.getStuPaperByExamId(examId);
+        int paper_id = examService.getPaperId(examId);
+        RealPaper realPaper = paperService.getRealPaperById(paper_id);
+
+        for(StudentPaper studentPaper:studentPapers){
+            paperExamInfo paperexamInfo = new paperExamInfo();
+            paperexamInfo.setStudentName(studentService.getInfoById(studentPaper.getStudentId()).getStudentName());
+            paperexamInfo.setStudentId(studentPaper.getStudentId());
+            paperexamInfo.setScorePart1(realPaper.getPaperScorePart1());
+            paperexamInfo.setMyScorePart1(studentPaper.getScorePart1());
+            paperexamInfo.setScorePart2(realPaper.getPaperScorePart2());
+            paperexamInfo.setMyScorePart2(studentPaper.getScorePart2());
+        }
+        return paperExamInfos;
    }
+
 }

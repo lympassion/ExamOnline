@@ -2,18 +2,22 @@ package com.loti.controller.role;
 
 import com.loti.controller.Utils.FormatUtil;
 import com.loti.controller.Utils.JwtUtil;
-import com.loti.controller.trans.SimpleQues;
+import com.loti.controller.trans.MarkQues;
 import com.loti.dao.pojo.Entity.Exam;
+import com.loti.dao.pojo.Entity.QuesSet;
 import com.loti.dao.pojo.Entity.Question;
 import com.loti.dao.pojo.Entity.StudentExam;
+import com.loti.dao.pojo.Entity.Trans.ReviewQues;
 import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.service.*;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/student")
@@ -148,6 +152,66 @@ public class StudentController {
             put("msg","ok");
         }};
 
+    }
+
+    @RequestMapping(value = "/collectQuestion",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> CollectQues(@RequestParam("questionId") int ques_id,@RequestParam("sid") int stuId){
+        try {
+            if(quesService.selectQues(stuId,ques_id)!=null){
+                return new HashMap<String, Object>(){{
+                    put("code",101);put("msg","question already exist");
+                }};
+            }
+            QuesSet quesSet = new QuesSet();
+            quesSet.setQuestionId(ques_id);
+            quesSet.setStudentId(stuId);
+            quesService.insertQuesSet(quesSet);
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            //ERROR CONTROL
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
+
+    @RequestMapping(value = "/getNotebook",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,MarkQues> getMark(@RequestParam("sid") int stuId){
+        List<QuesSet> quesSets = quesService.getQuesSetByStu(stuId);
+        Map<String,MarkQues> markQuesMap = new LinkedHashMap<>();
+        for(QuesSet quesSet:quesSets){
+            Question question = quesService.GetQuesByQid(quesSet.getQuestionId());
+            markQuesMap.put(String.valueOf(question.getQuestionId()),new MarkQues(quesSet.getSetTime(),
+                    question.getQuestionType(),question.getQuestionId(),question.getQuestionContent(),
+                    question.getOpa(),question.getOpb(),question.getOpc(),question.getOpd(),
+                    question.getQuestionAnswer()));
+        }
+        return markQuesMap;
+    }
+
+    @RequestMapping(value = "/reviewExamPaper",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getReview(@RequestParam("eid") int exam_id,@RequestParam("sid") int stu_id){
+        int examTime = examService.getExamTime(exam_id);
+        List<ReviewQues> reviewQues = quesService.getReviewByStu(stu_id,exam_id);
+        int quesNum_0 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,0);
+        int quesNum_1 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,1);
+        int quesNum_2 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,2);
+        int quesNum_4 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,4);
+
+        return new HashMap<String, Object>(){{
+            put("quesNum",quesNum_0+quesNum_1+quesNum_2+quesNum_4);
+            put("quesNum_0", quesNum_0);
+            put("quesNum_1", quesNum_1);
+            put("quesNum_2", quesNum_2);
+            put("quesNum_4", quesNum_4);
+            put("examTime",examTime);
+            put("data",reviewQues);
+        }};
     }
 
 }

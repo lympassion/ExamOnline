@@ -24,4 +24,9 @@
         set student_score = #{score}
         where exam_id = #{examId} and student_id = #{stuId} and question_id = #{quesId}
     </update>
+    <select id="getStuExamTypeCnt" resultType="int">
+        SELECT COUNT(q.question_type) from question q
+        LEFT JOIN student_exam  se on q.question_id = se.question_id
+        where se.exam_id = #{examId} AND se.student_id = #{stuId} AND q.question_type = #{type}
+    </select>
 </mapper>

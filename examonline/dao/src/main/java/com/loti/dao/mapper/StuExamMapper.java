@@ -14,4 +14,5 @@ public interface StuExamMapper {
     List<StudentExam> getStuExamByExamStu(@Param("examId") int exam_id,@Param("stuId") int stu_id);
     void updateScore(@Param("examId") int examId,@Param("stuId") int stuId,
                         @Param("quesId") int quesId,@Param("score") int score);
+    int getStuExamTypeCnt(@Param("stuId") int stuId,@Param("examId") int examId,@Param("type") int type);
 }

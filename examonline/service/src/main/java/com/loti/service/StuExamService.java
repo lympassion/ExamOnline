@@ -12,4 +12,5 @@ public interface StuExamService {
     void InsertInitStuExamByClass(int class_id,int exam_id);
     List<StudentExam> getStuExamByExamStu(int exam_id,int stu_id);
     void updateScore(int exam_id,int stu_id,int ques_id,int score);
+    int getStuExamTypeCnt(int stu_id,int exam_id,int type);
 }

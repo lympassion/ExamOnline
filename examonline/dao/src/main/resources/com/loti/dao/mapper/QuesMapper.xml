@@ -26,4 +26,9 @@
     <select id="SelectScoreById" parameterType="int" resultType="int">
         select question_score from question where question_id = #{id}
     </select>
+    <select id="getReviewByStu" resultType="com.loti.dao.pojo.Entity.Trans.ReviewQues">
+        SELECT q.*,se.student_answer,se.student_score from question q
+        LEFT JOIN student_exam  se on q.question_id = se.question_id
+        where se.exam_id = #{examId} AND se.student_id = #{stuId}
+    </select>
 </mapper>

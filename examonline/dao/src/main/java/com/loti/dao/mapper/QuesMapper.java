@@ -1,6 +1,7 @@
 package com.loti.dao.mapper;
 
 import com.loti.dao.pojo.Entity.Question;
+import com.loti.dao.pojo.Entity.Trans.ReviewQues;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,6 @@ public interface QuesMapper {
     List<String> SelectCourseName();
 
     int SelectScoreById(int id);
+
+    List<ReviewQues> getReviewByStu(@Param("stuId") int stuId,@Param("examId") int examId);
 }

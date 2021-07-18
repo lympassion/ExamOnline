@@ -17,4 +17,5 @@ public interface PaperMapper {
     void RemovePaperById(int id);
     int getTypeCnt(@Param("type") int type,@Param("paperId") int paperId);
     int getOrderByPaperAndQues(@Param("quesId") int quesId,@Param("paperId") int paperId);
+
 }
