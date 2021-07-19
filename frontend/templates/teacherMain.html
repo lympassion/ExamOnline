@@ -53,6 +53,7 @@
 										<i class='bi bi-chevron-right' style="float: right;"></i></a>
 									<div class="nav-box">
                                         <a href="examRepository.html" class="li-a-a " target="iframe">考试安排</a>
+                                        <a href="examListToTeacher.html" class="li-a-a " target="iframe">考试评卷</a>
                                         <a href="login.html" class="li-a-a" target="iframe">数据分析</a>
 									</div>
 								</li>
@@ -155,8 +156,26 @@
 				})
 
 				$('#btn-confirm-logout').click(function() {
-					$.session.remove(userId);
-					window.location.href='index.html';
+					$.ajax({
+						type: "post",
+						url: "/user/logout",
+						contentType: "application/json",
+						data: { "userId": userId },
+						datatype: "json",
+						success: function(resultMsg){
+							if(resultMsg.code == 0){
+								// 收藏成功
+								alert('注销成功！');
+								$.session.remove(userId);
+								window.location.href='index.html';
+							} else {
+								// 
+							}
+						},
+						error: function(resultMsg){
+							// alert("通信失败");
+						}
+					});
 				})
             })
 		</script>
