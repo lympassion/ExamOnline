@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static\css\page.css" />
+        <link rel="stylesheet" href="../static//css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+
+        <style>
+            #studentsTable {border: none;}
+            /* #markTable {border: none;} */
+          </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">考试管理</a></li>
+                  <li class="breadcrumb-item"><a href="#">考试列表</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">考试评卷</li>
+                </ol>
+              </nav>
+              <table class="table table-borderless" id="studentsTable"></table>
+
+
+              <div class="modal fade" id="markModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">主观题评分 - XXX - XXX考试</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" style="max-height: 460px; overflow-y: scroll;">
+                        <table class="table" id="markTable"></table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                      <button id="markSubmit" type="button" class="btn btn-primary">确定</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+    </div>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/js/timeFormat.js"></script>
+    <script src="../static/js/jquerysession.js"></script>
+    <script src="../static/js/bootstrap-input-spinner.js"></script>
+
+    <script>
+
+        var temp = 0;
+
+        var userId = $.session.get('userId');
+
+        var paramInURL = parseUrl();
+        var examId = paramInURL['eid'];
+         
+        var scoreString = "";
+        var questionIdString = "";
+        var questionIdList = [];
+        var scoreList = [];
+
+        var studentId = 0;
+
+        function parseUrl(){
+            var url=location.href;
+            var i=url.indexOf('?');
+            if(i==-1)return;
+            var querystr=url.substr(i+1);
+            var arr1=querystr.split('&');
+            var arr2=new Object();
+            for  (i in arr1){
+                var ta=arr1[i].split('=');
+                arr2[ta[0]]=ta[1];
+            }
+            return arr2;
+        }
+
+
+        function initTable() {  
+            //先销毁表格  
+            $('#studentsTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#studentsTable").bootstrapTable({
+                method: "get", 
+                url: "/teacher/getStuScorePart1?eid=" + examId,
+                pagination: true, //启动分页  
+                pageSize: 10,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+                // detailView: true, 
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮  
+                columns: [{
+                            field: 'studentName',
+                            title: '学生名称'
+                        }, {
+                            field: 'studentId',
+                            title: '学生编号'
+                            // sortable: true
+                        }, {
+                            field: 'paperScore',
+                            title: '试卷总分'
+                        }, {
+                            field: 'scorePart1',
+                            title: '客观题总分'
+                        }, {
+                            field: 'myScorePart1',
+                            title: '客观题得分'
+                            // sortable: true
+                        }, {
+                            field: 'myScorePart2',
+                            title: '主观题得分'
+                            // sortable: true
+                        }, {
+                            field: 'scorePart2',
+                            title: '主观题总分'
+                            // sortable: true
+                        }, {
+                            field: 'examOperator',
+                            title: '操作',
+                            formatter: addButton,
+                            events: operateEvents
+                        }],
+                // data:[
+                //       {"studentId":"1","examCourseName":"java","startTime":1626057000,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"2","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"3","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"4","examCourseName":"java","startTime":1626057000,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"5","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"6","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"7","examCourseName":"java","startTime":1626057000,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"8","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"},
+                //       {"studentId":"9","examCourseName":"java","startTime":1626143400,"endTime":1626229800,"paperScore":"120分钟"}
+                      
+                      
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+            });  
+        }
+
+        function initSubTable(studentId) {
+            console.log("sid:", studentId);
+            //先销毁表格  
+            $('#markTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#markTable").bootstrapTable({  
+                method: "get", 
+                url: "/teacher/getStuAnswerPart2?eid=" + examId + "&sid=" + studentId,
+                // pagination: true, //启动分页  
+                // pageSize: 10,  //每页显示的记录数  
+                // pageNumber:1, //当前第几页  
+                // pageList: [5, 10, 15, 20, 25],  //记录数可选列表
+                // detailView: true, 
+                cardView: true,
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮  
+                columns: [{
+                            field: 'quesSubOrder',
+                            title: '主观题号',
+                            sortable: true
+                        }, {
+                            field: 'questionId',
+                            title: '题库编号'
+                            // sortable: true
+                        }, {
+                            field: 'questionScore',
+                            title: '分值'
+                        }, {
+                            field: 'questionContent',
+                            title: '题目'
+                        }, {
+                            field: 'questionAnswer',
+                            title: '学生回答'
+                            // sortable: true
+                        }, {
+                            field: 'score',
+                            title: '得分',
+                            formatter: function(value, row, index) {
+                                if(row.score == -1) {
+                                    return  "未评分"
+                                } else {
+                                    return row.score;
+                                }
+                            }
+                            // sortable: true
+                        }, {
+                            field: 'setScore',
+                            title: '评分',
+                            formatter: function (value, row, index) {
+                                    return '<input type="number" name="setScore" value="" min="0" max=' + row.questionScore + ' step="1"  data-suffix="分" placeholder="请评分" index="' + index + '" onblur="saveScore('+ index + ', ' + row.questionId +', this)" />';
+                                
+                                
+                                // console.log(index);
+                                
+                        　　 }
+                        }],
+                // data:[
+                //       {"quesSubOrder":"6","questionId":"128","questionScore":"15","questionContent":"这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目","studentAnswer":"这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答","score":12},
+                //       {"quesSubOrder":"7","questionId":"139","questionScore":"15","questionContent":"这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目","studentAnswer":"这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答这是回答","score":-1}
+                      
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+            });  
+        }
+        
+        function addButton(value, row, index) {
+            // if(timeNow >= startTime && timeNow < endTime) {
+                return [
+                    '<button type="button" class="RoleOfA btn btn-default btn-primary btn-sm" style="margin-right:15px;">评判试卷</button>'
+                ].join('');
+            // } else if () {
+            //   return [
+            //       '<button type="button" class="btn btn-secondary btn-sm" style="margin-right:15px;" disabled>暂未开放</button>'
+            //   ].join('');
+            // }
+        }
+
+        window.operateEvents = {
+            'click .RoleOfA': function (e, value, row, index) {
+                // var examURL = "examPage.html?eid=" + row.examId + "&tid=" + userId;
+                // window.open(examURL); 
+                studentId = row.studentId;
+                initSubTable(studentId);
+                $('#markModal').modal('show');
+                // $("#markTable").bootstrapTable('resetView', {height:600});
+                $("input[name='setScore']").inputSpinner();
+            }
+        }; 
+
+        function getArrayIndex(arr, obj) {
+            for(var i = 0; i < arr.length; i++) {
+                if(arr[i] == obj) {
+                    return i;
+                }
+            }
+        }
+
+        function saveScore(index, qId, obj) {
+            // temp = 1;
+            // console.log(index);
+            var value = $(obj).val();
+            if(questionIdList.includes(qId) == false) {
+                questionIdList.push(qId) ;
+                scoreList.push(value);
+            } else {
+                var thisIndex = getArrayIndex(questionIdList, qId);
+                console.log(thisIndex);
+                questionIdList[thisIndex] = qId;
+                scoreList[thisIndex] = value;
+            }
+            // var name = 'score';
+            // console.log(name);　　　　　　
+            //通过 index 获取指定的行　
+            // console.log(row);　　　　
+            // //将 input 的值存进 row 中
+            // row[name] = value;
+            // // console.log(name, value);　　　　　　
+            // //更新指定的行，调用 'updateRow' 则会将 row 数据更新到 data 中，然后再重新加载
+            // $("#markTable").bootstrapTable('updateRow',{index: index, row: row});
+            // $("#markTable").bootstrapTable('updateCell', index, name, value);
+        }
+
+        for(var k = 0; k < questionIdList.length; k++){
+            questionIdString += (questionIdList[k] + ',');
+            scoreString += (scoreList[k] + ',');
+        }
+
+        // function getSelections() {
+        //     return $.map($("#markTable").bootstrapTable('getSelections'), function (row) {
+        //         return row
+        //     });
+        // }
+
+        $('#markSubmit').click(function() {
+            // var allTableData = $.map($('#markTable').bootstrapTable('getData'), function (row) {
+            //     return row;
+            // });
+            // var allTableData = $('#markTable').bootstrapTable('getData');
+            // console.log(allTableData);
+            // console.log(temp);
+            // alert(allTableData);
+
+            for(var k = 0; k < questionIdList.length; k++){
+                questionIdString += (questionIdList[k] + ',');
+                scoreString += (scoreList[k] + ',');
+            }
+            // console.log(scoreString);
+            // console.log(questionIdString);
+
+            scoreString = scoreString.substring(0, scoreString.lastIndexOf(","));
+            questionIdString = questionIdString.substring(0, questionIdString.lastIndexOf(","));
+            // console.log(scoreString);
+            // console.log(questionIdString);
+
+            var markData = {
+                "examId": examId,
+                "studentId": studentId,
+                "score": scoreString,
+                "questionId": questionIdString
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/teacher/submitExamMark",
+                contentType: "application/json",
+                data: JSON.stringify(markData),
+                datatype: "json",
+                success: function(resultMsg){
+                    if(resultMsg.code == 0){
+                        // 提交成功
+                        alert('提交成功！');
+                        window.location.reload();
+                        studentId = 0;
+                    } else {
+                        // 提交失败
+                        alert(resultMsg.msg);
+                    }
+                },
+                error: function(resultMsg){
+                    // alert("通信失败");
+                }
+            });
+
+        })
+    
+        $(document).ready(function () {          
+            //调用函数，初始化表格  
+            initTable();    
+        });
+        
+    </script>
+
+</body>
+</html>
