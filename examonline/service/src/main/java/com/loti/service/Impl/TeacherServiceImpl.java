@@ -1,6 +1,7 @@
 package com.loti.service.Impl;
 
 import com.loti.dao.mapper.TeacherMapper;
+import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.dao.pojo.Entity.User.Teacher;
 import com.loti.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> SelectNotClass(String courseName) {
         return teacherMapper.SelectNotClass(courseName);
+    }
+
+    @Override
+    public void updateTeacher(int teacherId, String teacherName, int teacherGender, String teacherPassword, String teacherPicture) {
+        Teacher teacher = teacherMapper.SelectTeacherById(teacherId);
+        teacher.setTeacherName(teacherName);
+        teacher.setTeacherGender(teacherGender);
+        teacher.setTeacherPassword(teacherPassword);
+        teacher.setTeacherPicture(teacherPicture);
+        teacherMapper.updateTeacherInfo(teacher);
     }
 
 }

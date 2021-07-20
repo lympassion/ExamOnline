@@ -65,18 +65,14 @@
                             checkbox: true
                         },{
                             field: 'studentId',
-                            title: '学生编号',
+                            title: '教师编号',
                             sortable: true
                         }, {
-                            field: 'studentName',
+                            field: 'studentRealname',
                             title: '姓名'
                         }, {
                             field: 'studentGender',
-                            title: '性别',
-                            formatter: function(value, row, index) {
-                                var val = (value == 0) ? "male" : "female";
-                                return val
-                            }
+                            title: '性别'
                         }],
                 onLoadSuccess: function () {
                 },

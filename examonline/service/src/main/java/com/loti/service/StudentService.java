@@ -1,6 +1,7 @@
 package com.loti.service;
 
 import com.loti.dao.pojo.Entity.Exam;
+import com.loti.dao.pojo.Entity.StudentPicture;
 import com.loti.dao.pojo.Entity.User.Student;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,10 @@ public interface StudentService {
     List<Student> getAllStudent();
     //查找未被分班的学生
     List<Student> getStuUniCourse(String course_name);
+
+    void updateStudent(int studentId,String studentName,int studentGender,String studentPassword,
+                       String studentPicture);
+    //存入和获取学生监考图像
+    void InsertStuPic(StudentPicture studentPicture);
+    StudentPicture getStuPic(int stu_id,int exam_id);
 }

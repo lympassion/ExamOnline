@@ -45,7 +45,7 @@ public class StudentController {
                     "123@qq.com", UserMap.get("password"),
                     FormatUtil.GenderFormat(UserMap.get("gender")));
             studentService.InsertStu(student);
-            String jwt = JwtUtil.generateToken("student",String.valueOf(student.getStudentId()));
+            String jwt = JwtUtil.generateToken(student.getStudentId());
             return new HashMap<String, Object>(){{
                 put("code",0);put("msg","ok");put("token",jwt);put("userId",student.getStudentId());
             }};
@@ -131,7 +131,7 @@ public class StudentController {
             Question question = quesService.GetQuesByQid(ques_id);
             String stu_ans = (String) temp.getValue().get("quesAnswer");
             String corr_ans = question.getQuestionAnswer();
-            int score = 0;
+            int score = -1;
             if(question.getQuestionType()!=FormatUtil.SUBJECT){
                 score = FormatUtil.JudgeScore(question.getQuestionType(),stu_ans,corr_ans);
                 score_1 += score;
@@ -156,26 +156,21 @@ public class StudentController {
 
     @RequestMapping(value = "/collectQuestion",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> CollectQues(@RequestParam("questionId") int ques_id,@RequestParam("sid") int stuId){
-        try {
-            if(quesService.selectQues(stuId,ques_id)!=null){
-                return new HashMap<String, Object>(){{
-                    put("code",101);put("msg","question already exist");
-                }};
-            }
-            QuesSet quesSet = new QuesSet();
-            quesSet.setQuestionId(ques_id);
-            quesSet.setStudentId(stuId);
-            quesService.insertQuesSet(quesSet);
+    public Map<String,Object> CollectQues(@RequestBody Map<String,Object> infos){
+        int ques_id = Integer.parseInt((String) infos.get("questionId"));
+        int stuId = Integer.parseInt((String) infos.get("studentId"));
+        if(quesService.selectQues(stuId,ques_id)!=null){
             return new HashMap<String, Object>(){{
-                put("code",0);put("msg","ok");
-            }};
-        }catch (Exception e){
-            //ERROR CONTROL
-            return new HashMap<String, Object>(){{
-                put("code",102);put("msg","database error");
+                put("code",101);put("msg","question already exist");
             }};
         }
+        QuesSet quesSet = new QuesSet();
+        quesSet.setQuestionId(ques_id);
+        quesSet.setStudentId(stuId);
+        quesService.insertQuesSet(quesSet);
+        return new HashMap<String, Object>(){{
+            put("code",0);put("msg","ok");
+        }};
     }
 
     @RequestMapping(value = "/getNotebook",method = RequestMethod.GET)
@@ -185,6 +180,7 @@ public class StudentController {
         Map<String,MarkQues> markQuesMap = new LinkedHashMap<>();
         for(QuesSet quesSet:quesSets){
             Question question = quesService.GetQuesByQid(quesSet.getQuestionId());
+            System.out.println(quesSet.getSetTime());
             markQuesMap.put(String.valueOf(question.getQuestionId()),new MarkQues(quesSet.getSetTime(),
                     question.getQuestionType(),question.getQuestionId(),question.getQuestionContent(),
                     question.getOpa(),question.getOpb(),question.getOpc(),question.getOpd(),
@@ -195,9 +191,10 @@ public class StudentController {
 
     @RequestMapping(value = "/reviewExamPaper",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> getReview(@RequestParam("eid") int exam_id,@RequestParam("sid") int stu_id){
+    public Map<String,Object> getReview(@RequestParam("pid") int paper_id,
+                                        @RequestParam("eid") int exam_id,@RequestParam("sid") int stu_id){
         int examTime = examService.getExamTime(exam_id);
-        List<ReviewQues> reviewQues = quesService.getReviewByStu(stu_id,exam_id);
+        List<ReviewQues> reviewQues = quesService.getReviewByStu(stu_id,exam_id,paper_id);
         int quesNum_0 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,0);
         int quesNum_1 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,1);
         int quesNum_2 = stuExamService.getStuExamTypeCnt(stu_id,exam_id,2);

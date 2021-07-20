@@ -13,6 +13,7 @@ public interface StuPaperMapper {
     //获取主观题客观题得分
     int selectScorePart1(@Param("examId") int examId, @Param("stuId") int studentId);
     int selectScorePart2(@Param("examId") int examId, @Param("stuId") int studentId);
+    int selectStuCntBySec(@Param("examId") int examId,@Param("upperBound") double up,@Param("lowerBound") double lower);
     //通过学生id查看考试
     List<StudentPaper> SelectStuPaperByStuId(int id);
     List<StudentPaper> SelectStuPaperByExamId(int id);
@@ -21,4 +22,5 @@ public interface StuPaperMapper {
     void InsertStuPaper(StudentPaper studentPaper);
     void updateScorePart1(@Param("examId") int examId, @Param("stuId") int studentId, @Param("score") int scorePart1);
     void updateScorePart2(@Param("examId") int examId, @Param("stuId") int studentId, @Param("score") int scorePart2);
+    void updateScore(@Param("examId") int examId, @Param("stuId") int studentId, @Param("score") int score);
 }

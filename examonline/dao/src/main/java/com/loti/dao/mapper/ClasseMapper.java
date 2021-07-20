@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ClasseMapper {
     void InsertClasse(Classe classe);
-    List<Classe> SelectClassByTeacher(int id);
+    Classe SelectClassByTeacher(int id);
     void updateExamById(@Param("classId") int classId,@Param("examId") int examId);
     List<Classe> SelectClassByCourse(String courseName);
     List<TransClass> getAllClassInfo();

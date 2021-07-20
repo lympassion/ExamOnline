@@ -29,4 +29,20 @@
         LEFT JOIN student_exam  se on q.question_id = se.question_id
         where se.exam_id = #{examId} AND se.student_id = #{stuId} AND q.question_type = #{type}
     </select>
+    <select id="getRateByExam" resultType="java.lang.Double">
+        SELECT SUM(
+                       CASE
+                           WHEN q.question_type = 0 AND student_score = #{score0} THEN 1
+                           WHEN q.question_type = 1 AND student_score = #{score1} THEN 1
+                           WHEN q.question_type = 2 AND student_score = #{score2} THEN 1
+                           WHEN q.question_type = 3 AND student_score = #{score3} THEN 1
+                           WHEN q.question_type = 4 AND student_score = #{score4} THEN 1
+                           ELSE 0
+                           END
+                   )/COUNT(question_order)/COUNT(DISTINCT question_order) AS rate
+        FROM student_exam se
+                 LEFT JOIN paper p ON se.question_id = p.question_id
+                 LEFT JOIN question q ON q.question_id = se.question_id
+        WHERE exam_id = #{examId} and paper_id = #{paperId} GROUP BY question_order order by p.question_order
+    </select>
 </mapper>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="\css\page.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+
+        <style>
+            #examListTable {border: none;}
+          </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">考试管理</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">数据分析</li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="input-group mb-2">
+                        <label for="courseNameSelect" class="col-sm-3 col-form-label" style="font-weight:bold;">选择考试：</label>
+                        <div class="col-sm-9">
+                            <select class="examCheck form-control" id="examNameSelect">
+                                <option>请选择一场考试</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+            <hr class="row">
+            <div class="row mt-5">
+
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3" style="text-align: center;">
+                            <h6 class="m-0 font-weight-bold text-primary">成绩分布</h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body" style="height: 370px;">
+                            <div class="chart-pie pt-4">
+                                <canvas id="myPieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8 col-lg-7">
+                    <!-- 柱状图 -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header" style="text-align: center;">
+                            <h6 class="m-0 font-weight-bold text-primary">各题得分率</h6>
+                        </div>
+                        <div class="card-body" style="height: 370px;">
+                            <div class="chart-area">
+                                <canvas id="myBarChart"></canvas>
+                            </div>
+                            <!-- <hr> -->
+                        </div>
+                    </div>
+
+                </div>
+
+                
+            </div>
+  
+        </div>
+
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    <script src="/js/chart.min.js"></script>
+    <script src="/js/color.js"></script>
+
+    <script>
+
+        var userId = $.session.get('userId');
+
+        var dataForPie = [];
+        var numForBar = 0;
+        var labelForBar = [];
+        var dataForBar = [];
+
+        var examName = "";
+        function initExamSelection(data) {
+            var examList = data.split(',');
+            for(var element in examList) {
+                examName = "<option>" + examList[element] + "</option>";
+                document.querySelector('#examNameSelect').innerHTML += examName;
+            }
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/teacher/getAllExamName?tid=" + userId,
+                type: "GET",
+                dataType: "json",
+                success: function(resultMsg){
+                    initExamSelection(resultMsg.data);
+                },
+                error: function(msg) {
+                    alert("ajax连接异常：" + resultMsg.msg);
+                }
+            }); 
+              
+        });
+
+        $(function(){
+		    $('.examCheck').change(function(){
+                var data= $(this).val();
+                if(data == "请选择一场考试") {
+                    // alert("请选择一场考试!");
+                } else {
+                    // alert(data);
+                    $.ajax({
+                        url: "/teacher/getAnalysedData?ename=" + examName + "&tid=" + userId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(resultMsg){
+                            parseAnalysedData(resultMsg);
+                        },
+                        error: function(msg) {
+                            // alert("ajax连接异常：" + resultMsg.msg);
+                        }
+                    }); 
+                }
+		    });
+		    
+		    // $('.examCheck').val('1').trigger('change');
+		});
+        
+        
+
+        function parseAnalysedData (data) {
+            console.log("here");
+            console.log(data);
+            var dataForPieStr = data.dataPie.split(',');
+            for(var i = 0; i < dataForPieStr.length; i++) {
+                dataForPie[i] = parseInt(dataForPieStr[i]);
+            }
+            // console.log(dataForPie);
+            drawPie(dataForPie);
+
+            numForBar = data.numBar;
+            for(var i = 0; i < numForBar; i++) {
+                labelForBar[i] = (i + 1).toString();
+            }
+            // console.log(labelForBar);
+
+
+            var dataForBarStr = data.dataBar.split(',');
+            for(var i = 0; i < dataForBarStr.length; i++) {
+                dataForBar[i] = parseFloat(dataForBarStr[i]);
+            }
+            // console.log(dataForBar);
+            drawBar(dataForBar, labelForBar);
+            
+        }
+
+        /*
+        dataPie: [不及格人数(<.6), 及格人数(.6 - .79), 良好人数(.8 - .89), 优秀人数(>= .9)]
+        numBar: 试卷题目数量
+        dataBar: [按照题目顺序，各题的正确率，不满分就算错]
+        */
+
+
+        function drawPie (dataForPie) {
+            var ctx = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ["不及格", "及格", "良好", "优秀"],
+                    datasets: [{
+                        // data: [4, 6, 7, 3],
+                        data: dataForPie,
+                        // backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#ff6384'],
+                        backgroundColor: bgColor.slice(33, 37),
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    }],
+                },
+                options: {
+                    layout:{padding:{top: 10}},
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                    },
+                    legend: {
+                        display: true
+                    },
+                    cutoutPercentage: 50,
+                },
+            });
+        }
+        
+
+        function drawBar(dataForBar, labelForBar) {
+            var ctx2 = document.getElementById("myBarChart");
+            var myBarChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: labelForBar,
+                    // labels: [1,2,3],
+                    datasets: [{
+                        label: '单题得分率',
+                        data: dataForBar,
+                        // borderSkipped:"bottom",//默认为底部
+                        // backgroundColor: ['rgba(168, 216, 185, 0.5)',
+                        //     'rgba(36, 147, 110, 0.5)',
+                        //     'rgba(120, 194, 196, 0.5)'],
+                        backgroundColor: bgColor.slice(19, 19 + numForBar),
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                        borderWidth: 1,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    layout:{padding:{top: 10}},
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                    },
+                    legend: {
+                        display: true
+                    },
+                    cutoutPercentage: 50,
+                    scales: {
+                        yAxes : [{
+                            ticks : {
+                                max : 1,    
+                                min : 0
+                            }
+                        }]
+                    }
+                },
+                
+            });
+        }
+        
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function setBgColor(bgColor, num) {
+            return bgColor.slice(0, num);
+        }
+    </script>
+
+</body>
+</html>

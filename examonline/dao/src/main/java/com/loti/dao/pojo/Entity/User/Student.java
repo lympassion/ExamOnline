@@ -10,8 +10,10 @@ public class Student{
     private String studentEmail;
     private String studentPassword;
     private int studentGender;
+    private String studentPicture;
 
     Student(){}
+
 
     public Student(int studentId, String studentName, String studentClass, String studentEmail, String studentPassword, int studentGender) {
         this.studentId = studentId;
@@ -68,5 +70,13 @@ public class Student{
 
     public void setStudentGender(int studentGender) {
         this.studentGender = studentGender;
+    }
+
+    public String getStudentPicture() {
+        return studentPicture;
+    }
+
+    public void setStudentPicture(String studentPicture) {
+        this.studentPicture = studentPicture;
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-    //查找数据库是否有user
+    //查找数据库是否有该用户
     MyUser checkUser(MyUser user);
     MyUser checkUserById(int id);
 }

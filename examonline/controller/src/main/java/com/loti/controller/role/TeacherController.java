@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/teacher")
@@ -33,6 +35,8 @@ public class TeacherController {
     private StuPaperService stuPaperService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ClassService classService;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
@@ -42,7 +46,7 @@ public class TeacherController {
                     FormatUtil.GenderFormat(UserMap.get("gender")),"Mori@gmail.com",
                     UserMap.get("password"));
             teacherService.InsertTeacher(teacher);
-            String jwt = JwtUtil.generateToken("teacher",String.valueOf(teacher.getTeacherId()));
+            String jwt = JwtUtil.generateToken(teacher.getTeacherId());
             return new HashMap<String, Object>(){{
                 put("code",0);put("msg","ok");put("token",jwt);put("userId",teacher.getTeacherId());
             }};
@@ -167,6 +171,26 @@ public class TeacherController {
         return examService.getExamByTeacherId(teacherId);
     }
 
+    @RequestMapping(value = "/getAllExamName",method = RequestMethod.GET)
+    @ResponseBody
+    public HashMap<String, Object> getExamName(@RequestParam("tid") int teacherId){
+        try {
+            if(teacherId == 0)
+                return new HashMap<String, Object>(){{
+                    put("code",101);put("msg","type error");
+                }};
+            List<Exam> examList = examService.getExamByTeacherId(teacherId);
+            List<String> examString = examList.stream().map(Exam::getExamName).collect(Collectors.toList());
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");put("data",String.join(",",examString));
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
+
     @RequestMapping(value = "/removePaper",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> removePaper(@RequestParam("pid") String paperId){
@@ -195,9 +219,9 @@ public class TeacherController {
                     continue;
                 int paperId = examService.getPaperId(exam_id);
                 int order = paperService.getOrderByPaperAndQues(questionId,paperId);
-                quesSubInfos.add(new QuesSubInfo(order,questionId,studentExam.getStudentScore()
+                quesSubInfos.add(new QuesSubInfo(order,questionId,question.getQuestionScore()
                         ,question.getQuestionContent(),studentExam.getStudentAnswer()
-                        ,question.getQuestionScore()));
+                        ,studentExam.getStudentScore()));
             }
             return quesSubInfos;
         }catch (Exception e){
@@ -224,6 +248,7 @@ public class TeacherController {
                 score_part2 += Integer.parseInt(scores[i]);
             }
             stuPaperService.updateScorePart2(examId,stuId,score_part2);
+            stuPaperService.updateScore(examId,stuId,stuPaperService.selectScorePart1(examId,stuId)+score_part2);
             return new HashMap<String, Object>(){{
                 put("code",0);put("msg","ok");
             }};
@@ -250,8 +275,74 @@ public class TeacherController {
             paperexamInfo.setMyScorePart1(studentPaper.getScorePart1());
             paperexamInfo.setScorePart2(realPaper.getPaperScorePart2());
             paperexamInfo.setMyScorePart2(studentPaper.getScorePart2());
+            paperExamInfos.add(paperexamInfo);
         }
         return paperExamInfos;
    }
 
+   @RequestMapping(value = "/getAnalysedData",method = RequestMethod.GET)
+   @ResponseBody
+   public Map<String,Object> getAnaData(@RequestParam("ename")String ename,@RequestParam("tid") int teacherId){
+        int exam_id = classService.getClassByTeacher(teacherId).getExamId();
+        int total_score = examService.getTotalScore(exam_id);
+        int paper_id = examService.getPaperId(exam_id);
+        int ques_cnt = paperService.getAllCnt(paper_id);
+        String dataPie = "";
+
+        dataPie += stuPaperService.selectCnt(exam_id, 0, total_score * 0.6) +",";
+        dataPie += stuPaperService.selectCnt(exam_id, total_score * 0.6, total_score * 0.8) +",";
+        dataPie += stuPaperService.selectCnt(exam_id, total_score * 0.8, total_score * 0.9) +",";
+        dataPie += stuPaperService.selectCnt(exam_id,total_score*0.9,total_score);
+
+        List<Double> rateList = stuExamService.getRateByExam(exam_id,paper_id,
+                FormatUtil.SCORE_CHOICE,FormatUtil.SCORE_CHOICE,FormatUtil.JUDGE,
+                FormatUtil.SCORE_BLANK, FormatUtil.SCORE_SUB);
+
+        StringBuilder stringBuffer = new StringBuilder("");
+        for(Double rate:rateList) {
+            stringBuffer.append(rate);
+            stringBuffer.append(",");
+        }
+        String rateString = stringBuffer.toString();
+        String finalDataPie = dataPie;
+        return new HashMap<String, Object>(){{
+           put("dataPie", finalDataPie);put("numBar",ques_cnt);put("dataBar",rateString.substring(0,rateString.length()-1));
+        }};
+   }
+
+    @RequestMapping(value = "/newQuestionSubmit",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> QuestionSubmit(@RequestBody Question question){
+        try {
+            quesService.InsertQuestion(question);
+            return new HashMap<String, Object>(){{
+               put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
+
+    @RequestMapping(value = "/getAllQuestion",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Question> getAllQuestion(){
+        return quesService.getAllQues();
+    }
+
+    @RequestMapping(value = "/removeQuestion",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> removeQues(@RequestParam("qid") int ques_id){
+        try {
+            quesService.removeQues(ques_id);
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
 }

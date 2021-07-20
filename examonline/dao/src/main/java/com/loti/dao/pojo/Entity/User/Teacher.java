@@ -10,6 +10,7 @@ public class Teacher {
     private String teacherEmail;
     private String teacherPassword;
     private String teacherCourse;
+    private String teacherPicture;
 
     Teacher(){}
 
@@ -67,5 +68,13 @@ public class Teacher {
 
     public void setTeacherCourse(String teacherCourse) {
         this.teacherCourse = teacherCourse;
+    }
+
+    public String getTeacherPicture() {
+        return teacherPicture;
+    }
+
+    public void setTeacherPicture(String teacherPicture) {
+        this.teacherPicture = teacherPicture;
     }
 }

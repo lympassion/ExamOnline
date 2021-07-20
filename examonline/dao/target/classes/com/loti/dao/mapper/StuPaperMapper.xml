@@ -7,8 +7,11 @@
         select student_mark from student_paper_record
         where student_id = #{stuId} and exam_id = #{examId}
     </select>
-    <select id="SelectStuPaperByRecId" parameterType="int" resultType="com.loti.dao.pojo.Entity.StudentPaper">
+    <select id="SelectStuPaperByStuId" parameterType="int" resultType="com.loti.dao.pojo.Entity.StudentPaper">
         select * from student_paper_record where (student_id) = #{id}
+    </select>
+    <select id="SelectStuPaperByExamId" parameterType="int" resultType="com.loti.dao.pojo.Entity.StudentPaper">
+        select * from student_paper_record where exam_id = #{id}
     </select>
     <update id="updateStudentTestInfoById" >
         update student_paper_record
@@ -28,6 +31,11 @@
         set score_part2 = #{score}
         where student_id = #{stuId} and exam_id = #{examId}
     </update>
+    <update id="updateScore">
+        update student_paper_record
+        set student_mark = #{score}
+        where exam_id = #{examId} and student_id = #{stuId}
+    </update>
     <select id="selectScorePart1" resultType="int">
         select score_part1 from student_paper_record
         where exam_id = #{examId} and student_id = #{stuId}
@@ -35,5 +43,9 @@
     <select id="selectScorePart2" resultType="int">
         select score_part2 from student_paper_record
         where exam_id = #{examId} and student_id = #{stuId}
+    </select>
+    <select id="selectStuCntBySec" resultType="int">
+        SELECT COUNT(*) FROM `student_paper_record`
+        WHERE exam_id = #{examId} AND student_mark &gt;= #{lowerBound} AND student_mark &lt; #{upperBound}
     </select>
 </mapper>

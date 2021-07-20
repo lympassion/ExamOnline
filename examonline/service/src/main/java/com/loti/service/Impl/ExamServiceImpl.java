@@ -55,4 +55,9 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.SelectPaperId(exam_id);
     }
 
+    @Override
+    public int getTotalScore(int exam_id) {
+        return examMapper.getTotalScore(exam_id);
+    }
+
 }

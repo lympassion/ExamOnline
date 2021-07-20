@@ -65,6 +65,11 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public int getAllCnt(int paper_id) {
+        return paperMapper.getAllCnt(paper_id);
+    }
+
+    @Override
     public List<Integer> getRPaperIdByCourse(String courseName) {
         return rPaperMapper.getRPaperIdByCourse(courseName);
     }

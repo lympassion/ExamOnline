@@ -21,8 +21,8 @@ public interface QuesMapper {
     void InsertQues(Question question);
     //获取考题课程列表
     List<String> SelectCourseName();
-
+    //删除试题
+    void deleteQuestion(int quesId);
     int SelectScoreById(int id);
-
-    List<ReviewQues> getReviewByStu(@Param("stuId") int stuId,@Param("examId") int examId);
+    List<ReviewQues> getReviewByStu(@Param("stuId") int stuId,@Param("examId") int examId,@Param("paperId") int paperId);
 }

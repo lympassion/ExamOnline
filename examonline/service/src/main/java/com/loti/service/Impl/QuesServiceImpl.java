@@ -56,13 +56,23 @@ public class QuesServiceImpl implements QuesService {
     }
 
     @Override
-    public List<ReviewQues> getReviewByStu(int stuId, int examId) {
-        return quesMapper.getReviewByStu(stuId,examId);
+    public List<ReviewQues> getReviewByStu(int stuId, int examId, int paper_id) {
+        return quesMapper.getReviewByStu(stuId,examId,paper_id);
+    }
+
+    @Override
+    public List<Question> getAllQues() {
+        return quesMapper.SelectAllQues();
     }
 
     @Override
     public void insertQuesSet(QuesSet quesSet) {
-        quesSetMapper.insertQuesSet(quesSet);
+        quesSetMapper.InsertQuesSet(quesSet);
+    }
+
+    @Override
+    public void removeQues(int ques_id) {
+        quesMapper.deleteQuestion(ques_id);
     }
 
     @Override

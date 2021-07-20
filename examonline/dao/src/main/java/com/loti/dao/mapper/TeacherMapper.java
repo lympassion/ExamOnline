@@ -15,4 +15,5 @@ public interface TeacherMapper {
     Teacher SelectTeacherById(int id);
     Teacher SelectTeacherByIdAndPass(MyUser user);
     List<Teacher> SelectNotClass(String courseName);
+    void updateTeacherInfo(Teacher teacher);
 }

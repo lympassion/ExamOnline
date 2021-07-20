@@ -21,4 +21,10 @@
             SELECT s2.student_id FROM student_class s2 LEFT JOIN class c1 on c1.class_id = s2.class_id
             WHERE c1.course_name = #{courseName})
     </select>
+    <update id="updateStuInfo" parameterType="com.loti.dao.pojo.Entity.User.Student">
+        UPDATE student
+        SET student_name = #{studentName} and student_gender = #{studentGender}
+        and student_picture = #{studentPicture} and student_password = #{stduentPassword}
+        where student_id = #{studentId}
+    </update>
 </mapper>

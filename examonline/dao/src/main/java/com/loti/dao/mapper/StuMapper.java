@@ -13,4 +13,5 @@ public interface StuMapper {
     Student selectById(int id);
     Student selectByIdAndPass(MyUser user);
     List<Student> selectStuUniCourse(String courseName);
+    void updateStuInfo(Student student);
 }

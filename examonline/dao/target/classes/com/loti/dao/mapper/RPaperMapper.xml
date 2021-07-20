@@ -7,6 +7,10 @@
         select * from real_paper
         where paper_name = #{name}
     </select>
+    <select id="SelectRPaperById" parameterType="int" resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+        where paper_id = #{paperId}
+    </select>
     <insert id="InsertRPaper"  parameterType="com.loti.dao.pojo.Entity.RealPaper" useGeneratedKeys="true" keyProperty="paperId">
         insert into real_paper (paper_id, paper_name, course_name, paper_score) VALUES
         (#{paperId},#{paperName},#{courseName},#{paperScore})

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,33 +34,33 @@ public class RouterController {
 
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> loginControl(MyUser user){
+    public Map<String,Object> loginControl(MyUser user, HttpSession session){
         int error_code = 102;
         String error_type = "user no exist";
 
         MyUser usr = userService.checkUser(user);
-        String role = usr.getRole();
-
-        if(role ==null){
+        try {
+            String role = usr.getRole();
+            if(usr.getRole()!=null){
+                String jwt = JwtUtil.generateToken(user.userId);
+                session.setAttribute("userId",jwt);
+                return new HashMap<String, Object>(){{
+                    put("code", 0);
+                    put("msg","ok");
+                    put("token",null);
+                }};
+            }
+        }catch (NullPointerException e){
             error_code = 105;
             error_type = "username invalid";
         }
-        if(usr!=null){
-            String jwt = JwtUtil.generateToken(role,String.valueOf(user.userId));
-            return new HashMap<String, Object>(){{
-                put("code", 0);
-                put("msg","ok");
-                put("token",jwt);
-            }};
-        }else {
-            String finalError_type = error_type;
-            int finalError_code = error_code;
-            return new HashMap<String, Object>(){{
-                put("code", finalError_code);
-                put("msg", finalError_type);
-                put("token",null);
-            }};
-        }
+        int finalError_code = error_code;
+        String finalError_type = error_type;
+        return new HashMap<String, Object>(){{
+            put("code", finalError_code);
+            put("msg", finalError_type);
+            put("token",null);
+        }};
     }
 
 }

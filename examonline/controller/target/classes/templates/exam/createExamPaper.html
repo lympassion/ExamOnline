@@ -82,9 +82,6 @@
                                             <label for="courseNameSelect" class="col-sm-3 col-form-label" style="font-weight:normal;">考试课程：</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control" id="courseNameSelect">
-                                                    <option>请选择考试课程</option>
-                                                    <option>java</option>
-                                                    <option>C++</option>
                                                   </select>
                                             </div>
                                         </div>
@@ -181,11 +178,10 @@
                 
                 method: "get", 
                 url: "/teacher/getQuestions0?cname=" + courseName,
-                sidePagination: "client",
-                // pagination: true, //启动分页  
-                // pageSize: 6,  //每页显示的记录数  
-                // pageNumber:1, //当前第几页  
-                // pageList: [6, 12],  //记录数可选列表
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
                 singleSelect: false,  //是否单选，false表示多选; true标识只能单选
                 clickToSelect: true,  //启用点击某行就选中某行
                 search: true,  //是否启用查询
@@ -263,7 +259,7 @@
                 onLoadSuccess: function () {
                 },
                 onLoadError: function () {
-                    alert("数据加载失败！");
+                    // showTips("数据加载失败！");
                 }
 
             });  
@@ -277,11 +273,10 @@
                 
                 method: "get", 
                 url: "/teacher/getQuestions1?cname=" + courseName,
-                sidePagination: "client",
-                // pagination: true, //启动分页  
-                // pageSize: 6,  //每页显示的记录数  
-                // pageNumber:1, //当前第几页  
-                // pageList: [6, 12],  //记录数可选列表
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
                 singleSelect: false,  //是否单选，false表示多选; true标识只能单选
                 clickToSelect: true,  //启用点击某行就选中某行
                 search: true,  //是否启用查询
@@ -375,11 +370,10 @@
                 
                 method: "get", 
                 url: "/teacher/getQuestions2?cname=" + courseName,
-                sidePagination: "client",
-                // pagination: true, //启动分页  
-                // pageSize: 6,  //每页显示的记录数  
-                // pageNumber:1, //当前第几页  
-                // pageList: [6, 12],  //记录数可选列表
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
                 singleSelect: false,  //是否单选，false表示多选; true标识只能单选
                 clickToSelect: true,  //启用点击某行就选中某行
                 search: true,  //是否启用查询
@@ -473,11 +467,10 @@
                 
                 method: "get", 
                 url: "/teacher/getQuestions4?cname=" + courseName,
-                sidePagination: "client",
-                // pagination: true, //启动分页  
-                // pageSize: 6,  //每页显示的记录数  
-                // pageNumber:1, //当前第几页  
-                // pageList: [6, 12],  //记录数可选列表
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
                 singleSelect: false,  //是否单选，false表示多选; true标识只能单选
                 clickToSelect: true,  //启用点击某行就选中某行
                 search: true,  //是否启用查询

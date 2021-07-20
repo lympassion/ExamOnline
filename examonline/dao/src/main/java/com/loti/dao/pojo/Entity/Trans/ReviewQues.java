@@ -15,6 +15,7 @@ public class ReviewQues {
     String opd;
     String questionAnswer;
     int questionScore;
+    int questionOrder;
 
     String studentAnswer;
     int studentScore;
@@ -113,5 +114,13 @@ public class ReviewQues {
 
     public void setStudentScore(int studentScore) {
         this.studentScore = studentScore;
+    }
+
+    public int getQuestionOrder() {
+        return questionOrder;
+    }
+
+    public void setQuestionOrder(int questionOrder) {
+        this.questionOrder = questionOrder;
     }
 }

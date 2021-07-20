@@ -28,8 +28,8 @@
                 
             </nav>
             <table class="table table-borderless" id="classListTable" style="text-align: center;">
-                
             </table>
+
         </div>
         
     </div>
@@ -82,7 +82,7 @@
                             field: 'teacherName',
                             title: '负责教师名称'
                         }, {
-                            field: 'studentCnt',
+                            field: 'studentNum',
                             title: '学生人数'
                         }, {
                             field: 'paperOperator',
@@ -107,8 +107,8 @@
 
         window.operateEvents = {
             'click .RoleOfA': function (e, value, row, index) {
-                var val = "row:" + JSON.stringify(row);
-                alert(val);            
+                // var val = "row:" + JSON.stringify(row);
+                // alert(val);       
             }
             // 'click .RoleOfB': function (e, value, row, index) {
             //     var paperId = row["paperId"];

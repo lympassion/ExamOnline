@@ -40,6 +40,11 @@ public class StuPaperServiceImpl implements StuPaperService {
     }
 
     @Override
+    public int selectCnt(int exam_id, double lower, double up) {
+        return stuPaperMapper.selectStuCntBySec(exam_id,up,lower);
+    }
+
+    @Override
     public void UpdateIfTestInfo(int exam_id, int stu_id) {
         stuPaperMapper.updateStudentTestInfoById(exam_id,stu_id);
     }
@@ -57,5 +62,10 @@ public class StuPaperServiceImpl implements StuPaperService {
     @Override
     public void updateScorePart2(int exam_id, int stu_id, int score_2) {
         stuPaperMapper.updateScorePart2(exam_id,stu_id,score_2);
+    }
+
+    @Override
+    public void updateScore(int exam_id, int stu_id, int score) {
+        stuPaperMapper.updateScore(exam_id,stu_id,score);
     }
 }

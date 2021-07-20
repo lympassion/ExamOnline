@@ -17,6 +17,7 @@ public class FormatUtil {
     public static final int SCORE_CHOICE_PART = 3;
     public static final int SCORE_JUDGE = 5;
     public static final int SCORE_BLANK = 5;
+    public static final int SCORE_SUB = 15;
     public static final int SCORE_ERROR = 0;
     public static final int ERROR = -1;
 
@@ -43,7 +44,7 @@ public class FormatUtil {
             case JUDGE:
                 if(stu_ans.equals(corr_ans))
                     return SCORE_JUDGE;
-                else return SCORE_JUDGE;
+                else return SCORE_ERROR;
             case BLANK:
                 if(stu_ans.equals(corr_ans))
                     return SCORE_BLANK;

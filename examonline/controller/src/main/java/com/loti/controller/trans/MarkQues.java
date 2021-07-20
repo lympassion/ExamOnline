@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Timestamp;
 
 public class MarkQues {
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER,timezone = "GMT+8")
     Timestamp addTime;
     int quesType;
     int quesId;

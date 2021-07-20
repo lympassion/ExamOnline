@@ -36,6 +36,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public Classe getClassByTeacher(int teacher_id) {
+        return classeMapper.SelectClassByTeacher(teacher_id);
+    }
+
+    @Override
     public List<Classe> SelectClassByCourse(String course_name) {
         return classeMapper.SelectClassByCourse(course_name);
     }

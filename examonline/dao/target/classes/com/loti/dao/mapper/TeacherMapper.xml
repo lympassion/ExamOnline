@@ -21,4 +21,10 @@
             SELECT teacher_id FROM class
         ) AND teacher_course = #{courseName}
     </select>
+    <update id="updateTeacherInfo" parameterType="com.loti.dao.pojo.Entity.User.Teacher">
+        UPDATE teacher
+        SET teacher_name = #{teacherName} and teacher_gender = #{teacherGender} and teacher_password = #{teacherPassword}
+        and teacher_picture = #{teacherPictuer}
+        where teacher_id = #{teacherId}
+    </update>
 </mapper>

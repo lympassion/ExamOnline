@@ -560,7 +560,6 @@
 
             function submitNow() {
                 var ansSubmit = getStuAnswers(num_total, num_q_0, num_q_1, num_q_2, num_q_4);
-                // var ansJSON = JSON.stringify(ansSubmit);
 
                     $.ajax({
                         type: "post",
@@ -600,7 +599,7 @@
             // }
     
             function timeCountdown () {
-                $('#clock-countdown').countdown('2021/07/18 15:55:00').on('update.countdown', function(event) {
+                $('#clock-countdown').countdown('2021/07/20 12:55:00').on('update.countdown', function(event) {
                     var format = '%H:%M:%S';
                     if(event.offset.totalDays > 0) {
                         format = '%-d day%!d ' + format;

@@ -68,20 +68,11 @@
                             title: '教师编号',
                             sortable: true
                         }, {
-                            field: 'teacherName',
+                            field: 'teacherRealname',
                             title: '姓名'
                         }, {
                             field: 'teacherGender',
-                            title: '性别',
-                            formatter: function(value, row, index) {
-                                var val = (value == 0) ? "male" : "female";
-                                return val
-                            }
-                        }, {
-                            field: 'paperOperator',
-                            title: '操作',
-                            formatter: addButton,
-                            events: operateEvents
+                            title: '性别'
                         }],
                 onLoadSuccess: function () {
                 },
