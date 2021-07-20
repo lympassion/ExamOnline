@@ -2543,6 +2543,30 @@ class BootstrapTable {
     return dataRow
   }
 
+  getRowByIndex = function (index) {
+    if((index * 1+1)>this.options.data.length){
+      throw new Error("Unknown method: 没有当前序号!");
+    }
+      return this.options.data[index * 1];
+  };  
+
+  removeByIndex = function (index) {
+   var len = this.options.data.length,
+     row = this.getRowByIndex(index);
+
+     if (row) {
+         this.options.data.splice(this.options.data.indexOf(row), 1);
+     }
+
+     if (len === this.options.data.length) {
+         return;
+     }
+
+     this.initSearch();
+     this.initPagination();
+     this.initBody(true);
+  };  
+
   updateByUniqueId (params) {
     const allParams = Array.isArray(params) ? params : [params]
 

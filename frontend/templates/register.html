@@ -25,12 +25,12 @@
             <li class="nav-item" role="presentation">
               <a class="nav-link" id="tch-tab" data-toggle="tab" href="#teacher" role="tab" aria-controls="teacher" aria-selected="false">教师注册</a>
             </li>
-          </ul>
+        </ul>
             <br>
           <div class="tab-content">
             <div class="tab-pane active" id="student" role="tabpanel" aria-labelledby="student-tab">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card shadow-lg">
+                    <div class="card-body" style="margin-top: 20px;">
                         <form class="needs-validation" novalidate>
                             <div class='input-group mb-2'>
                                 <label for="stu-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
@@ -39,15 +39,6 @@
                                     <div class="invalid-feedback">请输入您的真实姓名</div>
                                   </div>
                             </div>
-                            <!--
-                            <div class="input-group mb-2">
-                                <label for="stu-userId" class="col-sm-3 col-form-label"></span>用户名</span></label>
-                                <div class="col-sm-9">
-                                    <input id="stu-userId" name="stu-userId" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
-                                    <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
-                                  </div>
-                            </div>
-                            -->
                             <div class="input-group mb-2">
                                 <label for="stu-password" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
@@ -89,15 +80,15 @@
                                 
                             </div>
                         </form>    
-                        <button type="button" class="btn btn-primary btn-lg mb-2" id="stu-register">注册</button>
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="stu-register" style="width: 100%;">注册</button>
                         <p>已有帐号？<a href="login.html">立即登录</a></p>
                     </div>
                     
                 </div>  
             </div>
             <div class="tab-pane" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card shadow-lg">
+                    <div class="card-body" style="margin-top: 20px;">
                         <form class="needs-validation" novalidate>
                             <div class='input-group mb-2'>
                                 <label for="tch-realname" class="col-sm-3 col-form-label"></span>姓名</span></label>
@@ -106,15 +97,6 @@
                                     <div class="invalid-feedback">请输入您的真实姓名</div>
                                   </div>
                             </div>
-                            <!--
-                            <div class="input-group mb-2">
-                                <label for="tch-userId" class="col-sm-3 col-form-label"></span>用户名</span></label>
-                                <div class="col-sm-9">
-                                    <input id="tch-userId" name="tch-userId" type="text" class="form-control" aria-label="用户名" pattern="\S{0,20}" required>
-                                    <div class="invalid-feedback">请输入用户名（不超过20个字符）</div>
-                                  </div>
-                            </div>
-                            -->
                             <div class="input-group mb-2">
                                 <label for="tch-password" class="col-sm-3 col-form-label"></span>密码</span></label>
                                 <div class="col-sm-9">
@@ -146,7 +128,7 @@
                                 
                             </div>
                         </form>    
-                        <button type="button" class="btn btn-primary btn-lg mb-2" id="tch-register">注册</button>
+                        <button type="button" class="btn btn-primary btn-lg mb-2" id="tch-register" style="width: 100%;">注册</button>
                         <p>已有帐号？<a href="login.html">立即登录</a></p>
                     </div>
                     

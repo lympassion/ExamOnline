@@ -371,25 +371,25 @@
                 var colData = JSON.stringify({ "studentId": userId, "questionId": quesIdCollected });
 
                 $.ajax({
-                type: "post",
-                url: "/student/collectQuestion",
-                contentType: "application/json",
-                data: colData,
-                datatype: "json",
-                success: function(resultMsg){
-                    if(resultMsg.code == 0){
-                        // 收藏成功
-                        alert('已收藏至错题集！');
-                    } else {
-                        if(resultMsg.code == 101)
-                        // 收藏失败：题目已存在于错题集
-                        alert('该题目已存在！');
+                    type: "post",
+                    url: "/student/collectQuestion",
+                    contentType: "application/json",
+                    data: colData,
+                    datatype: "json",
+                    success: function(resultMsg){
+                        if(resultMsg.code == 0){
+                            // 收藏成功
+                            alert('已收藏至错题集！');
+                        } else {
+                            if(resultMsg.code == 101)
+                            // 收藏失败：题目已存在于错题集
+                            alert('该题目已存在！');
+                        }
+                    },
+                    error: function(resultMsg){
+                        // alert("通信失败");
                     }
-                },
-                error: function(resultMsg){
-                    // alert("通信失败");
-                }
-            });
+                });
             }
 
             // // 已答题目给答题卡着色

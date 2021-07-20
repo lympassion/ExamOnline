@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../static/css/page.css" />
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/css/login.register.css">
+
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">试题&试卷管理</a></li>
+                    <li class="breadcrumb-item"><a href="paperRepository.html">试题库</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">创建试题</li>
+                </ol>
+            </nav>
+            <div style="margin-top: 30px;">
+                <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="q-0-tab" data-toggle="tab" href="#qTypeCard0" role="tab" aria-selected="true">单选题</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="q-1-tab" data-toggle="tab" href="#qTypeCard1" role="tab" aria-selected="false">多选题</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="q-2-tab" data-toggle="tab" href="#qTypeCard2" role="tab" aria-selected="false">判断题</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="q-3-tab" data-toggle="tab" href="#qTypeCard4" role="tab" aria-selected="false">简答题</a>
+                    </li>
+                </ul>
+                <br>
+                <div class="row mt-1">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="qTypeCard0" role="tabpanel" aria-labelledby="qTypeCard0">
+                                <div class="card shadow-lg">
+                                    <div class="card-body">
+                                        <form class="needs-validation m-4" novalidate>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-0-course" class="col-sm-2 col-form-label" style="font-weight:normal;">课程: </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="qu-0-course">
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-0-title" class="col-sm-2 col-form-label"></span>题目: </span></label>
+                                                <div class="col-sm-10">
+                                                    <textarea id="qu-0-title" type="text" class="form-control" style="height: 80px; resize: none;" required></textarea>
+                                                  </div>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-0-score" class="col-sm-2 col-form-label"></span>分值: </span></label>
+                                                <div class="col-sm-10" style="display: inline;">
+                                                    <input id="qu-0-score" name="qu-score-input" type="number" min="0" class="input-score-number form-control" style="width: 100%;" required>
+                                                  </div>
+                                            </div>
+                
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-0-op-a" class="col-sm-2 col-form-label"></span>选项A: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-0-op-a" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-0-op-b" class="col-sm-2 col-form-label"></span>选项B: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-0-op-b" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-0-op-c" class="col-sm-2 col-form-label"></span>选项C: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-0-op-c" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-0-op-d" class="col-sm-2 col-form-label"></span>选项D: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-0-op-d" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="btn-qu-0-answer" class="col-sm-2 col-form-label"></span>答案: </span></label>
+                                                <div class="col-sm-10" style="display: flex; align-items: center; justify-content: center;">
+                                                    <div class="btn-qu-0-answer" role="group" aria-label="Basic example">
+                                                        <button id="btn-qu-0-answer-a" type="button" class="btn btn-light" value="A" style="width: 38px; border-radius: 50%;">A</button>
+                                                        <button id="btn-qu-0-answer-b" type="button" class="btn btn-light" value="B" style="width: 38px; border-radius: 50%; margin-left: 38px;">B</button>
+                                                        <button id="btn-qu-0-answer-c" type="button" class="btn btn-light" value="C" style="width: 38px; border-radius: 50%; margin-left: 38px;">C</button>
+                                                        <button id="btn-qu-0-answer-d" type="button" class="btn btn-light" value="D" style="width: 38px; border-radius: 50%; margin-left: 38px;">D</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="col-4"></div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-primary btn-lg mb-2" id="btn-qu-0-add " style=" width: 100%;"><i class="bi bi-check2"></i></button>
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="tab-pane" id="qTypeCard1" role="tabpanel" aria-labelledby="qTypeCard1">
+                                <div class="card shadow-lg">
+                                    <div class="card-body">
+                                        <form class="needs-validation m-4" novalidate>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-1-course" class="col-sm-2 col-form-label" style="font-weight:normal;">课程: </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="qu-1-course">
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-1-title" class="col-sm-2 col-form-label"></span>题目: </span></label>
+                                                <div class="col-sm-10">
+                                                    <textarea id="qu-1-title" type="text" class="form-control" style="height: 80px; resize: none;" required></textarea>
+                                                  </div>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-1-score" class="col-sm-2 col-form-label"></span>分值: </span></label>
+                                                <div class="col-sm-10" style="display: inline;">
+                                                    <input id="qu-1-score" name="qu-score-input" type="number" min="0" class="input-score-number form-control" style="width: 100%;" required>
+                                                  </div>
+                                            </div>
+                
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-1-op-a" class="col-sm-2 col-form-label"></span>选项A: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-1-op-a" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-1-op-b" class="col-sm-2 col-form-label"></span>选项B: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-1-op-b" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-1-op-c" class="col-sm-2 col-form-label"></span>选项C: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-1-op-c" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-1-op-d" class="col-sm-2 col-form-label"></span>选项D: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-1-op-d" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="btn-qu-1-answer" class="col-sm-2 col-form-label"></span>答案: </span></label>
+                                                <div class="col-sm-10" style="display: flex; align-items: center; justify-content: center;">
+                                                    <div class="btn-qu-1-answer" role="group" aria-label="Basic example">
+                                                        <button id="btn-qu-1-answer-a" type="button" class="btn btn-light" value="unchosen" style="width: 38px; border-radius: 50%;">A</button>
+                                                        <button id="btn-qu-1-answer-b" type="button" class="btn btn-light" value="unchosen" style="width: 38px; border-radius: 50%; margin-left: 38px;">B</button>
+                                                        <button id="btn-qu-1-answer-c" type="button" class="btn btn-light" value="unchosen" style="width: 38px; border-radius: 50%; margin-left: 38px;">C</button>
+                                                        <button id="btn-qu-1-answer-d" type="button" class="btn btn-light" value="unchosen" style="width: 38px; border-radius: 50%; margin-left: 38px;">D</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="col-4"></div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-primary btn-lg mb-2" id="btn-qu-1-add" style=" width: 100%;"><i class="bi bi-check2"></i></button>
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane" id="qTypeCard2" role="tabpanel" aria-labelledby="qTypeCard2">
+                                <div class="card shadow-lg">
+                                    <div class="card-body">
+                                        <form class="needs-validation m-4" novalidate>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-2-course" class="col-sm-2 col-form-label" style="font-weight:normal;">课程: </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="qu-2-course">
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-2-title" class="col-sm-2 col-form-label"></span>题目: </span></label>
+                                                <div class="col-sm-10">
+                                                    <textarea id="qu-2-title" type="text" class="form-control" style="height: 80px; resize: none;" required></textarea>
+                                                  </div>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-2-score" class="col-sm-2 col-form-label"></span>分值: </span></label>
+                                                <div class="col-sm-10" style="display: inline;">
+                                                    <input id="qu-2-score" name="qu-score-input" type="number" min="0" class="input-score-number form-control" style="width: 100%;" required>
+                                                  </div>
+                                            </div>
+                
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-2-op-a" class="col-sm-2 col-form-label"></span>选项A: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-2-op-a" type="text" value="T" class="form-control" disabled>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-2-op-b" class="col-sm-2 col-form-label"></span>选项B: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-2-op-b" type="text" value="F" class="form-control" disabled>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-2-op-c" class="col-sm-2 col-form-label"></span>选项C: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-2-op-c" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-2-op-d" class="col-sm-2 col-form-label"></span>选项D: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-2-op-d" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="btn-qu-2-answer" class="col-sm-2 col-form-label"></span>答案: </span></label>
+                                                <div class="col-sm-10" style="display: flex; align-items: center; justify-content: center;">
+                                                    <div class="btn-qu-2-answer" role="group" aria-label="Basic example">
+                                                        <button id="btn-qu-2-answer-a" type="button" class="btn btn-light" value="A" style="width: 38px; border-radius: 50%;">A</button>
+                                                        <button id="btn-qu-2-answer-b" type="button" class="btn btn-light" value="B" style="width: 38px; border-radius: 50%; margin-left: 120px;">B</button>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                        </form>
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="col-4"></div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-primary btn-lg mb-2" id="btn-qu-0-add " style="width: 100%;"><i class="bi bi-check2"></i></button>
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>    
+                                        
+                                    </div>
+                                    
+                                </div>  
+                            </div>
+                            
+                            <div class="tab-pane" id="qTypeCard4" role="tabpanel" aria-labelledby="qTypeCard4">
+                                <div class="card shadow-lg">
+                                    <div class="card-body">
+                                        <form class="needs-validation m-4" novalidate>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-4-course" class="col-sm-2 col-form-label" style="font-weight:normal;">课程: </label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="qu-4-course">
+                                                      </select>
+                                                </div>
+                                            </div>
+                                            <div class='input-group mb-2'>
+                                                <label for="qu-4-title" class="col-sm-2 col-form-label"></span>题目: </span></label>
+                                                <div class="col-sm-10">
+                                                    <textarea id="qu-4-title" type="text" class="form-control" style="height: 80px; resize: none;" required></textarea>
+                                                  </div>
+                                            </div>
+                                            <div class="input-group mb-2">
+                                                <label for="qu-4-score" class="col-sm-2 col-form-label"></span>分值: </span></label>
+                                                <div class="col-sm-10" style="display: inline;">
+                                                    <input id="qu-4-score" name="qu-score-input" type="number" min="0" class="input-score-number form-control" style="width: 100%;" required>
+                                                  </div>
+                                            </div>
+                
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-4-op-a" class="col-sm-2 col-form-label"></span>选项A: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-4-op-a" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-4-op-b" class="col-sm-2 col-form-label"></span>选项B: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-4-op-b" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-4-op-c" class="col-sm-2 col-form-label"></span>选项C: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-4-op-c" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="qu-4-op-d" class="col-sm-2 col-form-label"></span>选项D: </span></label>
+                                                <div class="col-sm-10">
+                                                    <input id="qu-4-op-d" type="text" class="form-control" required>
+                                                  </div>
+                                            </div>
+                                            <div class='input-group mb-2' style="visibility: hidden;">
+                                                <label for="btn-qu-4-answer" class="col-sm-2 col-form-label"></span>答案: </span></label>
+                                                <div class="col-sm-10">
+                                                    <div class="btn-qu-4-answer" role="group" aria-label="Basic example">
+                                                        <button id="btn-qu-4-answer-a" type="button" class="btn btn-light" value="A" style="width: 38px; border-radius: 50%; margin-left: 144.6px;">T</button>
+                                                        <button id="btn-qu-4-answer-b" type="button" class="btn btn-light" value="B" style="width: 38px; border-radius: 50%; margin-left: 144.6px;">F</button>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                    
+                                        </form>
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="col-4"></div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-primary btn-lg mb-2" id="btn-qu-0-add " style="width: 100%;"><i class="bi bi-check2"></i></button>
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>    
+                                        
+                                    </div>
+                                    
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/timeFormat.js"></script>
+    <script src="../static/js/jquerysession.js"></script>
+    <script src="../static/js/jquery.actual.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../static/js/bootstrap-input-spinner.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        var newQuesData = {};
+
+        var questionType = -1;
+        var questionTitle = "";
+        var questionScore = 0;
+        var optionA = "";
+        var optionB = "";
+        var optionC = "";
+        var optionD = "";
+        var questionAnswer = "";
+
+        $(document).ready(function () {
+            $("input[name='qu-score-input']").inputSpinner();
+        });
+
+        $(function(){
+            //  $('父元素').on('click', '子元素', function(){})
+            $('.btn-qu-0-answer').on('click', 'button', function() {
+                $(this).removeClass('btn-light').addClass('btn-primary');
+                $(this).siblings().removeClass('btn-primary').addClass('btn-light');
+                // alert($(this).attr('value'));
+            })
+            $('.btn-qu-1-answer').on('click', 'button', function() {
+                if( !$(this).hasClass('btn-primary')) {
+                    $(this).removeClass('btn-light').addClass('btn-primary');
+                    $(this).val("chosen");
+                } else {
+                    $(this).removeClass('btn-primary').addClass('btn-light'); 
+                    $(this).val("unchosen");
+                }
+                
+            })
+            $('.btn-qu-2-answer').on('click', 'button', function() {
+                $(this).removeClass('btn-light').addClass('btn-primary');
+                $(this).siblings().removeClass('btn-primary').addClass('btn-light');
+            })
+        })
+
+        $('#btn-qu-0-add').click(function () {
+            questionType = 0;
+            questionTitle = document.getElementById('qu-0-title').value;
+            questionScore = document.getElementById('qu-0-score').value;
+            optionA = document.getElementById('qu-0-op-a').value;
+            optionB = document.getElementById('qu-0-op-b').value;
+            optionC = document.getElementById('qu-0-op-c').value;
+            optionD = document.getElementById('qu-0-op-d').value;
+
+            if($('#btn-qu-0-answer-a').hasClass('btn-primary')) {
+                questionAnswer = "A";
+            } else if ($('#btn-qu-0-answer-b').hasClass('btn-primary')) {
+                questionAnswer = "B";
+            } else if ($('#btn-qu-0-answer-c').hasClass('btn-primary')) {
+                questionAnswer = "C";
+            } else {
+                questionAnswer = "D";
+            }
+
+            newQuesData = {
+                "questionType": questionType,
+                "questionTitle": questionTitle,
+                "questionScore": questionScore,
+                "optionA": optionA,
+                "optionB": optionB,
+                "optionC": optionC,
+                "optionD": optionD,
+                "questionAnswer": questionAnswer,
+            }
+
+            submitNewQues(newQuesData);
+
+        })
+
+        $('#btn-qu-1-add').click(function () {
+            questionType = 1;
+            questionTitle = document.getElementById('qu-1-title').value;
+            questionScore = document.getElementById('qu-1-score').value;
+            optionA = document.getElementById('qu-1-op-a').value;
+            optionB = document.getElementById('qu-1-op-b').value;
+            optionC = document.getElementById('qu-1-op-c').value;
+            optionD = document.getElementById('qu-1-op-d').value;
+
+            if ($('#btn-qu-1-answer-a').attr('value') == "chosen") {
+                questionAnswer += "A";
+            }
+            if ($('#btn-qu-1-answer-b').attr('value') == "chosen") {
+                questionAnswer += "B";
+            }
+            if ($('#btn-qu-1-answer-c').attr('value') == "chosen") {
+                questionAnswer += "C";
+            }
+            if ($('#btn-qu-1-answer-d').attr('value') == "chosen") {
+                questionAnswer += "D";
+            }
+
+            newQuesData = {
+                "questionType": questionType,
+                "questionContent": questionTitle,
+                "questionScore": questionScore,
+                "opa": optionA,
+                "opb": optionB,
+                "opc": optionC,
+                "opd": optionD,
+                "questionAnswer": questionAnswer,
+            }
+
+            submitNewQues(newQuesData);
+
+        })
+
+        $('#btn-qu-2-add').click(function () {
+            questionType = 0;
+            questionTitle = document.getElementById('qu-2-title').value;
+            questionScore = document.getElementById('qu-2-score').value;
+            optionA = "T";
+            optionB = "F";
+
+            if($('#btn-qu-2-answer-a').hasClass('btn-primary')) {
+                questionAnswer = "A";
+            } else {
+                questionAnswer = "B";
+            }
+
+            newQuesData = {
+                "questionType": questionType,
+                "questionTitle": questionTitle,
+                "questionScore": questionScore,
+                "optionA": optionA,
+                "optionB": optionB,
+                "optionC": optionC,
+                "optionD": optionD,
+                "questionAnswer": questionAnswer,
+            }
+            submitNewQues(newQuesData);
+
+        })
+
+        $('#btn-qu-4-add').click(function () {
+            questionType = 0;
+            questionTitle = document.getElementById('qu-2-title').value;
+            questionScore = document.getElementById('qu-2-score').value;
+
+            newQuesData = {
+                "questionType": questionType,
+                "questionTitle": questionTitle,
+                "questionScore": questionScore,
+                "optionA": optionA,
+                "optionB": optionB,
+                "optionC": optionC,
+                "optionD": optionD,
+                "questionAnswer": questionAnswer,
+            }
+
+            submitNewQues(newQuesData);
+
+        })
+
+        function submitNewQues (newQuesData) {
+            $.ajax({
+                type: "post",
+                url: "/teacher/newQuestionSubmit",
+                data: newQuesData,
+                datatype: "json",
+                success: function(){
+                    alert("新增成功");
+                    window.location.reload();
+                },
+                error: function(resultMsg){
+                    // alert("通信失败");
+                }
+                
+            });
+        }
+        
+    </script>
+
+</body>
+</html>

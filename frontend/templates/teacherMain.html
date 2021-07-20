@@ -24,7 +24,7 @@
 						</a>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="text-center">
-                            <img id="userImgArea" src="../static/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
+                            <img id="userImgArea" src="../static/img/avatar2/1.png" class="rounded-circle" height="35" width="35">
                         </div>
                         <div id="userIdArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
                         <!-- <div class="sidebar-brand-text mx-3"><span>Misty Mountain</span></div> -->
@@ -35,7 +35,7 @@
 				<div class="nav-left position-fixed">
 					<div class="navDiv position-absolute" style="height: 650px;">
                         <div class="m-5" style="padding-left: 12px;">
-                            <img src="../static/img/avatars/avatar6.jpg" class="rounded-circle" height="120" width="120">
+                            <img src="../static/img/avatar2/1.png" class="rounded-circle" height="120" width="120">
                           </div>
 						<div class="nav-list" style="margin-bottom: 40px;">
 							<ul>
@@ -54,14 +54,14 @@
 									<div class="nav-box">
                                         <a href="examRepository.html" class="li-a-a " target="iframe">考试安排</a>
                                         <a href="examListToTeacher.html" class="li-a-a " target="iframe">考试评卷</a>
-                                        <a href="login.html" class="li-a-a" target="iframe">数据分析</a>
+                                        <a href="dataAnalysis.html" class="li-a-a" target="iframe">数据分析</a>
 									</div>
 								</li>
 								<li class="nav-tab nav-ul">
 									<a href="login.html" class="li-a " target="iframe"><i class='bi bi-envelope-open m-3'></i>试题&试卷管理
 										<i class='bi bi-chevron-right' style="float: right;"></i></a>
 									<div class="nav-box">
-                                        <a href="login.html" class="li-a-a " target="iframe">试题库</a>
+                                        <a href="questionRepository.html" class="li-a-a " target="iframe">试题库</a>
                                         <a href="paperRepository.html" class="li-a-a " target="iframe">试卷库</a>
 									</div>
 								</li>
@@ -114,10 +114,42 @@
 		<script src="../static/js/jquery.easing.min.js"></script>
 		<script src="../static/js/jquerysession.js"></script>
 		<script>
-			$(function() {
-				var userId = $.session.get('userId');
 
-				document.getElementById('userIdArea').innerHTML = userId;
+			var userId = "";
+
+			$(document).ready(function () {
+
+				userId = $.session.get('userId');
+
+				$.ajax({
+					url: "/user/getUserInfo?uid=" + userId,
+					type: "GET",
+					dataType: "json",
+					success: function(resultMsg){
+						initUserInfo(resultMsg.data);
+					},
+					error: function(msg) {
+						// alert(resultMsg.msg);
+					}
+				}); 
+
+			})
+
+			function initUserInfo(userData) {
+				userAvatar = userData.studentAvatar;
+				userRealname = userData.studentRealname;
+
+				document.getElementById('userImgArea').src = userAvatar;
+				document.getElementById('userAvatarLarge').src = userAvatar;
+				document.getElementById('userRealnameArea').innerHTML = userRealname;
+
+			}
+
+
+			$(function() {
+				// var userId = $.session.get('userId');
+
+				// document.getElementById('userIdArea').innerHTML = userId;
 				
 				let navflag = false;
 				$('.nav-tab').click(function() {
@@ -156,26 +188,26 @@
 				})
 
 				$('#btn-confirm-logout').click(function() {
-					$.ajax({
-						type: "post",
-						url: "/user/logout",
-						contentType: "application/json",
-						data: { "userId": userId },
-						datatype: "json",
-						success: function(resultMsg){
-							if(resultMsg.code == 0){
-								// 收藏成功
-								alert('注销成功！');
-								$.session.remove(userId);
-								window.location.href='index.html';
-							} else {
-								// 
-							}
-						},
-						error: function(resultMsg){
-							// alert("通信失败");
-						}
-					});
+					// $.ajax({
+					// 	type: "post",
+					// 	url: "/user/logout",
+					// 	contentType: "application/json",
+					// 	data: { "userId": userId },
+					// 	datatype: "json",
+					// 	success: function(resultMsg){
+					// 		if(resultMsg.code == 0){
+					// 			// 收藏成功
+					// 			alert('注销成功！');
+					// 			$.session.remove(userId);
+					// 			window.location.href='index.html';
+					// 		} else {
+					// 			// 
+					// 		}
+					// 	},
+					// 	error: function(resultMsg){
+					// 		// alert("通信失败");
+					// 	}
+					// });
 				})
             })
 		</script>

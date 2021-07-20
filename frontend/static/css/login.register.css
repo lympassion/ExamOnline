@@ -32,9 +32,6 @@ html, body {
     width: 15%;
 }
 
-.input-group-text, button {
-    width: 100%;
-}
 
 div.input-group-text span {
     display: block;
