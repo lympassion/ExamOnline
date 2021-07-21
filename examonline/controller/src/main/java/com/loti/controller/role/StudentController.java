@@ -56,6 +56,20 @@ public class StudentController {
         }
     }
 
+    @RequestMapping(value = "/getUserInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getStudent(@RequestParam("uid") int stu_id){
+        try{
+            return new HashMap<String, Object>(){{
+               put("code",0);put("msg","ok");put("data",studentService.getInfoById(stu_id));
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
+
     @RequestMapping(value = "/getAllExam",method = RequestMethod.GET)
     @ResponseBody
     public List<Exam> getExamInfo(@RequestParam("sid") int studentId){
@@ -84,6 +98,7 @@ public class StudentController {
     @ResponseBody
     public Map<String,Object> getQuesInTest(@RequestParam("pid") int paper_id,@RequestParam("eid") int exam_id,
                                             @RequestParam("sid") int stu_id){
+        Exam exam = examService.getExamById(exam_id);
         int examTime = examService.getExamTime(exam_id);
         List<Question> questionList= paperService.getQuesByPaperId(paper_id);
         stuPaperService.UpdateIfTestInfo(exam_id,stu_id);
@@ -109,6 +124,9 @@ public class StudentController {
             put("quesNum_2", finalQuesNum_3);
             put("quesNum_4", finalQuesNum_4);
             put("examTime",examTime);
+            put("beginTime",exam.getStartTime());
+            put("endTime",exam.getEndTime());
+            put("examName",exam.getExamName());
             put("data",questionList);
         }};
     }
@@ -211,4 +229,20 @@ public class StudentController {
         }};
     }
 
+    @RequestMapping(value = "/infoUpdate",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> updateInfo(@RequestBody HashMap<String,String> userInfo){
+        try{
+            studentService.updateStudent(Integer.parseInt(userInfo.get("studentId")),userInfo.get("studentName"),
+                    Integer.parseInt(userInfo.get("studentGender")),userInfo.get("studentPassword"),
+                    userInfo.get("studentPicture"));
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
 }

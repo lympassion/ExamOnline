@@ -32,4 +32,8 @@
         LEFT JOIN student_exam  se on q.question_id = se.question_id
         where se.exam_id = #{examId} AND se.student_id = #{stuId} AND paper_id = #{paperId} ORDER BY p.question_order
     </select>
+    <delete id="deleteQuestion" parameterType="int">
+        delete from question
+        where question_id = #{quesId}
+    </delete>
 </mapper>

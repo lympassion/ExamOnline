@@ -53,6 +53,9 @@ public class FormatUtil {
         }
     }
 
+    public static int getFirstNum(int id){
+        return Integer.parseInt(String.valueOf(id).substring(0,1));
+    }
 
 
 }

@@ -23,8 +23,8 @@
     </select>
     <update id="updateTeacherInfo" parameterType="com.loti.dao.pojo.Entity.User.Teacher">
         UPDATE teacher
-        SET teacher_name = #{teacherName} and teacher_gender = #{teacherGender} and teacher_password = #{teacherPassword}
-        and teacher_picture = #{teacherPictuer}
+        SET teacher_name = #{teacherName} , teacher_gender = #{teacherGender} , teacher_password = #{teacherPassword}
+        , teacher_picture = #{teacherPicture}
         where teacher_id = #{teacherId}
     </update>
 </mapper>

@@ -24,9 +24,9 @@
 						</a>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="text-center">
-                            <img id="userImgArea" src="/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
+                            <img id="userImgArea" src="/img/avatar2/1.png" class="rounded-circle" height="35" width="35">
                         </div>
-                        <div id="userIdArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
+                        <div id="userRealnameArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
                         <!-- <div class="sidebar-brand-text mx-3"><span>Misty Mountain</span></div> -->
                     </a>
                 </div>
@@ -35,7 +35,7 @@
 				<div class="nav-left position-fixed">
 					<div class="navDiv position-absolute" style="height: 650px;">
                         <div class="m-5" style="padding-left: 12px;">
-                            <img src="/img/avatars/avatar6.jpg" class="rounded-circle" height="120" width="120">
+                            <img id="userAvatarLarge" src="/img/avatar2/1.png" class="rounded-circle" height="120" width="120">
                           </div>
 						<div class="nav-list" style="margin-bottom: 40px;">
 							<ul>
@@ -48,24 +48,23 @@
                                         <a href="myExamReady.html" class="li-a-a " target="iframe">可参加</a>
 									</div>
                                 </li>
-                                <li class="nav-tab nav-ul">
-									<a href="stuInfo.html" class="li-a " target="iframe"><i class='bi bi-card-checklist m-3'></i>我的成绩
-										<i class='bi bi-chevron-right' style="float: right;"></i></a>
+                                <li class="nav-tab">
+									<a href="notebook.html" class="li-a " target="iframe"><i class='bi bi-card-checklist m-3'></i>错题集</a>
+										<!-- <i class='bi bi-chevron-right' style="float: right;"></i></a>
 									<div class="nav-box">
                                         <a href="notebook.html" class="li-a-a " target="iframe">错题集</a>
-                                        <a href="login.html" class="li-a-a" target="iframe">数据分析</a>
-									</div>
+									</div> -->
 								</li>
-								<li class="nav-tab nav-ul">
+								<!-- <li class="nav-tab nav-ul">
 									<a href="login.html" class="li-a " target="iframe"><i class='bi bi-envelope-open m-3'></i>我的提问
 										<i class='bi bi-chevron-right' style="float: right;"></i></a>
 									<div class="nav-box">
                                         <a href="login.html" class="li-a-a " target="iframe">新建提问</a>
                                         <a href="login.html" class="li-a-a " target="iframe">历史提问</a>
 									</div>
-								</li>
+								</li> -->
                                 <li class="nav-tab">
-									<a href="stuInfo.html" class="li-a " target="iframe"><i class='bi bi-person m-3'></i>个人信息</a>
+									<a href="studentInfo.html" class="li-a " target="iframe"><i class='bi bi-person m-3'></i>个人信息</a>
 								</li>
 							</ul>
 						</div>
@@ -111,10 +110,40 @@
 		<script src="/js/jquery.easing.min.js"></script>
 		<script src="/js/jquerysession.js"></script>
 		<script>
-			$(function() {
-				var userId = $.session.get('userId');
 
-				document.getElementById('userIdArea').innerHTML = userId;
+			var userId = "";
+
+			$(document).ready(function () {
+
+				userId = $.session.get('userId');
+
+				$.ajax({
+					url: "/user/getUserInfo?uid=" + userId,
+					type: "GET",
+					dataType: "json",
+					success: function(resultMsg){
+						initUserInfo(resultMsg.data);
+					},
+					error: function(msg) {
+						// alert(resultMsg.msg);
+					}
+				}); 
+
+			})
+
+			function initUserInfo(userData) {
+				userAvatar = userData.userAvatar;
+				userRealname = userData.userRealname;
+
+				document.getElementById('userImgArea').src = userAvatar;
+				document.getElementById('userAvatarLarge').src = userAvatar;
+				document.getElementById('userRealnameArea').innerHTML = userRealname;
+
+			}
+
+
+			$(function() {
+				// document.getElementById('userRealnameArea').innerHTML = userId;
 				
 				let navflag = false;
 				$('.nav-tab').click(function() {
@@ -153,8 +182,26 @@
 				})
 
 				$('#btn-confirm-logout').click(function() {
-					$.session.remove(userId);
-					window.location.href='index.html';
+					$.ajax({
+						type: "post",
+						url: "/user/logout",
+						contentType: "application/json",
+						data: { "userId": userId },
+						datatype: "json",
+						success: function(resultMsg){
+							if(resultMsg.code == 0){
+								// 收藏成功
+								alert('注销成功！');
+								$.session.remove(userId);
+								window.location.href='login.html';
+							} else {
+								// 
+							}
+						},
+						error: function(resultMsg){
+							// alert("通信失败");
+						}
+					});
 				})
 
 				// 关闭main页面也要删除Id记录

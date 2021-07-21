@@ -245,7 +245,7 @@
                 initSubTable(studentId);
                 $('#markModal').modal('show');
                 // $("#markTable").bootstrapTable('resetView', {height:600});
-                $("input[type='number']").inputSpinner();
+                $("input[name='setScore']").inputSpinner();
             }
         }; 
 
@@ -259,14 +259,8 @@
 
         function saveScore(index, qId, obj) {
             // temp = 1;
-            console.log("HERE");
             // console.log(index);
             var value = $(obj).val();
-            // scoreString += (value + ",");
-            // console.log(typeof(qId));
-            // console.log("bef");
-            // console.log(questionIdList);
-            // console.log(scoreList);
             if(questionIdList.includes(qId) == false) {
                 questionIdList.push(qId) ;
                 scoreList.push(value);
@@ -276,11 +270,6 @@
                 questionIdList[thisIndex] = qId;
                 scoreList[thisIndex] = value;
             }
-            // console.log("af");
-            // console.log(questionIdList);
-            // console.log(scoreList);
-            
-        
             // var name = 'score';
             // console.log(name);　　　　　　
             //通过 index 获取指定的行　
@@ -317,13 +306,13 @@
                 questionIdString += (questionIdList[k] + ',');
                 scoreString += (scoreList[k] + ',');
             }
-            console.log(scoreString);
-            console.log(questionIdString);
+            // console.log(scoreString);
+            // console.log(questionIdString);
 
             scoreString = scoreString.substring(0, scoreString.lastIndexOf(","));
             questionIdString = questionIdString.substring(0, questionIdString.lastIndexOf(","));
-            console.log(scoreString);
-            console.log(questionIdString);
+            // console.log(scoreString);
+            // console.log(questionIdString);
 
             var markData = {
                 "examId": examId,

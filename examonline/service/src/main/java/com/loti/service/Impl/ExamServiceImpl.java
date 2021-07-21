@@ -51,6 +51,11 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    public Exam getExamById(int examId) {
+        return examMapper.SelectExamByExamId(examId);
+    }
+
+    @Override
     public int getPaperId(int exam_id) {
         return examMapper.SelectPaperId(exam_id);
     }

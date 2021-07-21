@@ -190,7 +190,7 @@
 
 #btn-info-update:hover {
 	transform: scale(1.3, 1.3);
-	transition: .5s;
+	transition: all .5s linear;
 }
 
 
@@ -212,4 +212,34 @@
 .avatar-box img.active {
 	transition: 0s;
 	border: 5px solid rgba(206, 62, 62, 0.7);
+}
+
+.webPhotoImg {
+	width: 240px;
+}
+
+.card-exam-manage {
+	height: 420px; 
+	width: 310px; 
+	align-items: center; 
+	justify-content: center;
+	/* z-index: -1; */
+	transition: all 1s linear;
+	cursor: pointer;
+}
+
+.card-exam-manage img {
+	width: 80%;
+}
+
+.card-exam-manage:hover {
+	transform: scale(1.2, 1.2);
+	transition: all .8s;
+	/* filter: blur(5px); */
+}
+
+.card-exam-manage:hover>img:hover {
+	transform: scale(1.2, 1.2);
+	transition: all .8s;
+	/* filter: blur(5px); */
 }

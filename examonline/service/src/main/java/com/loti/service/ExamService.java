@@ -20,4 +20,6 @@ public interface ExamService {
     void InsertExam(Exam exam);
     List<Exam> getAllExam();
     List<Exam> getExamByTeacherId(int teacher_id);
+
+    Exam getExamById(int examId);
 }

@@ -47,7 +47,7 @@ public class StuServiceImpl implements StudentService {
         student.setStudentGender(studentGender);
         student.setStudentPassword(studentPassword);
         student.setStudentPicture(studentPicture);
-        stuMapper.InsertStudent(student);
+        stuMapper.updateStuInfo(student);
     }
 
     @Override

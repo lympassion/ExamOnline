@@ -5,6 +5,7 @@ import com.loti.controller.Utils.JwtUtil;
 import com.loti.controller.trans.QuesSubInfo;
 import com.loti.controller.trans.paperExamInfo;
 import com.loti.dao.pojo.Entity.*;
+import com.loti.dao.pojo.Entity.User.Student;
 import com.loti.dao.pojo.Entity.User.Teacher;
 import com.loti.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,20 @@ public class TeacherController {
         return new HashMap<String, Object>(){{
             put("code",0);put("msg","ok");put("data",courseList);
         }};
+    }
+
+    @RequestMapping(value = "/getUserInfo",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> getTeacher(@RequestParam("uid") int teacher_id){
+        try{
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");put("data",teacherService.SelectTeacherById(teacher_id));
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
     }
 
     @RequestMapping(value = "/getQuestions0",method = RequestMethod.GET)
@@ -336,6 +351,23 @@ public class TeacherController {
     public Map<String,Object> removeQues(@RequestParam("qid") int ques_id){
         try {
             quesService.removeQues(ques_id);
+            return new HashMap<String, Object>(){{
+                put("code",0);put("msg","ok");
+            }};
+        }catch (Exception e){
+            return new HashMap<String, Object>(){{
+                put("code",102);put("msg","database error");
+            }};
+        }
+    }
+
+    @RequestMapping(value = "/infoUpdate",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> updateInfo(@RequestBody HashMap<String,String> userInfo){
+        try{
+            teacherService.updateTeacher(Integer.parseInt(userInfo.get("teacherId")),userInfo.get("teacherName"),
+                    Integer.parseInt(userInfo.get("teacherGender")),userInfo.get("teacherPassword"),
+                    userInfo.get("teacherPicture"));
             return new HashMap<String, Object>(){{
                 put("code",0);put("msg","ok");
             }};

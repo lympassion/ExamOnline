@@ -72,7 +72,7 @@
                                         <div class="input-group mb-2">
                                             <label for="examName" class="col-sm-3 col-form-label" style="font-weight:normal;">考试名称：</label>
                                             <div class="col-sm-9">
-                                                <input id="paperName" name="paperName" type="text" placeholder="请输入考试名称" class="form-control" required>
+                                                <input id="examName" name="paperName" type="text" placeholder="请输入考试名称" class="form-control" required>
                                                 <div class="invalid-feedback">请输入考试名称</div>
                                               </div>
                                         </div>
@@ -164,6 +164,15 @@
                     }
                 })
         }); 
+
+        function addCourseName(courseNamesString) {
+            var courseNames = courseNamesString.split(',');
+            var course = "";
+            for(var i = 0; i < courseNames.length; i++) {
+                course = "<option>" + courseNames[i] + "</option>";
+                document.querySelector('#courseNameSelect').innerHTML += course;
+            }
+        }
 
         function initAllTables(courseName) {
             //调用函数，初始化表格  
@@ -314,7 +323,7 @@
 
                 $('#next').click(function(){
                     if(current == 0) {
-                        examName = document.getElementById('examrName').value;
+                        examName = document.getElementById('examName').value;
                         courseName = document.getElementById('courseNameSelect').value;
                         timeLong = document.getElementById('timeLongSelect').value == "60分钟" ? 60*60 : 120*60;
                         // console.log(examName);
@@ -324,7 +333,7 @@
                         initAllTables(courseName); 
 
                     } else if (current == 1) {
-                        paperId = $('#paperListTable').bootstrapTable('getSelection')[0].paperId;
+                        paperId = $('#paperListTable').bootstrapTable('getSelections')[0].paperId;
 
                     }  else if (current == 2) {
                         var classChosed = $('#classListTable').bootstrapTable('getSelections');

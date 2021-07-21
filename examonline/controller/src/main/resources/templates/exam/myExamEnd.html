@@ -170,10 +170,10 @@
 
         window.operateEvents = {
             'click .RoleOfA': function (e, value, row, index) {
-                var reviewExamURL = "viewExamPage.html?eid=" + row.examId + "&pid=" + row.paperId;
-                window.location.href = reviewExamURL;
                 // var val = row.examName;
-                // alert(val);            
+                // alert(val); 
+                var viewExamURL = "viewExamPage.html?eid=" + row.examId + "&pid=" + row.paperId;
+                window.location.href = viewExamURL;           
             }
         }; 
     

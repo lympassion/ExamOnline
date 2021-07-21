@@ -24,7 +24,7 @@
 						</a>
                     <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                         <div class="text-center">
-                            <img id="userImgArea" src="/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
+                            <img id="userImgArea" src="/img/avatar2/1.png" class="rounded-circle" height="35" width="35">
                         </div>
                         <div id="userIdArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
                         <!-- <div class="sidebar-brand-text mx-3"><span>Misty Mountain</span></div> -->
@@ -35,7 +35,7 @@
 				<div class="nav-left position-fixed">
 					<div class="navDiv position-absolute" style="height: 650px;">
                         <div class="m-5" style="padding-left: 12px;">
-                            <img src="/img/avatars/avatar6.jpg" class="rounded-circle" height="120" width="120">
+                            <img src="/img/avatar2/1.png" class="rounded-circle" height="120" width="120">
                           </div>
 						<div class="nav-list" style="margin-bottom: 40px;">
 							<ul>
@@ -50,11 +50,11 @@
 									</div>
                                 </li>
                                 <li class="nav-tab nav-ul">
-									<a href="#" class="li-a " target="iframe"><i class='bi bi-card-checklist m-3'></i>考试管理
+									<a href="meixie.html" class="li-a " target="iframe"><i class='bi bi-card-checklist m-3'></i>考试管理
 										<i class='bi bi-chevron-right' style="float: right;"></i></a>
 									<div class="nav-box">
                                         <a href="examRepository.html" class="li-a-a " target="iframe">考试安排</a>
-                                        <a href="login.html" class="li-a-a" target="iframe">数据分析</a>
+                                        <!-- <a href="login.html" class="li-a-a" target="iframe">数据分析</a> -->
 									</div>
 								</li>
 								<!-- <li class="nav-tab nav-ul">
@@ -156,8 +156,26 @@
 				})
 
 				$('#btn-confirm-logout').click(function() {
-					$.session.remove(userId);
-					window.location.href='index.html';
+					$.ajax({
+						type: "post",
+						url: "/user/logout",
+						contentType: "application/json",
+						data: { "userId": userId },
+						datatype: "json",
+						success: function(resultMsg){
+							if(resultMsg.code == 0){
+								// 收藏成功
+								alert('注销成功！');
+								$.session.remove(userId);
+								window.location.href='login.html';
+							} else {
+								// 
+							}
+						},
+						error: function(resultMsg){
+							// alert("通信失败");
+						}
+					});
 				})
             })
 		</script>

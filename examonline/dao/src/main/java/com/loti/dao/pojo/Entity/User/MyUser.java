@@ -7,9 +7,12 @@ public class MyUser {
     public int userId;
     public String password;
 
-    public final static String ROLE_STUDENT = "1";
-    public final static String ROLE_TEACHER = "2";
-    public final static String ROLE_ADMIN = "3";
+    public final static int ROLE_STUDENT = 1;
+    public final static int ROLE_TEACHER = 2;
+    public final static int ROLE_ADMIN = 3;
+
+    public final static String ADMIN_NAME = "ADMIN";
+    public final static String ADMIN_PHOTO = "/img/avatar2/1.png";
 
     MyUser() {}
 
@@ -34,18 +37,6 @@ public class MyUser {
         this.password = password;
     }
 
-    public static String getRoleStudent() {
-        return ROLE_STUDENT;
-    }
-
-    public static String getRoleTeacher() {
-        return ROLE_TEACHER;
-    }
-
-    public static String getRoleAdmin() {
-        return ROLE_ADMIN;
-    }
-
     @Override
     public String toString() {
         return "MyUser{" +
@@ -54,7 +45,7 @@ public class MyUser {
                 '}';
     }
 
-    public String getRole(){
-        return String.valueOf(userId).substring(0,1);
+    public int getRole(){
+        return Integer.parseInt(String.valueOf(userId).substring(0,1));
     }
 }
