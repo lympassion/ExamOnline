@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.StuMapper">
+    <select id="getAllStudent" resultType="com.loti.dao.pojo.Entity.User.Student">
+        select * from student
+    </select>
+    <select id="selectById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Student">
+        select * from student where (student_id) = #{id}
+    </select>
+    <select id="selectByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Student" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
+        select * from student WHERE student_id = #{userId} AND student_password = #{password}
+    </select>
+    <insert id="InsertStudent"  parameterType="com.loti.dao.pojo.Entity.User.Student" useGeneratedKeys="true" keyProperty="studentId">
+        insert into student (student_id, student_name, student_class, student_email, student_password, student_gender)
+            VALUES(#{studentId},#{studentName},#{studentClass},#{studentEmail},#{studentPassword},#{studentGender})
+    </insert>
+    <select id="selectStuUniCourse" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.User.Student">
+        SELECT s1.* FROM student s1 WHERE s1.student_id not in(
+            SELECT s2.student_id FROM student_class s2 LEFT JOIN class c1 on c1.class_id = s2.class_id
+            WHERE c1.course_name = #{courseName})
+    </select>
+    <update id="updateStuInfo" parameterType="com.loti.dao.pojo.Entity.User.Student">
+        UPDATE student
+        SET student_name = #{studentName} , student_gender = #{studentGender}
+        , student_picture = #{studentPicture} , student_password = #{studentPassword}
+        where student_id = #{studentId}
+    </update>
+    <update id="setStuClass">
+        update student
+        set student_class = #{stuClass}
+        where student_id = #{stuId}
+    </update>
+    <select id="selectStuByClass" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Student">
+        SELECT s1.* FROM student s1
+        LEFT JOIN student_class s2 on s1.student_id = s2.student_id
+        WHERE s2.class_id = #{class_id}
+    </select>
+</mapper>

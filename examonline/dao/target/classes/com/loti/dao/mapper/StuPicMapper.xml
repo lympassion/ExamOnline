@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.StuPicMapper">
+    <insert id="InsertStuPic" parameterType="com.loti.dao.pojo.Entity.StudentPicture">
+        insert into student_picture (student_id, exam_id, picture_path) VALUES
+        (#{studentId},#{examId},#{picturePath})
+    </insert>
+    <select id="SelectStuPic" resultType="com.loti.dao.pojo.Entity.StudentPicture">
+        select * from student_picture
+        where student_id = #{stuId} and exam_id = #{examId}
+    </select>
+</mapper>

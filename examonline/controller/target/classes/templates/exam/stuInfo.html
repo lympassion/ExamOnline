@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../static/css/page.css" />
-    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="../static/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../static/css/login.register.css">
+    <link rel="stylesheet" href="/css/login.register.css">
 </head>
 <body>
     <div class="page">
@@ -20,16 +20,35 @@
                     <li class="breadcrumb-item active" aria-current="page">基本信息</li>
                 </ol>
             </nav>
-
-        
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="text-center m-5">
+                        <img src="/img/avatars/avatar6.jpg" class="rounded-circle" height="200" width="200">
+                    </div>
+                    <div class="custom-file">
+                        <input onchange="showFilename(this.files[0])" type="file" class="custom-file-input" id="customFile">
+                        <label id="new-avatar-label" class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+            </div>
+            
+               
             
                 
         </div>
-
-        
-
     </div>
     
-    <script src="../static/js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+        })
+
+        function showFilename(file) {
+            $("#new-avatar-label").html(file.name);
+        }   
+    </script>
+
 </body>
 </html>

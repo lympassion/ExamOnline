@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.TeacherMapper">
+    <select id="getAllTeacher" resultType="com.loti.dao.pojo.Entity.User.Teacher">
+        select * from teacher
+    </select>
+    <select id="SelectTeacherById" parameterType="int" resultType="com.loti.dao.pojo.Entity.User.Teacher">
+        select * from teacher where (teacher_id) = #{id}
+    </select>
+    <select id="SelectTeacherByIdAndPass" resultType="com.loti.dao.pojo.Entity.User.Teacher" parameterType="com.loti.dao.pojo.Entity.User.MyUser">
+        select * from teacher WHERE teacher_id = #{userId} AND teacher_password = #{password}
+    </select>
+    <insert id="InsertTeacher"  parameterType="com.loti.dao.pojo.Entity.User.Teacher" useGeneratedKeys="true" keyProperty="teacherId">
+        insert into teacher (teacher_id, teacher_name,teacher_gender,teacher_email, teacher_password,teacher_course)
+            VALUES(#{teacherId},#{teacherName},#{teacherGender},#{teacherEmail},#{teacherPassword},#{teacherCourse})
+    </insert>
+    <select id="SelectNotClass" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.User.Teacher">
+        SELECT * FROM teacher WHERE teacher_id NOT IN (
+            SELECT teacher_id FROM class
+        ) AND teacher_course = #{courseName}
+    </select>
+    <update id="updateTeacherInfo" parameterType="com.loti.dao.pojo.Entity.User.Teacher">
+        UPDATE teacher
+        SET teacher_name = #{teacherName} , teacher_gender = #{teacherGender} , teacher_password = #{teacherPassword}
+        , teacher_picture = #{teacherPicture}
+        where teacher_id = #{teacherId}
+    </update>
+</mapper>

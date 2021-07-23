@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<title>考试页面 - Exam Online</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="/css/page.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/test.css">
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+
+        <style>
+            .hasBeenAnswer {background: #5d9cec;color:#fff;}
+        </style>
+
+
+	</head>
+	<body>
+		<div class="page">
+			<div class="navbar navbar-light bg-light shadow-sm p-0 bg-body rounded fixed-top">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#" style="padding-left: 10%;">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Exam Online</span></div>
+                </a>
+				<div class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" style="padding-right: 10%;">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                        <div class="text-center">
+                            <img id="userImgArea" src="/img/avatars/avatar6.jpg" class="rounded-circle" height="35" width="35">
+                        </div>
+                        <div id="userIdArea" class="sidebar-brand-text mx-3">Misty Mountain</div>
+                    </a>
+                </div>
+			</div>
+            <div class="exam-page" style="padding-top:55px;">
+                <div class="container" style="max-width: 100%;">
+                    <div class="row">
+                        <div class="col">
+                            <div class="left-col" style="position: fixed;">
+                                <div class="camera-box m-2">
+                                    <div class="card" style="height: 253.5px; width: 338px; margin-top: 1.2rem;">
+                                        <video src=""></video>
+                                    </div>
+                                    <div class="card" style="height: 253.5px; width: 338px; margin-top: 1.2rem; display: none;">
+                                        <canvas id="canvas"></canvas>
+                                    </div>
+                                    <div class="alert alert-danger font-weight-bold m-2" role="alert">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        请确保摄像头未被遮挡
+                                      </div>
+                                </div>
+                                <div class="exam-info-box m-2">
+                                    <div class="card mt-5">
+                                        <div class="card-header" style="text-align: center;">
+                                            <i class="ri-file-info-line" style="font-size: 16px;"></i>
+                                            <span style="font-size: 18px;">考试信息</span>
+                                        </div>
+                                        <div class="card-body" style="padding: 1rem;">
+                                            
+                                            
+                                            <div class="alert alert-info" role="alert" style="text-align: left;">
+                                                <br>
+                                                <h3 id="exam-name-box" class="card-title" style="text-align: center;">Java能力测试</h3>
+                                                <br>
+                                                <p class="card-text">开始时间：<span id="exam-start-time-box"></span></p>
+                                                <p class="card-text">考试时长：<span id="exam-time-long-box"></span></p>
+                                              </div>
+                                            <br>
+                                            <div class="alert alert-warning" role="alert" style="align-items: center; font-size: 30px; color: red;">
+                                                <i class="bi bi-alarm"></i>
+                                                <span id="clock-countdown"></span>
+                                              </div>
+                                            <!-- <p class="card-text alert-danger">倒计时：<font color="red">01:17:43</font></p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="exam-body-box m-3">
+                                  <div class="nr_left">
+                                    <div class="test">
+                                        <div>
+                                            <!--单选题 表头-->
+                                            <div class="test_content">
+                                                <div class="test_content_title">
+                                                    <h2>单选题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">2</i><span>题，</span><span>合计</span><i class="content_fs">10</i><span>分</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!--单选题 题目-->
+                                            <div class="test_content_nr">
+                                                <ul id="ul-box-type-0">
+
+                                                </ul>
+                                            </div>
+                                            
+                                            <!--多选题 表头-->
+                                            <div class="test_content">
+                                                <div class="test_content_title">
+                                                    <h2>多选题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">2</i><span>题，</span><span>合计</span><i class="content_fs">10</i><span>分</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!--多选题 题目-->
+                                            <div class="test_content_nr">
+                                                <ul id="ul-box-type-1">
+
+                                                </ul>
+                                            </div>
+
+                                             <!--判断题 表头-->
+                                             <div class="test_content">
+                                                <div class="test_content_title">
+                                                    <h2>判断题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">1</i><span>题，</span><span>合计</span><i class="content_fs">5</i><span>分</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!--判断题 题目-->
+                                            <div class="test_content_nr">
+                                                <ul id="ul-box-type-2">
+
+                                                </ul>
+                                            </div>
+
+                                            <!--简答题 表头-->
+                                            <div class="test_content">
+                                                <div class="test_content_title">
+                                                    <h2>简答题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">1</i><span>题，</span><span>合计</span><i class="content_fs">10</i><span>分</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!--简答题 题目-->
+                                            <div class="test_content_nr">
+                                                <ul id="ul-box-type-4">
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="right-col" style="position: fixed;">
+                                <div class="nr_right" >
+                                    <div class="nr_rt_main">
+                                        <div class="rt_nr1" style="top: 67px; max-height: 540px; overflow: scroll; overflow-x: hidden;">
+                                            <div class="rt_nr1_title">
+                                                <div style="height: 100%; width: 100%; background-color: #5d9cec; font-size: 20px;">
+                                                    <i class="bi bi-card-list" style="color: aliceblue;"></i>
+                                                    <!-- <i class="ri-file-paper-2-line" style="color: aliceblue;"></i> -->
+                                                    <span style="color: aliceblue;">答题卡</span>
+                                                </div>
+                                            </div>
+                                            <div class="rt_content">
+                                                <div class="rt_content_tt">
+                                                    <h2>单选题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">2</i><span>题</span>
+                                                    </p>
+                                                </div>
+                                                <div class="rt_content_nr answerSheet">
+                                                    <ul id="ul-card-type-0">
+                                                    <!--
+                                                        <li class="switch-question"><a href="#0_qu_1">1</a></li>
+                                                        <li class="switch-question"><a href="#0_qu_2">2</a></li>
+                                                        
+                                                        -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="rt_content">
+                                                <div class="rt_content_tt">
+                                                    <h2>多选题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">2</i><span>题</span>
+                                                    </p>
+                                                </div>
+                                                <div class="rt_content_nr answerSheet">
+                                                    <ul id="ul-card-type-1">
+                                                    <!--
+                                                        <li class="switch-question"><a href="#1_qu_3">3</a></li>
+                                                        <li class="switch-question"><a href="#1_qu_4">4</a></li>
+                                                        -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="rt_content">
+                                                <div class="rt_content_tt">
+                                                    <h2>判断题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">1</i><span>题</span>
+                                                    </p>
+                                                </div>
+                                                <div class="rt_content_nr answerSheet">
+                                                    <ul id="ul-card-type-2">
+                                                    <!--
+                                                        <li class="switch-question"><a href="#2_qu_5">5</a></li>
+                                                        -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="rt_content">
+                                                <div class="rt_content_tt">
+                                                    <h2>简答题</h2>
+                                                    <p>
+                                                        <span>共</span><i class="content_lit">1</i><span>题</span>
+                                                    </p>
+                                                </div>
+                                                <div class="rt_content_nr answerSheet">
+                                                    <ul id="ul-card-type-4">
+                                                    <!--
+                                                        <li class="switch-question"><a href="#4_qu_6">6</a></li>
+                                                        -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="exam-submit-box" style="position:fixed; bottom: 30px;">
+                                    <div class="alert alert-danger font-weight-bold" role="alert">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        注意：提交后不可再次进入考试，请确认您需要提交。
+                                      </div>
+                                    <button id="btn-exam-submit" class="btn btn-primary btn-block" type="submit" style="height: 40px; font-size:1.7rem;">提&nbsp;&nbsp;交</button>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+
+            <!-- 考试须知Modal -->
+            <div class="modal fade" id="open-page-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="margin-top: 100px;">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        <span style="font-weight: bolder; font-size: large;">
+                            <i class="bi bi-exclamation-circle"></i>
+                            考试须知
+                        </span>
+                    </h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    </div>
+                    <div class="modal-body" style="text-align: left; font-size: 16px;">
+                        <div class="alert alert-danger" role="alert" style="text-align: center;">
+                            请仔细阅读本考试说明，以免对您的正常考试过程造成影响。<br>
+                            <span style="font-weight: bolder;">考试倒计时将会在您点击确认后才开始。</span>
+                        </div>
+                        <span style="font-weight: bolder;">1.</span> 开始考试前将需要获取摄像功能权限，请授予摄像头使用权限并全程确保您的摄像头未被遮挡；<br><br>
+                        <span style="font-weight: bolder;">2.</span> 考试需要全屏进行，请不要进行切屏等操作，您的所有异常行为都将被记录，若情节严重将被强制结束考试；<br><br>
+                        <span style="font-weight: bolder;">3.</span> 中途退出将不能再次进入考试。
+                        <br>
+                        <br>
+                        祝您本次考试一切顺利。
+
+                    </div>
+                    <div class="modal-footer">
+                    <button id="open-modal-confirm" type="button" class="btn btn-primary">我已知晓，开始考试</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+			
+		</div>
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+        <script src="/js/jquery.easing.min.js"></script>
+        <script src="/js/jquery.countdown.min.js"></script>
+		<script src="/js/jquerysession.js"></script>
+        <script src="/js/timeFormat.js"></script>
+        
+        <script>
+            var userId = $.session.get('userId');
+
+            var paramInURL = parseUrl();
+            var examId = paramInURL['eid'];
+            var paperId = paramInURL['pid'];
+
+            var examName = "";
+            var examStartTime = "";
+            var examTimeLong = 0;
+
+            function parseUrl(){
+                var url=location.href;
+                var i=url.indexOf('?');
+                if(i==-1)return;
+                var querystr=url.substr(i+1);
+                var arr1=querystr.split('&');
+                var arr2=new Object();
+                for (i in arr1) {
+                    var ta=arr1[i].split('=');
+                    arr2[ta[0]]=ta[1];
+                }
+                return arr2;
+            }
+
+            window.onload = function() {
+
+                // var userId = $.session.get('userId');
+                document.getElementById('userIdArea').innerHTML = userId;
+
+                // 解析url获得examId和papaerId;
+                var paramInURL = parseUrl();
+                var examId = paramInURL['eid'];
+                var paperId = paramInURL['pid'];
+
+                // var paperData;
+
+                $.ajax({
+                    type: "get",
+                    url: "/student/getExamPaper?eid=" + examId + "&pid=" + paperId + "&sid=" + userId,
+                    datatype: "json",
+                    success: function(data){
+                        parsePaperData(data);
+                    },
+                    //success: parsePaperData(data),
+                    error: function(data) {
+                        alert(data);
+                    }
+                })
+
+                $('#open-page-modal').modal('show');
+
+                $('#open-modal-confirm').click(function() {
+                    openWebCam();
+                    $('#open-page-modal').modal('hide');
+
+                    document.getElementById('exam-name-box').innerHTML = examName;
+                    document.getElementById('exam-time-long-box').innerHTML = examTimeLong / 60 + "分钟";
+                    var timeNow = Date.parse(new Date()) / 1000;
+                    document.getElementById('exam-start-time-box').innerHTML = formatTimeFromTimestamp(timeNow);
+
+                    timeCountdown(timeNow, examTimeLong);
+                    kaishi();
+
+                    // var camTemp = false;
+                    // while(true) {
+                    //     camTemp = openWebCam();
+                    //     if(camTemp === true) {
+                    //         $('#open-page-modal').modal('hide');
+                    //
+                    //         document.getElementById('exam-name-box').innerHTML = examName;
+                    //         document.getElementById('exam-time-long-box').innerHTML = examTimeLong;
+                    //         var timeNow = Date.parse(new Date()) / 1000;
+                    //         document.getElementById('exam-start-time-box').innerHTML = formatTimeFromTimestamp(timeNow);
+                    //
+                    //         timeCountdown(timeNow, examTimeLong);
+                    //         kaishi();
+                    //         break;
+                    //     }
+                    // }
+                })
+                
+                $('#btn-exam-submit').click(function() {
+                    submitNow();
+
+                    // window.close();
+                })
+            }
+
+
+            function submitNow() {
+                var ansSubmit = getStuAnswers(num_total, num_q_0, num_q_1, num_q_2, num_q_4);
+
+                $.ajax({
+                    type: "post",
+                    url: "/student/examSubmit",
+                    contentType: "application/json",
+                    data: ansSubmit,
+                    datatype: "json",
+                    success: function(resultMsg){
+                        if(resultMsg.code == 0){
+                            // 提交成功
+                            alert('提交成功！');
+                            window.close();
+                            window.parent.location.reload();
+                        } else {
+                            // 提交失败
+                            alert(resultMsg.code + resultMsg.msg);
+                        }
+                    },
+                    error: function(resultMsg){
+                        // alert("通信失败");
+                    }
+                });
+            }
+
+
+            // function parseUrl(){
+            //     var url=location.href;
+            //     var i=url.indexOf('?');
+            //     if(i==-1)return;
+            //     var querystr=url.substr(i+1);
+            //     var arr1=querystr.split('&');
+            //     var arr2=new Object();
+            //     for  (i in arr1){
+            //         var ta=arr1[i].split('=');
+            //         arr2[ta[0]]=ta[1];
+            //     }
+            //     return arr2;
+            // }
+    
+            function timeCountdown (timeNow, timeLong) {
+                $('#clock-countdown').countdown(formatTimeFromTimestamp(timeNow + timeLong).replace(/-/g, '/')).on('update.countdown', function(event) {
+                    var format = '%H:%M:%S';
+                    if(event.offset.totalDays > 0) {
+                        format = '%-d day%!d ' + format;
+                    }
+                    if(event.offset.weeks > 0) {
+                        format = '%-w week%!w ' + format;
+                    }
+                    $(this).html(event.strftime(format));
+                })
+                .on('finish.countdown', function(event) {
+                    $(this).html('时间到!').parent().addClass('disabled');
+                    alert("时间到！");
+                    submitNow();
+                });
+            }
+
+            // 已答题目给答题卡着色
+            $(function() {
+                $('li.option label').click(function() {
+                    var quesId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+                    var cardLi = $('a[href="#' + quesId + '"]'); // 根据题目ID找到对应答题卡
+                    // 设置已答题
+                    if (!cardLi.hasClass('hasBeenAnswer')){
+                        cardLi.addClass('hasBeenAnswer');
+                    }
+                });
+            });
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState=='hidden') {//切离该页面时执行
+                    // alert('你正在切换离开本页，如果继续将强制结束本次考试！');
+                    
+                // } else if(document.visibilityState=='visible') {//切换到该页面时执行
+                }
+            });
+
+            function openWebCam() {
+                // var getCam = false;
+                var video = document.querySelector('video');
+                navigator.mediaDevices.getUserMedia({
+                    audio: false, 
+                    video: { width: 200, height: 150 }
+                })
+                .then(function (stream) {       
+                    try {
+                        video.src = window.URL.createObjectURL(stream);
+                    } catch (e) {
+                        video.srcObject = stream;
+                        video.onloadedmetadata = function(e){
+                            video.play();
+                        }
+                    }
+                    // getCam = true;
+
+
+                })
+                .catch(function (err) {
+                    // alert("请授予摄像头使用权限！");
+                });
+                // return getCam
+            }
+
+
+
+            /*
+            function takePhotoEverySomeTime() {
+                setTimeout("takePhoto()", 10000); // 10秒
+            } 
+
+            // 拍照
+            function takePhoto () {
+                let canvas = document.getElementById("canvas");
+                var context = canvas.getContext('2d');
+                context.drawImage(video, 0, 0, 300, 300);
+                var imgData = canvas.toDataURL("image/jpg");
+                var img = new Image;
+                img.src = imgData;
+                // imgData = imgData.replace(/^data:image\/(png|jpg);base64,/,"")
+
+                var savaFile=function(data,filename)
+                {
+                    var save_link=document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+                    save_link.href=data;
+                    save_link.download=filename;
+                    var event=document.createEvent('MouseEvents');
+                    event.initMouseEvent('click',true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+                    save_link.dispatchEvent(event);
+                };
+                var filename=''+new Date().getSeconds()+'.'+type;
+                //我想用当前秒是可以解决重名的问题了 不行你就换成毫秒
+                savaFile(imgdata, filename);
+            }
+            */
+
+            //进入全屏
+            function requestFullScreen() {
+                var de = document.documentElement;
+                if (de.requestFullscreen) {
+                    de.requestFullscreen();
+                } else if (de.mozRequestFullScreen) {
+                    de.mozRequestFullScreen();
+                } else if (de.webkitRequestFullScreen) {
+                    de.webkitRequestFullScreen();
+                }
+            }
+
+            function kaishi()
+            {
+        
+        
+                var docElm = document.documentElement;
+                //W3C 
+                if (docElm.requestFullscreen) {
+                    docElm.requestFullscreen();
+                }
+                    //FireFox 
+                else if (docElm.mozRequestFullScreen) {
+                    docElm.mozRequestFullScreen();
+                }
+                    //Chrome等 
+                else if (docElm.webkitRequestFullScreen) {
+                    docElm.webkitRequestFullScreen();
+                }
+                    //IE11 
+                else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            }
+        
+            // function guanbi() {
+        
+        
+            //     if (document.exitFullscreen) {
+            //         document.exitFullscreen();
+            //     }
+            //     else if (document.mozCancelFullScreen) {
+            //         document.mozCancelFullScreen();
+            //     }
+            //     else if (document.webkitCancelFullScreen) {
+            //         document.webkitCancelFullScreen();
+            //     }
+            //     else if (document.msExitFullscreen) {
+            //         document.msExitFullscreen();
+            //     }
+            // }
+
+ 
+ 
+
+            /*
+            
+            paperData:
+
+            {
+                "quesNum": ,   // 总数
+                "quesNum_0": , // 单
+                "quesNum_1": , // 多
+                "quesNum_2": , // 判
+                "quesNum_4": , // 简
+                "examTime":  ,  // 时间
+                "data": {
+                    {},{},{}……
+                }
+
+            }
+
+            */
+
+            var quesOrderToId = {};
+            var num_total = "";
+            var num_q_0 = "";
+            var num_q_1 = "";
+            var num_q_2 = "";
+            var num_q_4 = "";
+
+            function parsePaperData(paperData) {
+                num_total = paperData.quesNum;
+                num_q_0 = paperData.quesNum_0;
+                num_q_1 = paperData.quesNum_1;
+                num_q_2 = paperData.quesNum_2;
+                num_q_4 = paperData.quesNum_4;
+                examName = paperData.examName;
+                examTimeLong = paperData.examTime;
+
+                var quesId = "";
+                var quesIdOnPaper = "";
+                var quesTitle = "";
+                var quesScore = "";
+                var opa = "";
+                var opb = "";
+                var opc = "";
+                var opd = "";
+                var opTrue = "";
+                var opFalse = "";
+
+                // 单选
+                for(var i = 0; i < num_q_0; i++) {
+                    quesId = paperData.data[i].questionId;
+                    quesIdOnPaper = paperData.data[i].questionOrder + 1;
+                    quesTitle = paperData.data[i].questionContent;
+                    quesScore = paperData.data[i].questionScore;
+                    opa = paperData.data[i].opa;
+                    opb = paperData.data[i].opb;
+                    opc = paperData.data[i].opc;
+                    opd = paperData.data[i].opd;
+                    add_ques_0(quesId, quesIdOnPaper, quesTitle, quesScore, opa, opb, opc, opd);
+                    quesOrderToId[quesIdOnPaper] = quesId;
+                }
+                // 多选
+                for(i = num_q_0; i < num_q_0 + num_q_1; i++) {
+                    quesId = paperData.data[i].questionId;
+                    quesIdOnPaper = paperData.data[i].questionOrder + 1;
+                    quesTitle = paperData.data[i].questionContent;
+                    quesScore = paperData.data[i].questionScore;
+                    opa = paperData.data[i].opa;
+                    opb = paperData.data[i].opb;
+                    opc = paperData.data[i].opc;
+                    opd = paperData.data[i].opd;
+                    add_ques_1(quesId, quesIdOnPaper, quesTitle, quesScore, opa, opb, opc, opd);
+                    quesOrderToId[quesIdOnPaper] = quesId;
+                }
+                // 判断
+                for(i = num_q_0 + num_q_1; i < num_q_0 + num_q_1 + num_q_2; i++) {
+                    quesId = paperData.data[i].questionId;
+                    quesIdOnPaper = paperData.data[i].questionOrder + 1;
+                    quesTitle = paperData.data[i].questionContent;
+                    quesScore = paperData.data[i].questionScore;
+                    opTrue = paperData.data[i].opa;
+                    opFalse = paperData.data[i].opb;
+                    add_ques_2(quesId, quesIdOnPaper, quesTitle, quesScore, opTrue, opFalse);
+                    quesOrderToId[quesIdOnPaper] = quesId;
+                }
+                // 简答
+                for(i = num_q_0 + num_q_1 + num_q_2; i < num_total; i++) {
+                    quesId = paperData.data[i].questionId;
+                    quesIdOnPaper = paperData.data[i].questionOrder + 1;
+                    quesTitle = paperData.data[i].questionContent;
+                    quesScore = paperData.data[i].questionScore;
+                    add_ques_4(quesId, quesIdOnPaper, quesTitle, quesScore);
+                    quesOrderToId[quesIdOnPaper] = quesId;
+                }
+
+            }
+
+            /* 
+            * 单选题: 0 
+            *
+            *quesId: 问题id
+            *quesIdOnPaper: 该问题在试卷上的顺序
+            *quesTitle: 问题的题目
+            *quesScore: 分值
+            *
+            * 
+            * template:
+            * 
+            * <li id="0_qu_1" class="question-ancher-jumpto">
+            *   <div class="test_content_nr_tt">
+            *       <i>1</i><span>(5分)</span><font>在生产管理信息系统中，下列操作步骤能正确将工单推进流程的是（  ）</font>
+            *   </div>              
+            *   <div class="test_content_nr_main">
+            *       <ul>
+            *           <li class="option">
+            *               <input type="radio" class="radioOrCheck" name="answer1"
+            *                   id="answer_1_option_1"/>
+            *               <label for="answer_1_option_1">
+            *                   A.
+            *                   <p class="ue" style="display: inline;">在工具栏中点击“workflow”标签</p>
+            *               </label>
+            *           </li>
+            *           <li class="option">
+            *                   <input type="radio" class="radioOrCheck" name="answer1"
+            *                       id="answer_1_option_2"
+            *                   />
+            *               <label for="answer_1_option_2">
+            *                   B.
+            *                   <p class="ue" style="display: inline;">在缺陷单界面中点击“推进流程”按钮</p>
+            *               </label>
+            *           </li>
+            *       
+            *           <li class="option">
+            *               <input type="radio" class="radioOrCheck" name="answer1" id="answer_1_option_3"/>
+            *               <label for="answer_1_option_3">
+            *                   C.
+            *                   <p class="ue" style="display: inline;">在缺陷单界面中点击“提交”按钮</p>
+            *               </label>
+            *           </li>
+            *           <li class="option">
+            *               <input type="radio" class="radioOrCheck" name="answer1" id="answer_1_option_4"/>
+            *               <label for="answer_1_option_4">
+            *                   D.
+            *                   <p class="ue" style="display: inline;">后台启动流程推进</p>
+            *               </label>
+            *           </li>
+            *       </ul>
+            *   </div>
+            * </li>
+            * 
+            */
+            function add_ques_0(quesId, quesIdOnPaper, quesTitle, quesScore, opa, opb, opc, opd) {
+                // 题目渲染
+                var str_ques_box_top = '<li id="0_qu_' + quesIdOnPaper + '" class="question-ancher-jumpto">';
+                var str_ques_title = '<div class="test_content_nr_tt">' + '<i>' + quesIdOnPaper + '</i><span>(' + quesScore + '分)</span><font>' + quesTitle + '</font>';
+                var str_choice_box_top = '<div class="test_content_nr_main"><ul>';
+                var str_opa = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_1"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_1"/>A.<p class="ue" style="display: inline;">' + opa + '</p></lable></li>';
+                var str_opb = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_2"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_2"/>B.<p class="ue" style="display: inline;">' + opb + '</p></lable></li>';
+                var str_opc = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_3"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_3"/>C.<p class="ue" style="display: inline;">' + opc + '</p></lable></li>';
+                var str_opd = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_4"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_4"/>D.<p class="ue" style="display: inline;">' + opd + '</p></lable></li>';
+                var str_choice_box_bottom = '</ul></div>';
+                var str_ques_box_bottom = '</li>';
+
+                var str_ques = str_ques_box_top + str_ques_title + str_choice_box_top + str_opa + str_opb + str_opc + str_opd + str_choice_box_bottom + str_ques_box_bottom;
+                // document.getElementById('ul-box-type-0').append(str_ques);
+                document.querySelector('#ul-box-type-0').innerHTML += str_ques;
+
+
+                // 答题卡渲染
+                // template:  <li class="switch-question"><a href="#qu_1">1</a></li>
+                var str_ans_card = '<li class="switch-question"><a href="#0_qu_' + quesIdOnPaper+ '">' + quesIdOnPaper + '</a></li>';
+                document.querySelector('#ul-card-type-0').innerHTML += str_ans_card;
+
+            }
+
+            /*
+            * 多选题: 1
+            *
+            * <li id="1_qu_3" class="question-ancher-jumpto">
+            * 
+            * 与单选题的区别主要在于：  input type="checkobx"
+            * 还有注意题号
+            * 
+            */
+            function add_ques_1(quesId, quesIdOnPaper, quesTitle, quesScore, opa, opb, opc, opd) {
+                // 题目渲染
+                var str_ques_box_top = '<li id="1_qu_' + quesIdOnPaper + '" class="question-ancher-jumpto">';
+                var str_ques_title = '<div class="test_content_nr_tt">' + '<i>' + quesIdOnPaper + '</i><span>(' + quesScore + '分)</span><font>' + quesTitle + '</font>';
+                var str_choice_box_top = '<div class="test_content_nr_main"><ul>';
+                var str_opa = '<li class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_1"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_1"/>A.<p class="ue" style="display: inline;">' + opa + '</p></lable></li>';
+                var str_opb = '<li class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_2"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_2"/>B.<p class="ue" style="display: inline;">' + opb + '</p></lable></li>';
+                var str_opc = '<li class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_3"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_3"/>C.<p class="ue" style="display: inline;">' + opc + '</p></lable></li>';
+                var str_opd = '<li class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_4"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_4"/>D.<p class="ue" style="display: inline;">' + opd + '</p></lable></li>';
+                var str_choice_box_bottom = '</ul></div>';
+                var str_ques_box_bottom = '</li>';
+
+                var str_ques = str_ques_box_top + str_ques_title + str_choice_box_top + str_opa + str_opb + str_opc + str_opd + str_choice_box_bottom + str_ques_box_bottom;
+                document.querySelector('#ul-box-type-1').innerHTML += str_ques;
+
+                // 答题卡渲染
+                // template:  <li class="switch-question"><a href="#qu_1">1</a></li>
+                var str_ans_card = '<li class="switch-question"><a href="#1_qu_' + quesIdOnPaper+ '">' + quesIdOnPaper + '</a></li>';
+                document.querySelector('#ul-card-type-1').innerHTML += str_ans_card;
+            }
+
+            /*
+            * 判断题: 2
+            *
+            * 
+            * template:
+            * 
+            *  <li id="2_qu_5" class="question-ancher-jumpto">
+                    <div class="test_content_nr_tt">
+                        <i>5</i><span>(5分)</span><font>在生产管理信息系统中，下列操作步骤能正确将工单推进流程的是</font>
+                    </div>              
+                    <div class="test_content_nr_main">
+                        <ul>
+                            <li class="option">
+                                <input type="radio" class="radioOrCheck" name="answer5"
+                                    id="answer_5_option_t" />
+                                <label for="answer_5_option_t">
+                                    <p class="ue" style="display: inline;">正确</p>
+                                </label>
+                            </li>
+                            <li class="option">
+                                    <input type="radio" class="radioOrCheck" name="answer5"
+                                        id="answer_5_option_f" />
+                                <label for="answer_5_option_f">
+                                    <p class="ue" style="display: inline;">错误</p>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            * 
+            */
+            function add_ques_2(quesId, quesIdOnPaper, quesTitle, quesScore, opTrue, opFalse) {
+                var str_ques_box_top = '<li id="2_qu_' + quesIdOnPaper + '" class="question-ancher-jumpto">';
+                var str_ques_title = '<div class="test_content_nr_tt">' + '<i>' + quesIdOnPaper + '</i><span>(' + quesScore + '分)</span><font>' + quesTitle + '</font>';
+                var str_choice_box_top = '<div class="test_content_nr_main"><ul>';
+                var str_opTrue = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_t"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_1"/><p class="ue" style="display: inline;">' + opTrue + '</p></lable></li>';
+                var str_opFalse = '<li class="option"><input type="radio" class="radioOrCheck" name="answer' + quesIdOnPaper + '"id="answer_' + quesIdOnPaper + '_option_f"/>'
+                    + '<label for="answer_' + quesIdOnPaper + '_option_2"/><p class="ue" style="display: inline;">' + opFalse + '</p></lable></li>';
+                var str_choice_box_bottom = '</ul></div>';
+                var str_ques_box_bottom = '</li>';
+
+                var str_ques = str_ques_box_top + str_ques_title + str_choice_box_top + str_opTrue + str_opFalse + str_choice_box_bottom + str_ques_box_bottom;
+                document.querySelector('#ul-box-type-2').innerHTML += str_ques;
+
+                // 答题卡渲染
+                // template:  <li class="switch-question"><a href="#qu_1">1</a></li>
+                var str_ans_card = '<li class="switch-question"><a href="#2_qu_' + quesIdOnPaper+ '">' + quesIdOnPaper + '</a></li>';
+                document.querySelector('#ul-card-type-2').innerHTML += str_ans_card;
+            }
+
+
+            /*
+            * 简答题: 4
+            *
+            * template:
+            * 
+            * <li id="4_qu_6" class="question-ancher-jumpto">
+                    <div class="test_content_nr_tt">
+                        <i>6</i><span>(10分)</span><font>以下属于南方电网员工职业操守中明文规定的有()</font>
+                    </div>
+                    <div class="test_content_nr_main">
+                        <textarea id="qu_6_answer_box" class="form-control textarea-input"></textarea>
+                    </div>
+                </li>
+            * 
+            * 
+            */
+            function add_ques_4(quesId, quesIdOnPaper, quesTitle, quesScore) {
+                var str_ques_box_top = '<li id="4_qu_' + quesIdOnPaper + '" class="question-ancher-jumpto">';
+                var str_ques_title = '<div class="test_content_nr_tt">' + '<i>' + quesIdOnPaper + '</i><span>(' + quesScore + '分)</span><font>' + quesTitle + '</font>';
+                var str_ans_box_top = '<div class="test_content_nr_main">';
+                var str_ans_input = '<div class="test_content_nr_main"><textarea id="qu_' + quesIdOnPaper + '_answer_box" class="form-control textarea-input"></textarea></div>'
+                var str_ans_box_bottom = '</div>';
+                var str_ques_box_bottom = '</li>';
+
+                var str_ques = str_ques_box_top + str_ques_title + str_ans_box_top + str_ans_input + str_ans_box_bottom + str_ques_box_bottom;
+                document.querySelector('#ul-box-type-4').innerHTML += str_ques;
+
+                // 答题卡渲染
+                // template:  <li class="switch-question"><a href="#qu_1">1</a></li>
+                var str_ans_card = '<li class="switch-question"><a href="#4_qu_' + quesIdOnPaper+ '">' + quesIdOnPaper + '</a></li>';
+                document.querySelector('#ul-card-type-4').innerHTML += str_ans_card;
+            }
+
+            // 用来得到用户的所有回答
+            // 分不同的题型根据各自数量去遍历
+            // function getStuAnswers(num_0, num_1, num_2, num_4) {
+            function getStuAnswers(num_total, num_q_0, num_q_1, num_q_2, num_q_4) {
+
+                var qName = "";
+                var qId = "";
+                var ans = {};
+                var ansData = {};
+
+                // nt = num_q_0 + num_q_1 + num_q_2 + num_q_4;
+                // ans["num_total"] = nt.toString();
+                ansData["num_total"] = num_total;
+                ansData["userId"] = userId;
+                ansData["examId"] = examId;
+                ansData["answer"] = ans;
+
+
+                // 单选题
+                for(var i = 1; i <= num_q_0; i++) {
+                    qName = "answer" + i;
+                    var a = document.getElementsByName(qName);
+                    var choice = a[0].checked ? "A" : a[1].checked ? "B" : a[2].checked ? "C" : a[3].checked ? "D" : "";
+                    // console.log(choice, typeof(choice));
+                    // console.log(typeof(choice));
+                    // q = i.toString();
+                    qId = quesOrderToId[i];
+                    ans[i] = {
+                                "quesId": qId,
+                                "quesAnswer" : choice
+                            };
+                }
+
+                // 多选题
+                for(i = num_q_0 + 1; i <= num_q_0 + num_q_1; i++) {
+                    qName = "answer" + i;
+                    var a = document.getElementsByName(qName);
+                    var choice = "";
+                    if(a[0].checked) {
+                        choice += "A";
+                    }
+                    if(a[1].checked) {
+                        choice += "B";
+                    }
+                    if(a[2].checked) {
+                        choice += "C";
+                    }
+                    if(a[3].checked) {
+                        choice += "D";
+                    }
+                    // q = i.toString();
+                    qId = quesOrderToId[i];
+                    ans[i] = {
+                                "quesId": qId,
+                                "quesAnswer" : choice
+                            };
+                }
+
+                // 判断题
+                for(i = num_q_0 + num_q_1 + 1; i <= num_q_0 + num_q_1 + num_q_2; i++) {
+                    qName = "answer" + i;
+                    var a = document.getElementsByName(qName);
+                    var choice = a[0].checked ? "T" : a[1].checked ? "F" : "";
+                    // q = i.toString();
+                    qId = quesOrderToId[i];
+                    ans[i] = {
+                                "quesId": qId,
+                                "quesAnswer" : choice
+                            };
+                }
+
+                // 简答题
+                for(i = num_q_0 + num_q_1 + num_q_2 + 1; i <= num_q_0 + num_q_1 + num_q_2 + num_q_4; i++) {
+                    qid4 = "qu_" + i + "_answer_box";
+                    var a = document.getElementById(qid4);
+                    var choice = a.value;
+                    // q = i.toString();
+                    qId = quesOrderToId[i];
+                    ans[i] = {
+                                "quesId": qId,
+                                "quesAnswer" : choice
+                            };
+                }
+                
+                // console.log(ans);
+                // var ansJSON = JSON.stringify(ans);
+                // console.log(ansJSON);
+                // console.log(typeof(ansJSON));
+                // return ansJSON;
+                // console.log(ansData);
+                // console.log(typeof(ansData));
+                var ansDataJSON = JSON.stringify(ansData);
+                // console.log(ansDataJSON);
+                // console.log(typeof(ansDataJSON));
+                
+                return ansDataJSON;
+            }
+
+
+        </script>
+
+	</body>
+</html>

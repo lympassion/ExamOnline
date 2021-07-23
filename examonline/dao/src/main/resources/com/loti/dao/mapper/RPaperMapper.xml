@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.RPaperMapper">
+    <select id="SelectRPaperByName" parameterType="java.lang.String" resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+        where paper_name = #{name}
+    </select>
+    <select id="SelectRPaperById" parameterType="int" resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+        where paper_id = #{paperId}
+    </select>
+    <insert id="InsertRPaper"  parameterType="com.loti.dao.pojo.Entity.RealPaper" useGeneratedKeys="true" keyProperty="paperId">
+        insert into real_paper (paper_id, paper_name, course_name, paper_score) VALUES
+        (#{paperId},#{paperName},#{courseName},#{paperScore})
+    </insert>
+    <select id="getAllRealPaper"   resultType="com.loti.dao.pojo.Entity.RealPaper">
+        select * from real_paper
+    </select>
+    <select id="getScoreById" parameterType="int" resultType="int">
+        select paper_score from real_paper where paper_id = #{paperId}
+    </select>
+    <update id="updateScoreById">
+        update real_paper
+        set paper_score = #{score} where paper_id = #{paperId}
+    </update>
+    <delete id="RemoveRPaperById" parameterType="int">
+        delete from real_paper where paper_id = #{id}
+    </delete>
+    <select id="getAllRPaperId" resultType="java.lang.Integer">
+        select distinct paper_id from real_paper
+    </select>
+    <select id="getRPaperIdByCourse"  parameterType="java.lang.String" resultType="int">
+        select paper_id from real_paper where course_name = #{courseName}
+    </select>
+    <select id="getPaperNameById" parameterType="int" resultType="java.lang.String">
+        select paper_name from real_paper where paper_id = #{id}
+    </select>
+    <update id="updateScorePart1">
+        update real_paper
+        set paper_score_part1 = #{score}
+        where paper_id = #{paperId}
+    </update>
+    <update id="updateScorePart2">
+        update real_paper
+        set paper_score_part2 = #{score}
+        where paper_id = #{paperId}
+    </update>
+</mapper>

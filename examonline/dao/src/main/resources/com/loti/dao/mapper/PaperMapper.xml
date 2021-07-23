@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.PaperMapper">
+    <select id="SelectQuesByPaperId" parameterType="int" resultType="com.loti.dao.pojo.Entity.Question">
+        select q.*,p.question_order
+        from question q
+                 right join paper p on q.question_id = p.question_id
+        where p.paper_id = #{id}
+        order by q.question_type
+    </select>
+    <insert id="InsertPaper"  parameterType="com.loti.dao.pojo.Entity.Paper">
+        insert into paper (id, paper_id, course_name, question_type, question_id, question_order) VALUES
+            (#{id},#{paperId},#{courseName},#{questionType},#{questionId},#{questionOrder})
+    </insert>
+    <select id="GetAllPaper"  resultType="com.loti.dao.pojo.Entity.Paper">
+        select * from paper
+    </select>
+    <delete id="RemovePaperById" parameterType="int">
+        delete from paper where paper_id = #{id}
+    </delete>
+    <select id="getTypeCnt"  resultType="int">
+        SELECT count(question_type) FROM paper
+        where question_type = #{type} AND paper_id = #{paperId}
+    </select>
+    <select id="getAllCnt" parameterType="int" resultType="int">
+        SELECT COUNT(*) from paper
+        where paper_id = #{paperId}
+    </select>
+    <select id="getOrderByPaperAndQues" resultType="int">
+        select question_order from paper
+        where paper_id = #{paperId} and question_id = #{quesId}
+    </select>
+</mapper>

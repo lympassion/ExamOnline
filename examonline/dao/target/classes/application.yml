@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  #数据库连接配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/examonline?characterEncoding=UTF8&useSSL=true&serverTimezone=Asia/Shanghai&useUnicode=true
+    username: root
+    password: 752196881
+
+#mybatis的相关配置
+mybatis:
+  type-aliases-package: com.loti.dao.pojo.Entity
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true

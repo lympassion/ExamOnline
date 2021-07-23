@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+        <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+		<link rel="stylesheet" href="/css/component.css" />
+        <link rel="stylesheet" href="/css/default.css" />
+        
+        <style>
+            .container {padding-left: 0px; padding-right: 0px;}
+        </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="clearfix">
+
+            <span>CUOTIJI</span>
+
+            <h1>错  题  集</h1>
+
+        </header>	
+
+        <div class="main">
+            <ul id="ul-notebook" class="cbp_tmtimeline">
+                <li>
+                    <!--
+                    <time class="cbp_tmtime"><span><i class="bi bi-journal-bookmark-fill"></i>&nbsp;&nbsp;&nbsp;2021-07-18</span> <span>18:30:27</span></time>
+                    <div class="cbp_tmlabel">
+                        <h4><font>在生产管理信息系统中，下列操作步骤能正确将工单推进流程的是（  ）</font></h4>
+                        <div class="option">
+                            <input type="radio" class="radioOrCheck" name="answer1" disabled
+                                id="answer_1_option_1"/>
+                            <label for="answer_1_option_1">
+                                A.
+                                <p class="ue" style="display: inline;">在工具栏中点击“workflow”标签</p>
+                            </label>
+                        </div>
+                        <div class="option">
+                                <input type="radio" class="radioOrCheck" name="answer1" disabled
+                                    id="answer_1_option_2"
+                                />
+                            <label for="answer_1_option_2">
+                                B.
+                                <p class="ue" style="display: inline;">在缺陷单界面中点击“推进流程”按钮</p>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radioOrCheck" name="answer1" checked
+                                    id="answer_1_option_3"/>
+                            <label for="answer_1_option_3">
+                                C.
+                                <p class="ue" style="display: inline;">在缺陷单界面中点击“提交”按钮</p>
+                            </label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" class="radioOrCheck" name="answer1" disabled
+                                id="answer_1_option_4"/>
+                            <label for="answer_1_option_4">
+                                D.
+                                <p class="ue" style="display: inline;">后台启动流程推进</p>
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                -->
+
+            </ul>
+        </div>
+    </div>
+
+        
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        
+        // 单选
+        function add_ques_0(addTimeYMD, addTimeHMS, quesId, quesTitle, opa, opb, opc, opd, opRight) {
+            // 题目渲染
+            var str_time = '<li><time class="cbp_tmtime"><span><i class="bi bi-journal-bookmark-fill"></i>&nbsp;&nbsp;&nbsp;' + addTimeYMD + '</span><span>' + addTimeHMS + '</span></time>';
+            
+            var str_ques_title = '<div class="cbp_tmlabel"><h4><font>' + quesId + '.&nbsp;&nbsp;' + quesTitle + '</font></h4>';
+            
+            var str_opa = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_1"/>'
+                + '<label for="answer_' + quesId + '_option_1"/>A.<p class="ue" style="display: inline;">' + opa + '</p></lable></div>';
+            var str_opb = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_2"/>'
+                + '<label for="answer_' + quesId + '_option_2"/>B.<p class="ue" style="display: inline;">' + opb + '</p></lable></div>';
+            var str_opc = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_3"/>'
+                + '<label for="answer_' + quesId + '_option_3"/>C.<p class="ue" style="display: inline;">' + opc + '</p></lable></div>';
+            var str_opd = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_4"/>'
+                + '<label for="answer_' + quesId + '_option_4"/>D.<p class="ue" style="display: inline;">' + opd + '</p></lable></div>';
+            var str_ques_bottom = '</div></li>';
+
+            var str_ques = str_time + str_ques_title + str_opa + str_opb + str_opc + str_opd + str_ques_bottom;
+            // document.getElementById('ul-box-type-0').append(str_ques);
+            document.querySelector('#ul-notebook').innerHTML += str_ques;
+
+            // 正确答案设置radio选中
+            var ops = ["A", "B", "C", "D"];
+            for(var i = 1; i <= ops.length; i++) {
+                if(ops[i - 1] == opRight) {
+                    var rightChoiceName = "answer" + quesId;
+                    var rightChoiceId = "answer_" + quesId + "_option_" + i;
+                    
+                    $("input:radio[name=" + rightChoiceName + "][id=" + rightChoiceId + "]").attr("checked", true).prop("checked", true);
+                }
+            }
+
+        }
+
+        function add_ques_1(addTimeYMD, addTimeHMS, quesId, quesTitle, opa, opb, opc, opd, opRight) {
+            // 题目渲染
+            var str_time = '<li><time class="cbp_tmtime"><span><i class="bi bi-journal-bookmark-fill"></i>&nbsp;&nbsp;&nbsp;' + addTimeYMD + '</span><span>' + addTimeHMS + '</span></time>';
+            
+            var str_ques_title = '<div class="cbp_tmlabel"><h4><font>' + quesId + '.&nbsp;&nbsp;' + quesTitle + '</font></h4>';
+            
+            var str_opa = '<div class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_1"/>'
+                + '<label for="answer_' + quesId + '_option_1"/>A.<p class="ue" style="display: inline;">' + opa + '</p></lable></div>';
+            var str_opb = '<div class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_2"/>'
+                + '<label for="answer_' + quesId + '_option_2"/>B.<p class="ue" style="display: inline;">' + opb + '</p></lable></div>';
+            var str_opc = '<div class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_3"/>'
+                + '<label for="answer_' + quesId + '_option_3"/>C.<p class="ue" style="display: inline;">' + opc + '</p></lable></div>';
+            var str_opd = '<div class="option"><input type="checkbox" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_4"/>'
+                + '<label for="answer_' + quesId + '_option_4"/>D.<p class="ue" style="display: inline;">' + opd + '</p></lable></div>';
+            var str_ques_bottom = '</div></li>';
+
+            var str_ques = str_time + str_ques_title + str_opa + str_opb + str_opc + str_opd + str_ques_bottom;
+            // document.getElementById('ul-box-type-0').append(str_ques);
+            document.querySelector('#ul-notebook').innerHTML += str_ques;
+
+            // 正确答案设置radio选中
+            var ops = ["A", "B", "C", "D"];
+            for(var i = 1; i <= ops.length; i++) {
+                for(var j = 1; j <= opRight.length; j++) {
+                    if(ops[i - 1] == opRight[j - 1]) {
+                        var rightChoiceName = "answer" + quesId;
+                        var rightChoiceId = "answer_" + quesId + "_option_" + i;
+                        
+                        $("input:checkbox[name=" + rightChoiceName + "][id=" + rightChoiceId + "]").attr("checked", true).prop("checked", true);
+                
+                    }
+                }
+            }
+        }
+
+        function add_ques_2(addTimeYMD, addTimeHMS, quesId, quesTitle, opTrue, opFalse, opRight) {
+            // 题目渲染
+            var str_time = '<li><time class="cbp_tmtime"><span><i class="bi bi-journal-bookmark-fill"></i>&nbsp;&nbsp;&nbsp;' + addTimeYMD + '</span><span>' + addTimeHMS + '</span></time>';
+            
+            var str_ques_title = '<div class="cbp_tmlabel"><h4><font>' + quesId + '.&nbsp;&nbsp;' + quesTitle + '</font></h4>';
+            
+            var str_opTrue = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_1"/>'
+                + '<label for="answer_' + quesId + '_option_1"/>A.<p class="ue" style="display: inline;">' + opa + '</p></lable></div>';
+            var str_opFalse = '<div class="option"><input type="radio" class="radioOrCheck" name="answer' + quesId + '"id="answer_' + quesId + '_option_2"/>'
+                + '<label for="answer_' + quesId + '_option_2"/>B.<p class="ue" style="display: inline;">' + opb + '</p></lable></div>';
+            var str_ques_bottom = '</div></li>';
+
+            var str_ques = str_time + str_ques_title + str_opa + str_opb + str_opc + str_opd + str_ques_bottom;
+            // document.getElementById('ul-box-type-0').append(str_ques);
+            document.querySelector('#ul-notebook').innerHTML += str_ques;
+
+            // 正确答案设置radio选中
+            var ops = ["T", "F"];
+            for(var i = 1; i <= ops.length; i++) {
+                if(ops[i - 1] == opRight) {
+                    var rightChoiceName = "answer" + quesId;
+                    var rightChoiceId = "answer_" + quesId + "_option_" + i;
+                    
+                    $("input:radio[name=" + rightChoiceName + "][id=" + rightChoiceId + "]").attr("checked", true).prop("checked", true);
+            
+                }
+                
+            }
+        }
+
+        function add_ques_4(addTimeYMD, addTimeHMS, quesId, quesTitle, opTrue, opFalse, opRight) {
+            // 题目渲染
+            var str_time = '<li><time class="cbp_tmtime"><span><i class="bi bi-journal-bookmark-fill"></i>&nbsp;&nbsp;&nbsp;' + addTimeYMD + '</span><span>' + addTimeHMS + '</span></time>';
+            
+            var str_ques_title = '<div class="cbp_tmlabel"><h4><font>' + quesId + '.&nbsp;&nbsp;' + quesTitle + '</font></h4>';
+            var str_ans_input = '<textarea class="form-control textarea-input" disabled></textarea>';
+            var str_ques_bottom = '</div></li>';
+
+            var str_ques = str_time + str_ques_title + str_ans_input + str_ques_bottom;
+            // document.getElementById('ul-box-type-0').append(str_ques);
+            document.querySelector('#ul-notebook').innerHTML += str_ques;
+
+        }
+
+    
+        $(document).ready(function () { 
+            $.ajax({
+                type: "get",
+                url: "/student/getNotebook?sid=" + userId,
+                datatype: "json",
+                success: function(data){
+                    drawNotebook(data);
+                },
+                //success: parsePaperData(data),
+                error: function(data) {
+                    // alert(data);
+                }
+            }) 
+            
+        }); 
+
+        /*
+        data: {     // 最好能按照时间戳排序
+            "name": {        // name是什么无所谓
+                     addTime: 时间戳
+                     quesType:
+                     quesId:
+                     quesTitle:
+                     opa:
+                     opb:
+                     opc:
+                     opd:
+                     opRight:
+                    },
+            "name": {
+                     addTime: 
+                     quesType:
+                     quesId:
+                     quesTitle:
+                     opa:
+                     opb:
+                     opc:
+                     opd:
+                     opRight: 
+                    }
+            }
+        */
+
+
+        function drawNotebook(data) {
+            for(var i in data) {
+                console.log(data[i].addTime);
+                var addTime = formatTimeFromTimestamp(data[i].addTime / 1000);
+                console.log(addTime);
+                var addTimeYMD = addTime.slice(0, 10);
+                var addTimeHMS = addTime.slice(11);
+                var quesType = data[i].quesType;
+                var quesId = data[i].quesId;
+                var quesTitle = data[i].quesTitle;
+                var opa = "";
+                var opb = "";
+                var opc = "";
+                var opd = "";
+                var opTrue = "";
+                var opFalse = "";
+                var opRight = "";
+
+                // 单选
+                if(quesType == 0) {
+                    opa = data[i].opa;
+                    opb = data[i].opb;
+                    opc = data[i].opc;
+                    opd = data[i].opd;
+                    opRight = data[i].opRight;
+                    add_ques_0(addTimeYMD, addTimeHMS, quesId, quesTitle, opa, opb, opc, opd, opRight);
+                }
+                // 多选
+                if(quesType == 1) {
+                    opa = data[i].opa;
+                    opb = data[i].opb;
+                    opc = data[i].opc;
+                    opd = data[i].opd;
+                    opRight = data[i].opRight.split(",");
+                    add_ques_1(addTimeYMD, addTimeHMS, quesId, quesTitle, opa, opb, opc, opd, opRight);
+                }
+                // 判断
+                if(quesType == 2) {
+                    opTrue = data[i].opa;
+                    opFalse = data[i].opb;
+                    opRight = data[i].opRight;
+                    add_ques_2(addTimeYMD, addTimeHMS, quesId, quesTitle, opTrue, opFalse, opRight);
+                }
+                // 简答
+                if(quesType == 4) {
+                    add_ques_4(addTimeYMD, addTimeHMS, quesId, quesTitle);
+                }
+            }
+            // 设置所有未被选中的radio/checkbox为disabled
+            $("input:radio:not(:checked)").attr("disabled", true).prop("disabled", true);
+            $("input:checkbox:not(:checked)").attr("disabled", true).prop("disabled", true);
+
+        }
+
+    </script>
+
+</body>
+</html>

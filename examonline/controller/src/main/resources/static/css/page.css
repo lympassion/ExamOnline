@@ -5,7 +5,7 @@
 
 .page .nav-left {
 	position: absolute;
-	margin-top: 57px;
+	margin-top: 0px;
 	height: 690px;
 	width: 240px;
 	background-color: #FFFFFF;
@@ -123,4 +123,123 @@
 	width:1px;
 	height:500px;
 	position: absolute;
+}
+
+.index-page {
+	height: 100%;
+	width: 100%;
+	background: url('../img/background/background_2.svg') no-repeat;
+	background-size: cover;
+	position: absolute;
+	overflow: hidden;
+  }
+  
+
+.page-animation {
+	animation: fadeInAnimation ease 4s;
+	
+	animation-iteration-count: 1; /*设置动画播放次数*/
+	
+	animation-fill-mode: forwards; /*设置样式以在动画不播放时应用元素。forward是设置动画结束后，使用元素的结束属性值*/
+	
+	}
+	
+	@keyframes fadeInAnimation {
+	0% {
+	opacity: 0; /*设置不透明度*/
+	
+	}
+	
+	100% {
+	opacity: 1;
+	
+	}
+	
+}
+
+.div-avatar {
+	position:absolute; 
+	left:70px; 
+	top:170px;
+	z-index: 1;
+}
+
+.div-info {
+	position:absolute; 
+	left:220px; 
+	top:50px;
+}
+
+.div-submit {
+	position:absolute; 
+	left:980px; 
+	top:300px;
+	z-index: 1;
+}
+
+#myAvatar {
+	box-shadow: 0px 0px 0px 0px rgba(0,0,0,.5);
+	cursor: pointer;
+	transition: 1.5s;
+	border: 3px solid rgba(85, 85, 85, 0.7);
+}
+
+#myAvatar:hover {
+	transform: scale(1.3, 1.3);
+}
+
+#btn-info-update:hover {
+	transform: scale(1.3, 1.3);
+	transition: all .5s linear;
+}
+
+
+.avatar-for-select {
+	height: 70px;
+	width: 70px;
+	border-radius:50%;
+	margin: 2px;
+}
+
+.avatar-for-select:hover { 
+	transform: scale(1.2, 1.2);
+	/* transition: .5s; */
+	/* transition: all 1s cubic-bezier(0.2, 0.8, 0.36, 1.6) 0s; */
+
+	box-shadow: 0px 0px 2px 3px rgb(156, 156, 156);
+}
+
+.avatar-box img.active {
+	transition: 0s;
+	border: 5px solid rgba(206, 62, 62, 0.7);
+}
+
+.webPhotoImg {
+	width: 240px;
+}
+
+.card-exam-manage {
+	height: 420px; 
+	width: 310px; 
+	align-items: center; 
+	justify-content: center;
+	/* z-index: -1; */
+	transition: all 1s linear;
+	cursor: pointer;
+}
+
+.card-exam-manage img {
+	width: 80%;
+}
+
+.card-exam-manage:hover {
+	transform: scale(1.2, 1.2);
+	transition: all .8s;
+	/* filter: blur(5px); */
+}
+
+.card-exam-manage:hover>img:hover {
+	transform: scale(1.2, 1.2);
+	transition: all .8s;
+	/* filter: blur(5px); */
 }

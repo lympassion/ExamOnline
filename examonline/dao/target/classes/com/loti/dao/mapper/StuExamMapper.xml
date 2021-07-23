@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loti.dao.mapper.StuExamMapper">
+    <select id="SelectStuExamById" resultType="com.loti.dao.pojo.Entity.StudentExam">
+        select * from student_exam
+        where exam_id = #{examId} and student_id = #{stuId} and question_id = #{quesId}
+    </select>
+    <insert id="InsertStuExam"  parameterType="com.loti.dao.pojo.Entity.StudentExam" >
+        insert into student_exam (exam_id, student_id, student_answer, student_score, question_id) VALUES
+        (#{examId},#{studentId},#{studentAnswer},#{studentScore},#{questionId})
+    </insert>
+    <insert id="InsertInitStuExamByClass">
+        insert into student_paper_record (exam_id, student_id)
+        select #{examId},student_id from student_class
+        where class_id = #{classId}
+    </insert>
+    <select id="getStuExamByExamStu" resultType="com.loti.dao.pojo.Entity.StudentExam">
+        select * from student_exam where student_id = #{stuId} and exam_id = #{examId}
+    </select>
+    <update id="updateScore">
+        update student_exam
+        set student_score = #{score}
+        where exam_id = #{examId} and student_id = #{stuId} and question_id = #{quesId}
+    </update>
+    <select id="getStuExamTypeCnt" resultType="int">
+        SELECT COUNT(q.question_type) from question q
+        LEFT JOIN student_exam  se on q.question_id = se.question_id
+        where se.exam_id = #{examId} AND se.student_id = #{stuId} AND q.question_type = #{type}
+    </select>
+    <select id="getRateByExam" resultType="java.lang.Double">
+        SELECT SUM(
+                       CASE
+                           WHEN q.question_type = 0 AND student_score = #{score0} THEN 1
+                           WHEN q.question_type = 1 AND student_score = #{score1} THEN 1
+                           WHEN q.question_type = 2 AND student_score = #{score2} THEN 1
+                           WHEN q.question_type = 3 AND student_score = #{score3} THEN 1
+                           WHEN q.question_type = 4 AND student_score = #{score4} THEN 1
+                           ELSE 0
+                           END
+                   )/COUNT(question_order)/COUNT(DISTINCT question_order) AS rate
+        FROM student_exam se
+                 LEFT JOIN paper p ON se.question_id = p.question_id
+                 LEFT JOIN question q ON q.question_id = se.question_id
+        WHERE exam_id = #{examId} and paper_id = #{paperId} GROUP BY question_order order by p.question_order
+    </select>
+</mapper>

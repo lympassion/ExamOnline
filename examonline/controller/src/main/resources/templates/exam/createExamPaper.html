@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/page.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/step.style.css">
+
+        <style>
+            #question_0_listTable {border: none;}
+            #question_1_listTable {border: none;}
+            #question_2_listTable {border: none;}
+            #question_4_listTable {border: none;}
+        </style>
+</head>
+<body>
+    <div class="page">
+        <div class="container-fluid">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">试题&试卷管理</a></li>
+                    <li class="breadcrumb-item"><a href="paperRepository.html">试卷库</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">创建试卷</li>
+                </ol>
+            </nav>
+            <div>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary unVisible" id="pre">上一步</button>
+                    </div>
+                    <div class="col-8 form-group  border-bottom-1">
+                        <div class="modal-steps">
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 1: 试卷信息</label>
+                            </div>
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 2: 单选题</label>
+                            </div>
+                        
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 3: 多选题</label>
+                            </div>
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 4: 判断题</label>
+                            </div>
+                            <div class="step">
+                                <div class="dot"></div>
+                                <label class="label">Step 5: 简答题</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary" id="next">下一步</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="step-main">
+                        <div class="step-slide" id="step-slide-1">
+                            <div class="row m-3">
+                                <div class="col"></div>
+                                <div class="col-sm-5">
+                                    <form class="needs-validation" style="margin-top: 150px;">
+                                        <div class="input-group mb-2">
+                                            <label for="paperName" class="col-sm-3 col-form-label" style="font-weight:normal;">试卷名称：</label>
+                                            <div class="col-sm-9">
+                                                <input id="paperName" name="paperName" type="text" placeholder="请输入试卷名称" class="form-control" required>
+                                                <div class="invalid-feedback">请输入试卷名称</div>
+                                              </div>
+                                        </div>
+                    
+                                        <div class="input-group mb-2">
+                                            <label for="courseNameSelect" class="col-sm-3 col-form-label" style="font-weight:normal;">考试课程：</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="courseNameSelect">
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                        <div class="step-slide" id="step-slide-2">
+                            <table class="table table-borderless" id="question_0_listTable">
+                            </table>
+                        </div>
+                        <div class="step-slide" id="step-slide-3">
+                            <table class="table table-borderless" id="question_1_listTable">
+                            </table>
+                        </div>
+                        <div class="step-slide" id="step-slide-4">
+                            <table class="table table-borderless" id="question_2_listTable">
+                            </table>
+                        </div>
+                        <div class="step-slide" id="step-slide-5">
+                            <table class="table table-borderless" id="question_4_listTable">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- <table class="table table-borderless" id="quesListTable">
+                
+            </table> -->
+
+
+
+        </div>
+        
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/timeFormat.js"></script>
+    <script src="/js/jquerysession.js"></script>
+    <script src="/js/jquery.actual.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+    
+    <script>
+        
+        var userId = $.session.get('userId');
+
+        var courseName = "";
+        
+        $(document).ready(function () {  
+            
+            // 获取所有已存在课程的课程名称 
+            $.ajax({
+                    type: "get",
+                    url: "/teacher/getAllCourseName",
+                    datatype: "json",
+                    success: function(resultMsg){
+                        addCourseName(resultMsg.data);
+                    },
+                    //success: parsePaperData(data),
+                    error: function(data) {
+                        // alert(data);
+                    }
+                })
+        }); 
+
+        function addCourseName(courseNamesString) {
+            var courseNames = courseNamesString.split(',');
+            var course = "";
+            for(var i = 0; i < courseNames.length; i++) {
+                course = "<option>" + courseNames[i] + "</option>";
+                document.querySelector('#courseNameSelect').innerHTML += course;
+            }
+        }
+
+        function initAllTables(courseName) {
+            //调用函数，初始化表格  
+            initTable_0(courseName);
+            initTable_1(courseName); 
+            initTable_2(courseName); 
+            initTable_4(courseName); 
+        }
+
+        function initTable_0(courseName) {  
+            //先销毁表格  
+            $('#question_0_listTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#question_0_listTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/teacher/getQuestions0?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: false,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'questionId',
+                            title: '试题编号',
+                            sortable: true
+                        }, {
+                            field: 'questionType',
+                            title: '类型',
+                            visible: false
+                        }, {
+                            field: 'courseName',
+                            title: '课程名称',
+                            visible: false
+                        }, {
+                            // width: 1100,
+                            field: 'questionContent',
+                            title: '题目',
+                            cellStyle: function (value, row, index) {
+                                return {
+                                    css: {
+                                        "min-width": "800px",
+                                        "white-space": "nowrap",
+                                        "text-overflow": "ellipsis",
+                                        "overflow": "hidden",
+                                        "max-width": "1100px"
+                                    }
+                                }
+                            },
+                        }, {
+                            field: 'opa',
+                            title: 'opa',
+                            visible: false
+                        }, {
+                            field: 'opb',
+                            title: 'opb',
+                            visible: false
+                        }, {
+                            field: 'opc',
+                            title: 'opc',
+                            visible: false
+                        }, {
+                            field: 'opd',
+                            title: 'opd',
+                            visible: false
+                        }, {
+                            field: 'questionAnswer',
+                            title: 'questionAnswer',
+                            visible: false
+                        }, {
+                            field: 'questionScore',
+                            title: '分值',
+                            sortable: true
+                        }, {
+                            field: 'questionOrder',
+                            title: 'questionOrder',
+                            visible: false
+                        }],
+                // data:[
+                //         {"questionId":"1","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"2","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"3","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"4","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"5","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"6","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"7","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"8","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"9","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"10","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"}
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+        function initTable_1(courseName) {  
+            //先销毁表格  
+            $('#question_1_listTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#question_1_listTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/teacher/getQuestions1?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: false,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'questionId',
+                            title: '试题编号',
+                            sortable: true
+                        }, {
+                            field: 'questionType',
+                            title: '类型',
+                            visible: false
+                        }, {
+                            field: 'courseName',
+                            title: '课程名称',
+                            visible: false
+                        }, {
+                            // width: 1100,
+                            field: 'questionContent',
+                            title: '题目',
+                            cellStyle: function (value, row, index) {
+                                return {
+                                    css: {
+                                        "min-width": "800px",
+                                        "white-space": "nowrap",
+                                        "text-overflow": "ellipsis",
+                                        "overflow": "hidden",
+                                        "max-width": "1100px"
+                                    }
+                                }
+                            },
+                        }, {
+                            field: 'opa',
+                            title: 'opa',
+                            visible: false
+                        }, {
+                            field: 'opb',
+                            title: 'opb',
+                            visible: false
+                        }, {
+                            field: 'opc',
+                            title: 'opc',
+                            visible: false
+                        }, {
+                            field: 'opd',
+                            title: 'opd',
+                            visible: false
+                        }, {
+                            field: 'questionAnswer',
+                            title: 'questionAnswer',
+                            visible: false
+                        }, {
+                            field: 'questionScore',
+                            title: '分值',
+                            sortable: true
+                        }, {
+                            field: 'questionOrder',
+                            title: 'questionOrder',
+                            visible: false
+                        }],
+                // data:[
+                //         {"questionId":"11","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"12","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"13","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"14","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"15","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"16","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"17","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"18","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"19","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"20","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"21","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"22","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"}
+                //     ]        
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+        function initTable_2(courseName) {  
+            //先销毁表格  
+            $('#question_2_listTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#question_2_listTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/teacher/getQuestions2?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: false,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'questionId',
+                            title: '试题编号',
+                            sortable: true
+                        }, {
+                            field: 'questionType',
+                            title: '类型',
+                            visible: false
+                        }, {
+                            field: 'courseName',
+                            title: '课程名称',
+                            visible: false
+                        }, {
+                            // width: 1100,
+                            field: 'questionContent',
+                            title: '题目',
+                            cellStyle: function (value, row, index) {
+                                return {
+                                    css: {
+                                        "min-width": "800px",
+                                        "white-space": "nowrap",
+                                        "text-overflow": "ellipsis",
+                                        "overflow": "hidden",
+                                        "max-width": "1100px"
+                                    }
+                                }
+                            },
+                        }, {
+                            field: 'opa',
+                            title: 'opa',
+                            visible: false
+                        }, {
+                            field: 'opb',
+                            title: 'opb',
+                            visible: false
+                        }, {
+                            field: 'opc',
+                            title: 'opc',
+                            visible: false
+                        }, {
+                            field: 'opd',
+                            title: 'opd',
+                            visible: false
+                        }, {
+                            field: 'questionAnswer',
+                            title: 'questionAnswer',
+                            visible: false
+                        }, {
+                            field: 'questionScore',
+                            title: '分值',
+                            sortable: true
+                        }, {
+                            field: 'questionOrder',
+                            title: 'questionOrder',
+                            visible: false
+                        }],
+                // data:[
+                //         {"questionId":"23","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"24","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"25","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"26","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"27","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"28","questionScore":"5","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"29","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"30","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"31","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"32","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"33","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"}
+                        
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+        function initTable_4(courseName) {  
+            //先销毁表格  
+            $('#question_4_listTable').bootstrapTable('destroy');  
+            //初始化表格, 动态从服务器加载数据  
+            $("#question_4_listTable").bootstrapTable({  
+                
+                method: "get", 
+                url: "/teacher/getQuestions4?cname=" + courseName,
+                pagination: true, //启动分页  
+                pageSize: 6,  //每页显示的记录数  
+                pageNumber:1, //当前第几页  
+                pageList: [6, 12],  //记录数可选列表
+                singleSelect: false,  //是否单选，false表示多选; true标识只能单选
+                clickToSelect: true,  //启用点击某行就选中某行
+                search: true,  //是否启用查询
+                showRefresh: true,  //显示刷新按钮
+                columns: [{
+                            checkbox: true
+                        },{
+                            field: 'questionId',
+                            title: '试题编号',
+                            sortable: true
+                        }, {
+                            field: 'questionType',
+                            title: '类型',
+                            visible: false
+                        }, {
+                            field: 'courseName',
+                            title: '课程名称',
+                            visible: false
+                        }, {
+                            // width: 1100,
+                            field: 'questionContent',
+                            title: '题目',
+                            cellStyle: function (value, row, index) {
+                                return {
+                                    css: {
+                                        "min-width": "800px",
+                                        "white-space": "nowrap",
+                                        "text-overflow": "ellipsis",
+                                        "overflow": "hidden",
+                                        "max-width": "1100px"
+                                    }
+                                }
+                            },
+                        }, {
+                            field: 'opa',
+                            title: 'opa',
+                            visible: false
+                        }, {
+                            field: 'opb',
+                            title: 'opb',
+                            visible: false
+                        }, {
+                            field: 'opc',
+                            title: 'opc',
+                            visible: false
+                        }, {
+                            field: 'opd',
+                            title: 'opd',
+                            visible: false
+                        }, {
+                            field: 'questionAnswer',
+                            title: 'questionAnswer',
+                            visible: false
+                        }, {
+                            field: 'questionScore',
+                            title: '分值',
+                            sortable: true
+                        }, {
+                            field: 'questionOrder',
+                            title: 'questionOrder',
+                            visible: false
+                        }],
+                // data:[
+                //         {"questionId":"34","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"35","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"36","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"37","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"38","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"39","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"},
+                //         {"questionId":"40","questionScore":"10","questionContent":"这是题目这是题目这是题目这是题目"}
+                //   ]
+                onLoadSuccess: function () {
+                },
+                onLoadError: function () {
+                    // showTips("数据加载失败！");
+                }
+
+            });  
+        }
+
+
+        
+
+        $(function(){
+
+        step_();
+        })
+
+        function step_(){
+            let howLong=$(".modal-steps").actual("width")/3;
+            // console.log(howLong)
+            let current=0;
+            $('.step-main').css("height",getMaxHeight());
+            $('.step-slide').eq(current).fadeIn(500)
+            $('.step').eq(current).addClass("current");
+
+            let preventResponse=false;
+            // console.log(current);
+
+            var paperName = "";
+            var courseName = "";
+            var questions0 = "", questions1 = "", questions2 = "", questions4 = "";
+
+            $('#next').click(function(){
+
+                if(current == 0) {
+                    paperName = document.getElementById('paperName').value;
+                    courseName = document.getElementById('courseNameSelect').value;
+                    console.log(courseName);
+
+                    initAllTables(courseName); 
+
+                } else if (current == 1) {
+                    questions0.length = 0;
+                    var allItemsChoosedInThisStep = $('#question_0_listTable').bootstrapTable('getSelections');
+                    for(var i = 0; i < allItemsChoosedInThisStep.length; i++) {
+                        if(questions0.indexOf(allItemsChoosedInThisStep[i].questionId) < 0) {
+                            questions0 += allItemsChoosedInThisStep[i].questionId + ",";
+                        }
+                    }
+
+                } else if (current == 2) {
+                    questions1.length = 0;
+                    allItemsChoosedInThisStep = $('#question_1_listTable').bootstrapTable('getSelections');
+                    for(var i = 0; i < allItemsChoosedInThisStep.length; i++) {
+                        if(questions1.indexOf(allItemsChoosedInThisStep[i].questionId) < 0) {
+                            questions1 += allItemsChoosedInThisStep[i].questionId + ",";
+                        }
+                    }
+
+                } else if (current == 3) {
+                    questions2.length = 0;
+                    allItemsChoosedInThisStep = $('#question_2_listTable').bootstrapTable('getSelections');
+                    for(var i = 0; i < allItemsChoosedInThisStep.length; i++) {
+                        if(questions2.indexOf(allItemsChoosedInThisStep[i].questionId) < 0) {
+                            questions2 += allItemsChoosedInThisStep[i].questionId + ",";
+                        }
+                    }
+
+                } else if (current == 4) {
+                    questions4.length = 0;
+                    allItemsChoosedInThisStep = $('#question_4_listTable').bootstrapTable('getSelections');
+                    for(var i = 0; i < allItemsChoosedInThisStep.length; i++) {
+                        if(questions4.indexOf(allItemsChoosedInThisStep[i].questionId) < 0) {
+                            questions4 += allItemsChoosedInThisStep[i].questionId + ",";
+                        }
+                    }
+
+                    questions0 = questions0.substring(0, questions0.lastIndexOf(","));
+                    questions1 = questions1.substring(0, questions1.lastIndexOf(","));
+                    questions2 = questions2.substring(0, questions2.lastIndexOf(","));
+                    questions4 = questions4.substring(0, questions4.lastIndexOf(","));
+                    var paperSubmit = createSubmit(questions0, questions1, questions2, questions4);
+                    var paperJSON = JSON.stringify(paperSubmit);
+                    // console.log(paperSubmit);
+                    // console.log(pJSON);
+
+                    $.ajax({
+                        type: "post",
+                        url: "/teacher/newPaperSubmit",
+                        contentType: "application/json",
+                        data: paperJSON,
+                        datatype: "json",
+                        success: function(resultMsg){
+                            if(resultMsg.code == 0){
+                                // 提交成功
+                                alert('提交成功！');
+                                window.location.reload();
+                            } else {
+                                // 提交失败
+                                alert(resultMsg.code + resultMsg.msg);
+                            }
+                        },
+                        error: function(resultMsg){
+                            // alert("通信失败");
+                        }
+                    });
+
+                }
+
+                
+
+                
+
+                // console.log(paperName);
+                // console.log(courseName);
+                // console.log(questions);
+
+                if(!preventResponse){
+                    if(current!=($('.step-slide').length-1)){
+                
+                        $('.step').eq(current).addClass("completed");
+                    
+                        current++;
+                        
+                        let timeOut=null;
+                        clearTimeout(timeOut);
+                        timeOut=setTimeout(function(){
+                            // console.log(current)
+                            $('.step').eq(current).addClass("current");
+                        },200);
+
+                        // console.log(current);
+                        $('.step-slide').eq(current).stop().fadeIn(500).siblings().fadeOut(500);
+                        if(current==($('.step-slide').length-1)){
+                            $(this).html("完&nbsp;&nbsp;&nbsp;&nbsp;成");
+                            
+                            
+                        }else{
+                            $(this).html("下一步");
+                        }
+                        if(current==0){
+                            $('#pre').addClass('unVisible')
+                        }else{
+                            $('#pre').removeClass('unVisible')
+                        }
+
+                        // if(current==($('.step-slide').length)) {
+                        //     $(this).click(function() {
+                        //         // createSubmit();
+                        //         var m = createSubmit();
+                        //         alert(m);
+                        //     })
+                        // }
+                    }
+                    
+                    // $(".step").eq(0).css("width",current*howLong);
+                    preventResponse=true;
+                    setTimeout(function(){
+                        preventResponse=false;
+                    },500);
+                }
+            })
+
+
+
+            function createSubmit(questions0, questions1, questions2, questions4) {
+                var paperMsg = {
+                    "paperName": paperName,
+                    "courseName": courseName,
+                    "questions0": questions0,
+                    "questions1": questions1,
+                    "questions2": questions2,
+                    "questions4": questions4
+                }
+                return paperMsg;
+            }
+
+            $('#pre').click(function(){
+            if(!preventResponse){
+                if(current!=0){
+                    $('.step').eq(current).removeClass("current");
+                    current--;
+                    let timeOut=null;
+                    clearTimeout(timeOut);
+                    timeOut=setTimeout(function(){
+                        $('.step').eq(current).removeClass("completed");
+                    },200);
+                    $('.step-slide').eq(current).stop().fadeIn(500).siblings().fadeOut(500);
+                    if(current==($('.step-slide').length-1)){
+                        $("#next").html("完成");
+                    }else{
+                        $("#next").html("下一步");
+                    }
+                    if(current==0){
+                        $(this).addClass('unVisible')
+                    }else{
+                        $(this).removeClass('unVisible')
+                    }
+                }
+                
+            
+                preventResponse=true;
+                setTimeout(function(){
+                    preventResponse=false;
+                },500);
+            }
+        })
+        }
+
+        function getMaxHeight(){
+            let MaxHeight=0;
+            $('.step-slide').each(function(){
+                let actualHeight=parseFloat($(this).actual('outerHeight'));
+                if(actualHeight>MaxHeight){
+                    MaxHeight=actualHeight
+                }
+            })
+            // console.log(MaxHeight)
+            return MaxHeight;
+        }
+    </script>
+
+</body>
+</html>
